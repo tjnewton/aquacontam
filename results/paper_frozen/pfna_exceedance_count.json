@@ -1,0 +1,11 @@
+{
+  "_meta": {
+    "source": "C17 (R5 m9) PFNA-only MCL exceeders \u2014 systems exceeding the PFNA individual MCL (0.010 ug/L) but no analyte in the default union (PFOS, PFOA, PFHxS, HFPO-DA, PFBS). Reproduction gate ties the default-union exceedance count to mcl_exceedance_analysis.json mcl_summary. No retrain."
+  },
+  "pfna_mcl_ug_per_l": 0.01,
+  "n_systems_with_pfna_data": 16464,
+  "n_pfna_exceeders": 112,
+  "n_pfna_only_exceeders": 5,
+  "union_exceeders": 3385,
+  "exceedance_rate": 0.19113495200451722
+}

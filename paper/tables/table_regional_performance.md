@@ -1,0 +1,12 @@
+| Task   | Model   |   Region | AUROC   | AUPRC   | N   |
+|:-------|:--------|---------:|:--------|:--------|:----|
+| T1     | XGBoost |        1 | *       | *       | *   |
+| T1     | XGBoost |        2 | *       | *       | *   |
+| T1     | XGBoost |        3 | *       | *       | *   |
+| T1     | XGBoost |        4 | *       | *       | *   |
+| T1     | XGBoost |        5 | *       | *       | *   |
+| T1     | XGBoost |        6 | *       | *       | *   |
+| T1     | XGBoost |        7 | *       | *       | *   |
+| T1     | XGBoost |        8 | *       | *       | *   |
+| T1     | XGBoost |        9 | *       | *       | *   |
+| T1     | XGBoost |       10 | *       | *       | *   |

@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "source": "C7 (m11) out-of-region top-decile lift from provenance-free T1 LORO OOF predictions (folds mirrored from _run_loro_cv; per-fold AUROC reproduction gate vs loro_cv_provenance_free.json within 0.002).",
+    "n_systems_oof": 16281,
+    "seed": 42
+  },
+  "pooled_oof_lift_top_decile": 2.9675063775740846,
+  "weighted_mean_per_region_lift": 2.718841632140451,
+  "per_region": [
+    {
+      "test_region": 1,
+      "n_test": 526,
+      "auroc": 0.607587671468748,
+      "lift_top_decile": 1.8655128387005249
+    },
+    {
+      "test_region": 2,
+      "n_test": 1863,
+      "auroc": 0.5650540357987166,
+      "lift_top_decile": 1.4990125082290982
+    },
+    {
+      "test_region": 3,
+      "n_test": 870,
+      "auroc": 0.7364290801790803,
+      "lift_top_decile": 3.0357142857142856
+    },
+    {
+      "test_region": 4,
+      "n_test": 2262,
+      "auroc": 0.5856111171276954,
+      "lift_top_decile": 1.4499741813714142
+    },
+    {
+      "test_region": 5,
+      "n_test": 3482,
+      "auroc": 0.826398704941729,
+      "lift_top_decile": 5.6293054159026825
+    },
+    {
+      "test_region": 6,
+      "n_test": 1947,
+      "auroc": 0.5756517873486572,
+      "lift_top_decile": 1.267887667887668
+    },
+    {
+      "test_region": 7,
+      "n_test": 1551,
+      "auroc": 0.6680679582919908,
+      "lift_top_decile": 2.6940446650124072
+    },
+    {
+      "test_region": 8,
+      "n_test": 538,
+      "auroc": 0.7111277113767153,
+      "lift_top_decile": 3.3209876543209877
+    },
+    {
+      "test_region": 9,
+      "n_test": 2410,
+      "auroc": 0.7123680091451943,
+      "lift_top_decile": 1.923641703377386
+    },
+    {
+      "test_region": 10,
+      "n_test": 832,
+      "auroc": 0.955720338983051,
+      "lift_top_decile": 2.283266398929049
+    }
+  ]
+}

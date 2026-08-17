@@ -1,0 +1,54 @@
+{
+  "pct_people_of_color": {
+    "monitoring_ratio": 1.847053612840429,
+    "mean_high": 14.313785692354928,
+    "mean_low": 7.749523669939909,
+    "p_value": 9.999000099990002e-05,
+    "n_high": 3257,
+    "n_low": 6823,
+    "n_systems": 16281,
+    "size_adjusted_coef": 0.060004941733981354,
+    "size_adjusted_se": 0.00631575268434734,
+    "size_adjusted_p": 0.0,
+    "adjusted_for_population": true
+  },
+  "pct_low_income": {
+    "monitoring_ratio": 0.7829771566612836,
+    "mean_high": 9.14553269880258,
+    "mean_low": 11.680459156433528,
+    "p_value": 0.0018998100189981002,
+    "n_high": 3257,
+    "n_low": 7492,
+    "n_systems": 16281,
+    "size_adjusted_coef": -0.10670170062841394,
+    "size_adjusted_se": 0.006232056319825334,
+    "size_adjusted_p": 0.0,
+    "adjusted_for_population": true
+  },
+  "pct_limited_english": {
+    "monitoring_ratio": Infinity,
+    "mean_high": 13.933394720687538,
+    "mean_low": 0.0,
+    "p_value": 1.0,
+    "n_high": 3258,
+    "n_low": 0,
+    "n_systems": 16281,
+    "size_adjusted_coef": 0.037133419382916075,
+    "size_adjusted_se": 0.006279647144701781,
+    "size_adjusted_p": 3.4203619936334917e-09,
+    "adjusted_for_population": true
+  },
+  "pct_less_hs_education": {
+    "monitoring_ratio": 0.9607907589762177,
+    "mean_high": 10.517961314092723,
+    "mean_low": 10.947192420231294,
+    "p_value": 0.5497450254974503,
+    "n_high": 3257,
+    "n_low": 7177,
+    "n_systems": 16281,
+    "size_adjusted_coef": -0.023712313690445685,
+    "size_adjusted_se": 0.006280330988412164,
+    "size_adjusted_p": 0.00016015990840712035,
+    "adjusted_for_population": true
+  }
+}

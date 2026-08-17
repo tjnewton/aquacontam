@@ -1,0 +1,393 @@
+{
+  "task": "T6",
+  "description": "Private-well risk extrapolation: public-supply \u2192 domestic arsenic",
+  "analyte": "arsenic",
+  "target": "action_level (arsenic MCL \u2265 10 \u00b5g/L)",
+  "source": {
+    "source": "USGS National Groundwater Aggregation (Erickson, Hill & Wilson 2020)",
+    "doi": "10.5066/P9JMUAPY",
+    "sciencebase_item": "5f36baa782cee144fb3873e8",
+    "license": "CC0 1.0 Universal",
+    "analyte": "arsenic",
+    "mcl_ugl": 10.0
+  },
+  "seed": 42,
+  "use_tuned_params": false,
+  "n_public_wells": 26769,
+  "n_domestic_wells": 12561,
+  "public_exceedance_rate": 0.07859837872165565,
+  "domestic_exceedance_rate": 0.09410078815380941,
+  "models": {
+    "dummy_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.5,
+          "auprc": 0.09165746411002912,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9083425358899709,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08343318716808576,
+          "ece": 0.013297134470927105
+        },
+        "domestic_holdout": {
+          "auroc": 0.5,
+          "auprc": 0.09410078815380941,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9058992118461906,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08549359185689451,
+          "ece": 0.0157404585147074
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.5,
+          "auprc": 0.08202599731062304,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.917974002689377,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.07533084485120348,
+          "ece": 0.005754283220591294
+        },
+        "domestic_holdout": {
+          "auroc": 0.5,
+          "auprc": 0.09410078815380941,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9058992118461906,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08556370570461296,
+          "ece": 0.017829074063777664
+        }
+      },
+      "leakage_inflation_auroc": 0.0,
+      "leakage_inflation_auprc": -0.0096,
+      "transfer_minus_indist_auroc": 0.0
+    },
+    "logistic_regression": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.6215465309513918,
+          "auprc": 0.15616735708466037,
+          "f1": 0.22109875294910683,
+          "precision": 0.1596884128529698,
+          "recall": 0.3592552026286966,
+          "accuracy": 0.7679951812067062,
+          "balanced_accuracy": 0.5842474067962227,
+          "brier_score": 0.19569431948270602,
+          "ece": 0.24090015447748342
+        },
+        "domestic_holdout": {
+          "auroc": 0.6703918028713503,
+          "auprc": 0.1867573659700146,
+          "f1": 0.24729194187582562,
+          "precision": 0.17979254706108336,
+          "recall": 0.39593908629441626,
+          "accuracy": 0.7731868481808774,
+          "balanced_accuracy": 0.6041563785457493,
+          "brier_score": 0.16816239894195614,
+          "ece": 0.19112117166879417
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.7596814283545841,
+          "auprc": 0.2280292054894495,
+          "f1": 0.2638700947225981,
+          "precision": 0.1620274200249273,
+          "recall": 0.7103825136612022,
+          "accuracy": 0.6748842073808456,
+          "balanced_accuracy": 0.6910473766222678,
+          "brier_score": 0.19869928870586662,
+          "ece": 0.301192448908101
+        },
+        "domestic_holdout": {
+          "auroc": 0.7273150930061,
+          "auprc": 0.18518402024649153,
+          "f1": 0.26834170854271355,
+          "precision": 0.16729323308270677,
+          "recall": 0.6776649746192893,
+          "accuracy": 0.6522569859087652,
+          "balanced_accuracy": 0.6636413457330562,
+          "brier_score": 0.20944572886290871,
+          "ece": 0.28354136259513857
+        }
+      },
+      "leakage_inflation_auroc": 0.1381,
+      "leakage_inflation_auprc": 0.0719,
+      "transfer_minus_indist_auroc": 0.0488
+    },
+    "random_forest_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.6112531873333701,
+          "auprc": 0.13380242644824497,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9083425358899709,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08664861124604577,
+          "ece": 0.0601350968426865
+        },
+        "domestic_holdout": {
+          "auroc": 0.6823786626268087,
+          "auprc": 0.20173219913181545,
+          "f1": 0.035541195476575124,
+          "precision": 0.39285714285714285,
+          "recall": 0.018612521150592216,
+          "accuracy": 0.9049438738953905,
+          "balanced_accuracy": 0.5078122804364439,
+          "brier_score": 0.08720967064160753,
+          "ece": 0.07202169120291609
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.8601080148091227,
+          "auprc": 0.4711955901136109,
+          "f1": 0.4226327944572748,
+          "precision": 0.5772870662460567,
+          "recall": 0.3333333333333333,
+          "accuracy": 0.9252950844165546,
+          "balanced_accuracy": 0.65576171875,
+          "brier_score": 0.06465915207600242,
+          "ece": 0.08363905702049858
+        },
+        "domestic_holdout": {
+          "auroc": 0.7294545388847476,
+          "auprc": 0.26558353332044493,
+          "f1": 0.147413182140326,
+          "precision": 0.45414847161572053,
+          "recall": 0.08798646362098139,
+          "accuracy": 0.9042273704322904,
+          "balanced_accuracy": 0.5385006577705926,
+          "brier_score": 0.0868948581487839,
+          "ece": 0.09210653100202179
+        }
+      },
+      "leakage_inflation_auroc": 0.2489,
+      "leakage_inflation_auprc": 0.3374,
+      "transfer_minus_indist_auroc": 0.0711
+    },
+    "xgboost_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.6163058309921625,
+          "auprc": 0.13412074473304714,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9083425358899709,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08334088325500488,
+          "ece": 0.031850840414999256
+        },
+        "domestic_holdout": {
+          "auroc": 0.6782966485149641,
+          "auprc": 0.19249439650822422,
+          "f1": 0.005054759898904802,
+          "precision": 0.6,
+          "recall": 0.0025380710659898475,
+          "accuracy": 0.9059788233420906,
+          "balanced_accuracy": 0.5011811543483565,
+          "brier_score": 0.08227746933698654,
+          "ece": 0.024950634564114615
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.8461666512503795,
+          "auprc": 0.4773441064001482,
+          "f1": 0.3338008415147265,
+          "precision": 0.725609756097561,
+          "recall": 0.2167577413479053,
+          "accuracy": 0.9290303301957269,
+          "balanced_accuracy": 0.6047167612989527,
+          "brier_score": 0.05672499164938927,
+          "ece": 0.01611499256642798
+        },
+        "domestic_holdout": {
+          "auroc": 0.7130231737182025,
+          "auprc": 0.26426073312923903,
+          "f1": 0.11674347158218126,
+          "precision": 0.6333333333333333,
+          "recall": 0.06429780033840947,
+          "accuracy": 0.9084467797149909,
+          "balanced_accuracy": 0.5302155141071606,
+          "brier_score": 0.07964903861284256,
+          "ece": 0.03591398638389989
+        }
+      },
+      "leakage_inflation_auroc": 0.2299,
+      "leakage_inflation_auprc": 0.3432,
+      "transfer_minus_indist_auroc": 0.062
+    },
+    "lightgbm_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.5101375480218439,
+          "auprc": 0.0977179135847468,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9083425358899709,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08335981240618569,
+          "ece": 0.011075251197921875
+        },
+        "domestic_holdout": {
+          "auroc": 0.6039195751844353,
+          "auprc": 0.1439387642731792,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9058992118461906,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08417644178843668,
+          "ece": 0.011698848156362794
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.7873157160746812,
+          "auprc": 0.2458340218396639,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.917974002689377,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.07203473765923882,
+          "ece": 0.0412295130791764
+        },
+        "domestic_holdout": {
+          "auroc": 0.6775173907347656,
+          "auprc": 0.17537452633223805,
+          "f1": 0.0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "accuracy": 0.9058992118461906,
+          "balanced_accuracy": 0.5,
+          "brier_score": 0.08388425703450397,
+          "ece": 0.034307071195280134
+        }
+      },
+      "leakage_inflation_auroc": 0.2772,
+      "leakage_inflation_auprc": 0.1481,
+      "transfer_minus_indist_auroc": 0.0938
+    },
+    "catboost_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.6061875909715544,
+          "auprc": 0.14334771277146902,
+          "f1": 0.18610271903323264,
+          "precision": 0.20754716981132076,
+          "recall": 0.1686746987951807,
+          "accuracy": 0.8647726131914466,
+          "balanced_accuracy": 0.5518439806973251,
+          "brier_score": 0.11617942363825375,
+          "ece": 0.14231046424152735
+        },
+        "domestic_holdout": {
+          "auroc": 0.6450628023332082,
+          "auprc": 0.18316287415449237,
+          "f1": 0.22513812154696133,
+          "precision": 0.19019836639439908,
+          "recall": 0.27580372250423013,
+          "accuracy": 0.8213518032003821,
+          "balanced_accuracy": 0.576912319113087,
+          "brier_score": 0.1321937022415808,
+          "ece": 0.17431662312056284
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.8311920999829235,
+          "auprc": 0.3775304782152507,
+          "f1": 0.3663115169964485,
+          "precision": 0.2538677918424754,
+          "recall": 0.6575591985428051,
+          "accuracy": 0.8133871208725534,
+          "balanced_accuracy": 0.7424351982297359,
+          "brier_score": 0.13397889936086396,
+          "ece": 0.23799770728567057
+        },
+        "domestic_holdout": {
+          "auroc": 0.7238850502209,
+          "auprc": 0.2406794179331339,
+          "f1": 0.28540714861596345,
+          "precision": 0.20913745569121703,
+          "recall": 0.44923857868020306,
+          "accuracy": 0.7883130324018788,
+          "balanced_accuracy": 0.6363865799631792,
+          "brier_score": 0.1530458325994636,
+          "ece": 0.24455575868650772
+        }
+      },
+      "leakage_inflation_auroc": 0.225,
+      "leakage_inflation_auprc": 0.2342,
+      "transfer_minus_indist_auroc": 0.0389
+    },
+    "mlp_classifier": {
+      "geographic": {
+        "public_test": {
+          "auroc": 0.6354674787890409,
+          "auprc": 0.16762337394815308,
+          "f1": 0.20269382391590013,
+          "precision": 0.11922705314009661,
+          "recall": 0.6757940854326396,
+          "accuracy": 0.5126995281598233,
+          "balanced_accuracy": 0.5860181744581412,
+          "brier_score": 0.2757202684879303,
+          "ece": 0.39800003675605433
+        },
+        "domestic_holdout": {
+          "auroc": 0.7182858960810197,
+          "auprc": 0.20057073550041996,
+          "f1": 0.2511600059871277,
+          "precision": 0.15257319512638662,
+          "recall": 0.7098138747884941,
+          "accuracy": 0.6017036860122602,
+          "balanced_accuracy": 0.6501437771868475,
+          "brier_score": 0.22757086157798767,
+          "ece": 0.33329571428607047
+        }
+      },
+      "random": {
+        "public_test": {
+          "auroc": 0.7832372187120522,
+          "auprc": 0.2582076205194706,
+          "f1": 0.26552598225602025,
+          "precision": 0.16072113540467972,
+          "recall": 0.7632058287795993,
+          "accuracy": 0.6536680113551472,
+          "balanced_accuracy": 0.7035430185564664,
+          "brier_score": 0.19848841428756714,
+          "ece": 0.314838977813001
+        },
+        "domestic_holdout": {
+          "auroc": 0.7280429380627984,
+          "auprc": 0.2045858168252068,
+          "f1": 0.2694541231126597,
+          "precision": 0.1675954592363261,
+          "recall": 0.6869712351945855,
+          "accuracy": 0.649470583552265,
+          "balanced_accuracy": 0.6662732087740217,
+          "brier_score": 0.21089982986450195,
+          "ece": 0.31163688725348865
+        }
+      },
+      "leakage_inflation_auroc": 0.1478,
+      "leakage_inflation_auprc": 0.0906,
+      "transfer_minus_indist_auroc": 0.0828
+    }
+  }
+}

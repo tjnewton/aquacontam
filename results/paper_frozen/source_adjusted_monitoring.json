@@ -1,0 +1,61 @@
+{
+  "_meta": {
+    "source": "R7 M1 source-adjusted monitoring-intensity disparity. Re-estimates the frozen unadjusted POC monitoring ratio (monitoring_inequity.json) adding (i) data-source fixed effects and (ii) a UCMR5-only single-source subset. Reproduction-gated on the frozen POC ratio AND size-adjusted coef via the exact analyze_monitoring_inequity path before writing.",
+    "reproduction_gate": {
+      "poc_ratio_obs": 1.847053612840429,
+      "poc_ratio_frozen": 1.847053612840429,
+      "poc_coef_obs": 0.060004941733981354,
+      "poc_coef_frozen": 0.060004941733981354,
+      "ratio_tol": 0.02,
+      "coef_tol": 0.001
+    },
+    "dominant_source_system_counts": {
+      "ucmr5": 8481,
+      "ucmr3": 1765,
+      "mn_mdh": 1300,
+      "ca_geotracker": 1132,
+      "nj_dep": 1131,
+      "wqp": 937,
+      "mo_dnr": 734,
+      "sdwis": 455,
+      "wa_doh": 256,
+      "mi_mpart": 90
+    },
+    "method": "OLS log1p(n_samples) ~ z(pct_people_of_color) + z(log1p(population)) [+ data-source dummies, most-common level as reference]; homoscedastic OLS SEs matching monitoring_equity._size_adjusted_association. UCMR5-only = systems whose every record has source==ucmr5."
+  },
+  "unadjusted_frozen": {
+    "monitoring_ratio": 1.847053612840429,
+    "size_adjusted_coef": 0.060004941733981354,
+    "size_adjusted_p": 0.0,
+    "n_systems": 16281
+  },
+  "source_fixed_effects": {
+    "size_adjusted_coef": 0.04312666235448259,
+    "size_adjusted_se": 0.005339665894513631,
+    "size_adjusted_t": 8.076659327841865,
+    "size_adjusted_p": 6.661338147750939e-16,
+    "n_systems": 16281,
+    "ref_source": "ucmr5",
+    "attenuation_vs_unadjusted": 0.28128148935340835
+  },
+  "ucmr5_only": {
+    "monitoring_ratio": NaN,
+    "n_high": 31,
+    "n_low": 0,
+    "size_adjusted_coef": 0.0,
+    "size_adjusted_se": 0.0,
+    "size_adjusted_t": 0.0,
+    "size_adjusted_p": 1.0,
+    "n_systems": 31
+  },
+  "dominant_ucmr5": {
+    "monitoring_ratio": 1.3664905844949866,
+    "n_high": 1700,
+    "n_low": 3414,
+    "size_adjusted_coef": 0.021209194442520368,
+    "size_adjusted_se": 0.006362368909198474,
+    "size_adjusted_t": 3.333537357737448,
+    "size_adjusted_p": 0.0008611664491164905,
+    "n_systems": 8481
+  }
+}

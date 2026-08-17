@@ -1,0 +1,306 @@
+{
+  "summary": [
+    {
+      "magnitude_km": 0.0,
+      "auroc_mean": 0.7894503888694807,
+      "auroc_std": 0.0,
+      "auprc_mean": 0.6681246851177332,
+      "auprc_std": 0.0,
+      "delta_auroc": 0.0,
+      "delta_auprc": 0.0,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 1.0,
+      "auroc_mean": 0.7743950375300871,
+      "auroc_std": 0.00818131854496223,
+      "auprc_mean": 0.6613476194176487,
+      "auprc_std": 0.009474031524577908,
+      "delta_auroc": -0.015055351339393619,
+      "delta_auprc": -0.006777065700084406,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 5.0,
+      "auroc_mean": 0.7820595157002552,
+      "auroc_std": 0.006530911574316594,
+      "auprc_mean": 0.6735724553069113,
+      "auprc_std": 0.011949409766544426,
+      "delta_auroc": -0.007390873169225487,
+      "delta_auprc": 0.0054477701891781916,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 10.0,
+      "auroc_mean": 0.7909702448979452,
+      "auroc_std": 0.005094279220016572,
+      "auprc_mean": 0.6832291569048434,
+      "auprc_std": 0.005763427313119034,
+      "delta_auroc": 0.0015198560284644946,
+      "delta_auprc": 0.015104471787110274,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 20.0,
+      "auroc_mean": 0.797720782747324,
+      "auroc_std": 0.00645114079889591,
+      "auprc_mean": 0.6815479654625529,
+      "auprc_std": 0.010016468415289373,
+      "delta_auroc": 0.00827039387784334,
+      "delta_auprc": 0.013423280344819766,
+      "n_runs": 5
+    }
+  ],
+  "raw_results": [
+    {
+      "magnitude_km": 0.0,
+      "seed": 42,
+      "metrics": {
+        "auroc": 0.7894503888694807,
+        "auprc": 0.6681246851177332
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.0
+    },
+    {
+      "magnitude_km": 0.0,
+      "seed": 43,
+      "metrics": {
+        "auroc": 0.7894503888694807,
+        "auprc": 0.6681246851177332
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.0
+    },
+    {
+      "magnitude_km": 0.0,
+      "seed": 44,
+      "metrics": {
+        "auroc": 0.7894503888694807,
+        "auprc": 0.6681246851177332
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.0
+    },
+    {
+      "magnitude_km": 0.0,
+      "seed": 45,
+      "metrics": {
+        "auroc": 0.7894503888694807,
+        "auprc": 0.6681246851177332
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.0
+    },
+    {
+      "magnitude_km": 0.0,
+      "seed": 46,
+      "metrics": {
+        "auroc": 0.7894503888694807,
+        "auprc": 0.6681246851177332
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.0
+    },
+    {
+      "magnitude_km": 1.0,
+      "seed": 42,
+      "metrics": {
+        "auroc": 0.7755210947222919,
+        "auprc": 0.668950431746708
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.7978845608028654
+    },
+    {
+      "magnitude_km": 1.0,
+      "seed": 43,
+      "metrics": {
+        "auroc": 0.7884653765151757,
+        "auprc": 0.6760047161882542
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.7978845608028654
+    },
+    {
+      "magnitude_km": 1.0,
+      "seed": 44,
+      "metrics": {
+        "auroc": 0.76885942267799,
+        "auprc": 0.6558569892724578
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.7978845608028654
+    },
+    {
+      "magnitude_km": 1.0,
+      "seed": 45,
+      "metrics": {
+        "auroc": 0.7749553352288165,
+        "auprc": 0.6546064135216596
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.7978845608028654
+    },
+    {
+      "magnitude_km": 1.0,
+      "seed": 46,
+      "metrics": {
+        "auroc": 0.7641739585061613,
+        "auprc": 0.6513195463591647
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 0.7978845608028654
+    },
+    {
+      "magnitude_km": 5.0,
+      "seed": 42,
+      "metrics": {
+        "auroc": 0.7869695661239566,
+        "auprc": 0.6869242726338186
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 3.989422804014327
+    },
+    {
+      "magnitude_km": 5.0,
+      "seed": 43,
+      "metrics": {
+        "auroc": 0.7878489494289334,
+        "auprc": 0.6864108325217427
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 3.989422804014327
+    },
+    {
+      "magnitude_km": 5.0,
+      "seed": 44,
+      "metrics": {
+        "auroc": 0.7744797468750119,
+        "auprc": 0.6658411876003305
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 3.989422804014327
+    },
+    {
+      "magnitude_km": 5.0,
+      "seed": 45,
+      "metrics": {
+        "auroc": 0.7736688936361846,
+        "auprc": 0.6559552471656639
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 3.989422804014327
+    },
+    {
+      "magnitude_km": 5.0,
+      "seed": 46,
+      "metrics": {
+        "auroc": 0.7873304224371902,
+        "auprc": 0.6727307366130008
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 3.989422804014327
+    },
+    {
+      "magnitude_km": 10.0,
+      "seed": 42,
+      "metrics": {
+        "auroc": 0.7987479780195395,
+        "auprc": 0.6932977630070264
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 7.978845608028654
+    },
+    {
+      "magnitude_km": 10.0,
+      "seed": 43,
+      "metrics": {
+        "auroc": 0.7910530305918901,
+        "auprc": 0.6803635456165912
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 7.978845608028654
+    },
+    {
+      "magnitude_km": 10.0,
+      "seed": 44,
+      "metrics": {
+        "auroc": 0.7928832470953728,
+        "auprc": 0.685916936954205
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 7.978845608028654
+    },
+    {
+      "magnitude_km": 10.0,
+      "seed": 45,
+      "metrics": {
+        "auroc": 0.7890699525373471,
+        "auprc": 0.6778600715974387
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 7.978845608028654
+    },
+    {
+      "magnitude_km": 10.0,
+      "seed": 46,
+      "metrics": {
+        "auroc": 0.783097016245576,
+        "auprc": 0.6787074673489559
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 7.978845608028654
+    },
+    {
+      "magnitude_km": 20.0,
+      "seed": 42,
+      "metrics": {
+        "auroc": 0.8005062293658376,
+        "auprc": 0.678824664452992
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 15.957691216057308
+    },
+    {
+      "magnitude_km": 20.0,
+      "seed": 43,
+      "metrics": {
+        "auroc": 0.8085481209880283,
+        "auprc": 0.7010481135386285
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 15.957691216057308
+    },
+    {
+      "magnitude_km": 20.0,
+      "seed": 44,
+      "metrics": {
+        "auroc": 0.7936958178797175,
+        "auprc": 0.6730515916176696
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 15.957691216057308
+    },
+    {
+      "magnitude_km": 20.0,
+      "seed": 45,
+      "metrics": {
+        "auroc": 0.7961620414883426,
+        "auprc": 0.6754706476330213
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 15.957691216057308
+    },
+    {
+      "magnitude_km": 20.0,
+      "seed": 46,
+      "metrics": {
+        "auroc": 0.7896917040146939,
+        "auprc": 0.6793448100704531
+      },
+      "n_systems": 16497,
+      "mean_displacement_km": 15.957691216057308
+    }
+  ]
+}

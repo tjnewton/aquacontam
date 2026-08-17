@@ -1,0 +1,54 @@
+{
+  "overall_metrics": {
+    "auroc": 0.42045454545454547,
+    "auprc": 0.8520490894650236,
+    "f1": 0.8253094910591472,
+    "accuracy": 0.7100456621004566
+  },
+  "per_region": {
+    "1": {
+      "metrics": {
+        "auroc": 0.861111111111111,
+        "auprc": 0.9565900230373915
+      },
+      "n_systems": 24,
+      "detection_rate": 0.75
+    },
+    "3": {
+      "metrics": {
+        "auroc": 0.595,
+        "auprc": 0.8434306229795594
+      },
+      "n_systems": 33,
+      "detection_rate": 0.7575757575757576
+    },
+    "4": {
+      "metrics": {
+        "auroc": 1.0,
+        "auprc": 1.0
+      },
+      "n_systems": 9,
+      "detection_rate": 0.8888888888888888
+    },
+    "5": {
+      "metrics": {
+        "auroc": 0.7590497737556561,
+        "auprc": 0.9894727522637976
+      },
+      "n_systems": 353,
+      "detection_rate": 0.9631728045325779
+    },
+    "6": {
+      "metrics": {
+        "auroc": 0.4571428571428572,
+        "auprc": 0.29964456596035544
+      },
+      "n_systems": 19,
+      "detection_rate": 0.2631578947368421
+    }
+  },
+  "n_systems": 438,
+  "n_overlap_excluded": 0,
+  "detection_rate": 0.9041095890410958,
+  "caveat": "WQP monitoring locations are ambient sites (groundwater wells, surface water), not public water systems. This validation shows whether environmental risk patterns generalize, not PWS-specific prediction."
+}

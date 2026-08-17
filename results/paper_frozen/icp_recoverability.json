@@ -1,0 +1,27 @@
+{
+  "n_source_classes": 4,
+  "source_classes": [
+    "ucmr5",
+    "ucmr3",
+    "sdwis",
+    "wqp"
+  ],
+  "n_train": 9087,
+  "n_test": 3780,
+  "chance_auroc": 0.5,
+  "conf_columns_used": [
+    "n_samples",
+    "mean_detection_limit"
+  ],
+  "probes": {
+    "logistic": {
+      "auroc_from_icp_representation": 0.6354808543273667,
+      "auroc_from_raw_features": 0.7949166823961437
+    },
+    "mlp": {
+      "auroc_from_icp_representation": 0.5567937418336917,
+      "auroc_from_raw_features": 0.7408579751735644
+    }
+  },
+  "interpretation": "AUROC near 0.5 from the ICP representation indicates monitoring source is not recoverable; a large gap below the raw-feature probe quantifies the suppression."
+}

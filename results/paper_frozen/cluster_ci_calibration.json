@@ -1,0 +1,46 @@
+{
+  "_meta": {
+    "source": "C12 (R5 M5) t(G-1)- and cluster-bootstrap-calibrated CIs for the LORO provenance-reduced AUROC and the national PoC burden ratio, from the G=10 per-region values in loro_cv_provenance_free.json / loro_equity_analysis.json. Reproduction gate ties both weighted means to inference_strengthening within 0.002. The block bootstrap resamples only G=10 blocks and is anti-conservative; the t(9) interval widens it honestly. No retrain.",
+    "t_crit_9": 2.262157162740992,
+    "n_boot": 10000,
+    "boot_seed": 42,
+    "auroc_survives_out_of_region": true,
+    "widest_auroc_lower_bound": 0.6055074096414054
+  },
+  "loro_auroc": {
+    "n_clusters": 10,
+    "weighted_mean": 0.6920135794646839,
+    "simple_mean": 0.6944016414661578,
+    "cluster_sd": 0.12426556741823928,
+    "t_gminus1_ci": [
+      0.6055074096414054,
+      0.7832958732909102
+    ],
+    "t_gminus1_width": 0.17778846364950485,
+    "cluster_bootstrap_ci": [
+      0.6149891826248156,
+      0.768199458434519
+    ],
+    "cluster_bootstrap_width": 0.15321027580970337,
+    "block_bootstrap_width": 0.154402337089263,
+    "naive_normal_width": 0.15403836274466465
+  },
+  "poc_burden": {
+    "n_clusters": 10,
+    "weighted_mean": 1.4823303389183498,
+    "simple_mean": 1.6267578655659034,
+    "cluster_sd": 0.5717187397495629,
+    "t_gminus1_ci": [
+      1.217774916823552,
+      2.0357408143082547
+    ],
+    "t_gminus1_width": 0.8179658974847026,
+    "cluster_bootstrap_ci": [
+      1.2324857315646993,
+      1.8684000138145165
+    ],
+    "cluster_bootstrap_width": 0.6359142822498172,
+    "block_bootstrap_width": 0.6390561145371039
+  },
+  "t4_block_over_naive_ratio": 0.8452217953384461
+}

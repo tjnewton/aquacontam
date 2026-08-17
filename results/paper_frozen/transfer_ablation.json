@@ -1,0 +1,52 @@
+{
+  "full": {
+    "metrics": {
+      "auroc": 0.7151740306135106,
+      "auprc": 0.33471208053297,
+      "f1": 0.3055555555555556,
+      "precision": 0.4330708661417323,
+      "recall": 0.23605150214592274,
+      "accuracy": 0.8726439123790117,
+      "balanced_accuracy": 0.597216502518048,
+      "brier_score": 0.1005781888961792,
+      "ece": 0.04609572649916793
+    },
+    "metadata": {
+      "source_analyte": "lead",
+      "target_analyte": "PFOS",
+      "mode": "zero_shot",
+      "n_source_train": 55309
+    }
+  },
+  "no_system_chars": {
+    "metrics": {
+      "auroc": 0.5889863305961448,
+      "auprc": 0.13896442302844825,
+      "f1": 0.01606425702811245,
+      "precision": 0.125,
+      "recall": 0.008583690987124463,
+      "accuracy": 0.8751910341314315,
+      "balanced_accuracy": 0.5002456027189958,
+      "brier_score": 0.12216059863567352,
+      "ece": 0.12237696679829943
+    },
+    "metadata": {
+      "source_analyte": "lead",
+      "target_analyte": "PFOS",
+      "mode": "zero_shot_no_system_chars",
+      "n_source_train": 55309,
+      "excluded_features": [
+        "n_samples",
+        "population_served",
+        "log_population_served",
+        "mean_detection_limit"
+      ]
+    }
+  },
+  "pwsid_overlap": {
+    "n_source": 89493,
+    "n_target": 10299,
+    "n_overlap": 10245,
+    "overlap_fraction": 0.9947567725021846
+  }
+}

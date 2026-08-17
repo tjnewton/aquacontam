@@ -1,0 +1,103 @@
+{
+  "task": "T1",
+  "model": "xgboost_classifier",
+  "top_interactions": [
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_wetland_5km",
+      "mean_abs_interaction": 0.07630472630262375,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "n_wwtp_5000m",
+      "mean_abs_interaction": 0.030352378264069557,
+      "category": "other_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_forest_5km",
+      "mean_abs_interaction": 0.028796959668397903,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_forest_1km",
+      "mean_abs_interaction": 0.02444000355899334,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_shrub_5km",
+      "mean_abs_interaction": 0.02016402967274189,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_developed_5km",
+      "mean_abs_interaction": 0.018929116427898407,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "aquifer_lithology",
+      "mean_abs_interaction": 0.01668015494942665,
+      "category": "other_x_spatial"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "n_airport_10000m",
+      "mean_abs_interaction": 0.0147129837423563,
+      "category": "other_x_other"
+    },
+    {
+      "feature_a": "n_wwtp_5000m",
+      "feature_b": "pct_wetland_5km",
+      "mean_abs_interaction": 0.014440376311540604,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "mean_detection_limit",
+      "mean_abs_interaction": 0.013780961744487286,
+      "category": "other_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_grassland_5km",
+      "mean_abs_interaction": 0.013654300011694431,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_people_of_color",
+      "mean_abs_interaction": 0.013111795298755169,
+      "category": "demographic_x_other"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "dist_nearest_industrial",
+      "mean_abs_interaction": 0.013071942143142223,
+      "category": "other_x_spatial"
+    },
+    {
+      "feature_a": "pct_forest_1km",
+      "feature_b": "pct_wetland_5km",
+      "mean_abs_interaction": 0.011655718088150024,
+      "category": "demographic_x_demographic"
+    },
+    {
+      "feature_a": "n_samples",
+      "feature_b": "pct_water_5km",
+      "mean_abs_interaction": 0.011422361247241497,
+      "category": "demographic_x_other"
+    }
+  ],
+  "n_samples_used": 1000,
+  "interaction_summary": {
+    "demographic_x_other": 9,
+    "other_x_other": 3,
+    "other_x_spatial": 2,
+    "demographic_x_demographic": 1
+  }
+}

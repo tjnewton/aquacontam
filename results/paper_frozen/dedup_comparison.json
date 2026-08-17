@@ -1,0 +1,24 @@
+{
+  "no_dedup": {
+    "metrics": {
+      "auroc": 0.7894503888694807,
+      "auprc": 0.6681246851177332
+    },
+    "n_systems": 16497,
+    "mean_n_samples": 10.186155058495483,
+    "median_n_samples": 4.0
+  },
+  "dedup_max": {
+    "metrics": {
+      "auroc": 0.8182594303019383,
+      "auprc": 0.7062175472454024
+    },
+    "n_systems": 13228,
+    "mean_n_samples": 5.500680374962202,
+    "median_n_samples": 4.0
+  },
+  "delta": {
+    "auroc": 0.02880904143245755,
+    "auprc": 0.03809286212766927
+  }
+}

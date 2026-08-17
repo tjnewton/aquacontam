@@ -1,0 +1,932 @@
+[
+  {
+    "task": "T1",
+    "model": "dummy_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T1",
+    "model": "dummy_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T1",
+    "model": "dummy_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T1",
+    "model": "logistic_regression",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9271317829457364,
+    "avg_set_size": 1.4661498708010337,
+    "singleton_frac": 0.5338501291989665,
+    "both_classes_frac": 0.4661498708010336
+  },
+  {
+    "task": "T1",
+    "model": "logistic_regression",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9049095607235143,
+    "avg_set_size": 1.324547803617571,
+    "singleton_frac": 0.6754521963824289,
+    "both_classes_frac": 0.3245478036175711
+  },
+  {
+    "task": "T1",
+    "model": "logistic_regression",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8723514211886305,
+    "avg_set_size": 1.158139534883721,
+    "singleton_frac": 0.8418604651162791,
+    "both_classes_frac": 0.15813953488372093
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9493540051679586,
+    "avg_set_size": 1.2914728682170542,
+    "singleton_frac": 0.7085271317829457,
+    "both_classes_frac": 0.29147286821705426
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9002583979328166,
+    "avg_set_size": 1.0496124031007752,
+    "singleton_frac": 0.9503875968992248,
+    "both_classes_frac": 0.04961240310077519
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8713178294573644,
+    "avg_set_size": 0.9834625322997416,
+    "singleton_frac": 0.9834625322997416,
+    "both_classes_frac": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_default",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.951937984496124,
+    "avg_set_size": 1.3627906976744186,
+    "singleton_frac": 0.6372093023255814,
+    "both_classes_frac": 0.3627906976744186
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_default",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9131782945736434,
+    "avg_set_size": 1.1157622739018087,
+    "singleton_frac": 0.8842377260981912,
+    "both_classes_frac": 0.11576227390180878
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_default",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8516795865633074,
+    "avg_set_size": 0.9705426356589147,
+    "singleton_frac": 0.9705426356589147,
+    "both_classes_frac": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "random_forest_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9617571059431524,
+    "avg_set_size": 1.427390180878553,
+    "singleton_frac": 0.572609819121447,
+    "both_classes_frac": 0.42739018087855296
+  },
+  {
+    "task": "T1",
+    "model": "random_forest_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.930749354005168,
+    "avg_set_size": 1.1829457364341085,
+    "singleton_frac": 0.8170542635658915,
+    "both_classes_frac": 0.18294573643410852
+  },
+  {
+    "task": "T1",
+    "model": "random_forest_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8852713178294573,
+    "avg_set_size": 1.0330749354005169,
+    "singleton_frac": 0.9669250645994832,
+    "both_classes_frac": 0.03307493540051679
+  },
+  {
+    "task": "T1",
+    "model": "mlp_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9395348837209302,
+    "avg_set_size": 1.7958656330749354,
+    "singleton_frac": 0.2041343669250646,
+    "both_classes_frac": 0.7958656330749354
+  },
+  {
+    "task": "T1",
+    "model": "mlp_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8739018087855297,
+    "avg_set_size": 1.3736434108527131,
+    "singleton_frac": 0.6263565891472869,
+    "both_classes_frac": 0.3736434108527132
+  },
+  {
+    "task": "T1",
+    "model": "mlp_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8031007751937984,
+    "avg_set_size": 1.1198966408268733,
+    "singleton_frac": 0.8801033591731267,
+    "both_classes_frac": 0.11989664082687339
+  },
+  {
+    "task": "T1",
+    "model": "cnn1d_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9638242894056848,
+    "avg_set_size": 1.958656330749354,
+    "singleton_frac": 0.041343669250646,
+    "both_classes_frac": 0.958656330749354
+  },
+  {
+    "task": "T1",
+    "model": "cnn1d_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9059431524547804,
+    "avg_set_size": 1.7131782945736433,
+    "singleton_frac": 0.2868217054263566,
+    "both_classes_frac": 0.7131782945736435
+  },
+  {
+    "task": "T1",
+    "model": "cnn1d_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8268733850129198,
+    "avg_set_size": 1.4733850129198967,
+    "singleton_frac": 0.5266149870801033,
+    "both_classes_frac": 0.47338501291989665
+  },
+  {
+    "task": "T1",
+    "model": "lightgbm_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9436692506459948,
+    "avg_set_size": 1.3364341085271318,
+    "singleton_frac": 0.6635658914728683,
+    "both_classes_frac": 0.3364341085271318
+  },
+  {
+    "task": "T1",
+    "model": "lightgbm_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9023255813953488,
+    "avg_set_size": 1.1736434108527132,
+    "singleton_frac": 0.8263565891472868,
+    "both_classes_frac": 0.17364341085271318
+  },
+  {
+    "task": "T1",
+    "model": "lightgbm_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7953488372093023,
+    "avg_set_size": 0.9431524547803618,
+    "singleton_frac": 0.9431524547803618,
+    "both_classes_frac": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "catboost_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9116279069767442,
+    "avg_set_size": 1.5405684754521964,
+    "singleton_frac": 0.4594315245478036,
+    "both_classes_frac": 0.5405684754521963
+  },
+  {
+    "task": "T1",
+    "model": "catboost_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8485788113695091,
+    "avg_set_size": 1.3643410852713178,
+    "singleton_frac": 0.6356589147286822,
+    "both_classes_frac": 0.3643410852713178
+  },
+  {
+    "task": "T1",
+    "model": "catboost_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7245478036175711,
+    "avg_set_size": 1.0754521963824288,
+    "singleton_frac": 0.924547803617571,
+    "both_classes_frac": 0.07545219638242893
+  },
+  {
+    "task": "T1",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.8987080103359173,
+    "avg_set_size": 1.5090439276485788,
+    "singleton_frac": 0.4909560723514212,
+    "both_classes_frac": 0.5090439276485789
+  },
+  {
+    "task": "T1",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8811369509043928,
+    "avg_set_size": 1.4165374677002585,
+    "singleton_frac": 0.5834625322997417,
+    "both_classes_frac": 0.4165374677002584
+  },
+  {
+    "task": "T1",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8527131782945736,
+    "avg_set_size": 1.3255813953488371,
+    "singleton_frac": 0.6744186046511628,
+    "both_classes_frac": 0.32558139534883723
+  },
+  {
+    "task": "T1",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.8051679586563307,
+    "avg_set_size": 1.4599483204134367,
+    "singleton_frac": 0.5400516795865633,
+    "both_classes_frac": 0.4599483204134367
+  },
+  {
+    "task": "T1",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.772093023255814,
+    "avg_set_size": 1.3276485788113694,
+    "singleton_frac": 0.6723514211886304,
+    "both_classes_frac": 0.3276485788113695
+  },
+  {
+    "task": "T1",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7147286821705426,
+    "avg_set_size": 1.1664082687338502,
+    "singleton_frac": 0.8335917312661498,
+    "both_classes_frac": 0.16640826873385012
+  },
+  {
+    "task": "T1",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9085271317829458,
+    "avg_set_size": 1.310077519379845,
+    "singleton_frac": 0.689922480620155,
+    "both_classes_frac": 0.31007751937984496
+  },
+  {
+    "task": "T1",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8981912144702843,
+    "avg_set_size": 1.2036175710594315,
+    "singleton_frac": 0.7963824289405684,
+    "both_classes_frac": 0.2036175710594315
+  },
+  {
+    "task": "T1",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8821705426356589,
+    "avg_set_size": 1.0423772609819122,
+    "singleton_frac": 0.9576227390180878,
+    "both_classes_frac": 0.04237726098191214
+  },
+  {
+    "task": "T1",
+    "model": "tabpfn_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9410852713178295,
+    "avg_set_size": 1.248062015503876,
+    "singleton_frac": 0.751937984496124,
+    "both_classes_frac": 0.24806201550387597
+  },
+  {
+    "task": "T1",
+    "model": "tabpfn_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8987080103359173,
+    "avg_set_size": 1.062015503875969,
+    "singleton_frac": 0.937984496124031,
+    "both_classes_frac": 0.06201550387596899
+  },
+  {
+    "task": "T1",
+    "model": "tabpfn_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8702842377260982,
+    "avg_set_size": 0.9896640826873385,
+    "singleton_frac": 0.9896640826873385,
+    "both_classes_frac": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "voting_ensemble",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9529715762273901,
+    "avg_set_size": 1.330749354005168,
+    "singleton_frac": 0.6692506459948321,
+    "both_classes_frac": 0.330749354005168
+  },
+  {
+    "task": "T1",
+    "model": "voting_ensemble",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9121447028423773,
+    "avg_set_size": 1.1162790697674418,
+    "singleton_frac": 0.8837209302325582,
+    "both_classes_frac": 0.11627906976744186
+  },
+  {
+    "task": "T1",
+    "model": "voting_ensemble",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8434108527131783,
+    "avg_set_size": 0.9565891472868217,
+    "singleton_frac": 0.9565891472868217,
+    "both_classes_frac": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "stacking_ensemble",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.924031007751938,
+    "avg_set_size": 1.6408268733850129,
+    "singleton_frac": 0.35917312661498707,
+    "both_classes_frac": 0.6408268733850129
+  },
+  {
+    "task": "T1",
+    "model": "stacking_ensemble",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8599483204134367,
+    "avg_set_size": 1.3803617571059432,
+    "singleton_frac": 0.6196382428940569,
+    "both_classes_frac": 0.38036175710594317
+  },
+  {
+    "task": "T1",
+    "model": "stacking_ensemble",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7457364341085271,
+    "avg_set_size": 1.069250645994832,
+    "singleton_frac": 0.930749354005168,
+    "both_classes_frac": 0.06925064599483204
+  },
+  {
+    "task": "T1",
+    "model": "icp_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9064599483204134,
+    "avg_set_size": 1.2511627906976743,
+    "singleton_frac": 0.7488372093023256,
+    "both_classes_frac": 0.25116279069767444
+  },
+  {
+    "task": "T1",
+    "model": "icp_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8888888888888888,
+    "avg_set_size": 1.1136950904392764,
+    "singleton_frac": 0.8863049095607235,
+    "both_classes_frac": 0.11369509043927649
+  },
+  {
+    "task": "T1",
+    "model": "icp_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8537467700258398,
+    "avg_set_size": 1.0020671834625323,
+    "singleton_frac": 0.9979328165374677,
+    "both_classes_frac": 0.0020671834625322996
+  },
+  {
+    "task": "T4",
+    "model": "dummy_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T4",
+    "model": "dummy_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T4",
+    "model": "dummy_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 1.0,
+    "avg_set_size": 2.0,
+    "singleton_frac": 0.0,
+    "both_classes_frac": 1.0
+  },
+  {
+    "task": "T4",
+    "model": "logistic_regression",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.860653122008297,
+    "avg_set_size": 1.6475906818423571,
+    "singleton_frac": 0.3524093181576428,
+    "both_classes_frac": 0.6475906818423572
+  },
+  {
+    "task": "T4",
+    "model": "logistic_regression",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.816296138708648,
+    "avg_set_size": 1.5096798212956068,
+    "singleton_frac": 0.49032017870439315,
+    "both_classes_frac": 0.5096798212956068
+  },
+  {
+    "task": "T4",
+    "model": "logistic_regression",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7404531432826295,
+    "avg_set_size": 1.2906073821933837,
+    "singleton_frac": 0.7093926178066163,
+    "both_classes_frac": 0.29060738219338367
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.933996383363472,
+    "avg_set_size": 1.572545473885757,
+    "singleton_frac": 0.42745452611424317,
+    "both_classes_frac": 0.5725454738857568
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8897989575577067,
+    "avg_set_size": 1.384852675247314,
+    "singleton_frac": 0.6151473247526859,
+    "both_classes_frac": 0.3848526752473141
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8062972024252739,
+    "avg_set_size": 1.1117434315498351,
+    "singleton_frac": 0.8882565684501649,
+    "both_classes_frac": 0.11174343154983513
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_default",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9347941708328901,
+    "avg_set_size": 1.6052015743006063,
+    "singleton_frac": 0.39479842569939366,
+    "both_classes_frac": 0.6052015743006063
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_default",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8949047973619828,
+    "avg_set_size": 1.4387299223486862,
+    "singleton_frac": 0.5612700776513136,
+    "both_classes_frac": 0.4387299223486863
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_default",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8099670247845974,
+    "avg_set_size": 1.1720029784065524,
+    "singleton_frac": 0.8279970215934475,
+    "both_classes_frac": 0.1720029784065525
+  },
+  {
+    "task": "T4",
+    "model": "random_forest_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9592064673970854,
+    "avg_set_size": 1.6507286458887351,
+    "singleton_frac": 0.34927135411126475,
+    "both_classes_frac": 0.6507286458887352
+  },
+  {
+    "task": "T4",
+    "model": "random_forest_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9144771832783747,
+    "avg_set_size": 1.4128816083395384,
+    "singleton_frac": 0.5871183916604616,
+    "both_classes_frac": 0.41288160833953835
+  },
+  {
+    "task": "T4",
+    "model": "random_forest_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.829220295713222,
+    "avg_set_size": 1.1295606850335072,
+    "singleton_frac": 0.870439314966493,
+    "both_classes_frac": 0.12956068503350707
+  },
+  {
+    "task": "T4",
+    "model": "mlp_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.8632592277417296,
+    "avg_set_size": 1.71130730773322,
+    "singleton_frac": 0.2886926922667801,
+    "both_classes_frac": 0.7113073077332198
+  },
+  {
+    "task": "T4",
+    "model": "mlp_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8192213594298479,
+    "avg_set_size": 1.5530794596319542,
+    "singleton_frac": 0.44692054036804596,
+    "both_classes_frac": 0.553079459631954
+  },
+  {
+    "task": "T4",
+    "model": "mlp_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7469418147005638,
+    "avg_set_size": 1.3373577279012872,
+    "singleton_frac": 0.6626422720987128,
+    "both_classes_frac": 0.3373577279012871
+  },
+  {
+    "task": "T4",
+    "model": "cnn1d_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9370279757472609,
+    "avg_set_size": 1.6524837783214552,
+    "singleton_frac": 0.34751622167854485,
+    "both_classes_frac": 0.6524837783214552
+  },
+  {
+    "task": "T4",
+    "model": "cnn1d_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8951707265184555,
+    "avg_set_size": 1.4662801829592595,
+    "singleton_frac": 0.5337198170407403,
+    "both_classes_frac": 0.46628018295925966
+  },
+  {
+    "task": "T4",
+    "model": "cnn1d_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.815604722901819,
+    "avg_set_size": 1.2257206680140411,
+    "singleton_frac": 0.7742793319859589,
+    "both_classes_frac": 0.22572066801404106
+  },
+  {
+    "task": "T4",
+    "model": "lightgbm_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9483565578129987,
+    "avg_set_size": 1.554834592064674,
+    "singleton_frac": 0.44516540793532605,
+    "both_classes_frac": 0.554834592064674
+  },
+  {
+    "task": "T4",
+    "model": "lightgbm_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9023508137432188,
+    "avg_set_size": 1.3073609190511648,
+    "singleton_frac": 0.6926390809488352,
+    "both_classes_frac": 0.30736091905116475
+  },
+  {
+    "task": "T4",
+    "model": "lightgbm_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8190086161046697,
+    "avg_set_size": 1.0481331773215616,
+    "singleton_frac": 0.9518668226784385,
+    "both_classes_frac": 0.048133177321561534
+  },
+  {
+    "task": "T4",
+    "model": "catboost_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9542601850866929,
+    "avg_set_size": 1.9009147962982662,
+    "singleton_frac": 0.09908520370173386,
+    "both_classes_frac": 0.9009147962982661
+  },
+  {
+    "task": "T4",
+    "model": "catboost_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9033613445378151,
+    "avg_set_size": 1.750771194553771,
+    "singleton_frac": 0.24922880544622913,
+    "both_classes_frac": 0.7507711945537708
+  },
+  {
+    "task": "T4",
+    "model": "catboost_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7970428677800234,
+    "avg_set_size": 1.323742155089884,
+    "singleton_frac": 0.676257844910116,
+    "both_classes_frac": 0.3237421550898841
+  },
+  {
+    "task": "T4",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.8012445484522923,
+    "avg_set_size": 1.555526007871503,
+    "singleton_frac": 0.444473992128497,
+    "both_classes_frac": 0.5555260078715031
+  },
+  {
+    "task": "T4",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.7506648228911817,
+    "avg_set_size": 1.4295819593660248,
+    "singleton_frac": 0.570418040633975,
+    "both_classes_frac": 0.4295819593660249
+  },
+  {
+    "task": "T4",
+    "model": "gnn_gcn_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.6730666950324433,
+    "avg_set_size": 1.2448675672800766,
+    "singleton_frac": 0.7551324327199234,
+    "both_classes_frac": 0.24486756728007658
+  },
+  {
+    "task": "T4",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.8302840123391129,
+    "avg_set_size": 1.4063929369216042,
+    "singleton_frac": 0.593607063078396,
+    "both_classes_frac": 0.4063929369216041
+  },
+  {
+    "task": "T4",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8067226890756303,
+    "avg_set_size": 1.3347516221678546,
+    "singleton_frac": 0.6652483778321455,
+    "both_classes_frac": 0.3347516221678545
+  },
+  {
+    "task": "T4",
+    "model": "gnn_sage_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7655036698223593,
+    "avg_set_size": 1.2205084565471758,
+    "singleton_frac": 0.7794915434528241,
+    "both_classes_frac": 0.22050845654717582
+  },
+  {
+    "task": "T4",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.7528986278055526,
+    "avg_set_size": 1.6808318264014466,
+    "singleton_frac": 0.3191681735985534,
+    "both_classes_frac": 0.6808318264014467
+  },
+  {
+    "task": "T4",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.7084884586746091,
+    "avg_set_size": 1.6246144027231146,
+    "singleton_frac": 0.3753855972768854,
+    "both_classes_frac": 0.6246144027231145
+  },
+  {
+    "task": "T4",
+    "model": "deep_tobit_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.6448782044463355,
+    "avg_set_size": 1.5490373364535688,
+    "singleton_frac": 0.4509626635464312,
+    "both_classes_frac": 0.5490373364535688
+  },
+  {
+    "task": "T4",
+    "model": "voting_ensemble",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.943782576321668,
+    "avg_set_size": 1.6964152749707477,
+    "singleton_frac": 0.3035847250292522,
+    "both_classes_frac": 0.6964152749707478
+  },
+  {
+    "task": "T4",
+    "model": "voting_ensemble",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8918200191468992,
+    "avg_set_size": 1.4902669928730987,
+    "singleton_frac": 0.5097330071269014,
+    "both_classes_frac": 0.4902669928730986
+  },
+  {
+    "task": "T4",
+    "model": "voting_ensemble",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8129986171683864,
+    "avg_set_size": 1.2170513775130305,
+    "singleton_frac": 0.7829486224869695,
+    "both_classes_frac": 0.21705137751303052
+  },
+  {
+    "task": "T4",
+    "model": "stacking_ensemble",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9410700989256462,
+    "avg_set_size": 1.801510477608765,
+    "singleton_frac": 0.19848952239123496,
+    "both_classes_frac": 0.801510477608765
+  },
+  {
+    "task": "T4",
+    "model": "stacking_ensemble",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8893734709073503,
+    "avg_set_size": 1.6458355494096373,
+    "singleton_frac": 0.3541644505903627,
+    "both_classes_frac": 0.6458355494096373
+  },
+  {
+    "task": "T4",
+    "model": "stacking_ensemble",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.7857142857142857,
+    "avg_set_size": 1.368684182533773,
+    "singleton_frac": 0.631315817466227,
+    "both_classes_frac": 0.368684182533773
+  },
+  {
+    "task": "T4",
+    "model": "icp_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.9610147856610999,
+    "avg_set_size": 1.7958727794915434,
+    "singleton_frac": 0.20412722050845655,
+    "both_classes_frac": 0.7958727794915434
+  },
+  {
+    "task": "T4",
+    "model": "icp_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.9345282416764173,
+    "avg_set_size": 1.6462610360599936,
+    "singleton_frac": 0.35373896394000637,
+    "both_classes_frac": 0.6462610360599936
+  },
+  {
+    "task": "T4",
+    "model": "icp_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.8443250718008722,
+    "avg_set_size": 1.2880544622912455,
+    "singleton_frac": 0.7119455377087544,
+    "both_classes_frac": 0.2880544622912456
+  }
+]

@@ -1,0 +1,83 @@
+{
+  "T1": {
+    "xgboost": {
+      "reported_seed": 42,
+      "reported_auroc": 0.8636253029361376,
+      "mean_auroc_multi_seed": 0.8090894226333338,
+      "std_auroc_multi_seed": 0.0033628808287750403,
+      "inflation_z_score": 16.217012460316337,
+      "max_optimism": 0.003465560292546188,
+      "is_inflated": true
+    },
+    "catboost": {
+      "reported_seed": 42,
+      "reported_auroc": 0.8449208118633682,
+      "mean_auroc_multi_seed": 0.7945359380941633,
+      "std_auroc_multi_seed": 0.004576178348436235,
+      "inflation_z_score": 11.010251334811352,
+      "max_optimism": 0.005125602386151562,
+      "is_inflated": true
+    },
+    "logistic_regression": {
+      "reported_seed": 42,
+      "reported_auroc": 0.7534464294913741,
+      "mean_auroc_multi_seed": 0.6538125560134532,
+      "std_auroc_multi_seed": 0.0,
+      "inflation_z_score": 0.0,
+      "max_optimism": 0.0,
+      "is_inflated": false
+    },
+    "random_forest": {
+      "reported_seed": 42,
+      "reported_auroc": 0.8499409747227128,
+      "mean_auroc_multi_seed": 0.8140069272045812,
+      "std_auroc_multi_seed": 0.0008764483053085924,
+      "inflation_z_score": 40.999620058001476,
+      "max_optimism": 0.0010268174122016749,
+      "is_inflated": true
+    }
+  },
+  "T4": {
+    "xgboost": {
+      "reported_seed": 42,
+      "reported_auroc": 0.6991935079509133,
+      "mean_auroc_multi_seed": 0.6971482592531144,
+      "std_auroc_multi_seed": 0.002052005869645824,
+      "inflation_z_score": 0.9967070406830189,
+      "max_optimism": 0.00357306111984923,
+      "is_inflated": false
+    },
+    "catboost": {
+      "reported_seed": 42,
+      "reported_auroc": 0.6950990948066778,
+      "mean_auroc_multi_seed": 0.694027374442778,
+      "std_auroc_multi_seed": 0.0021698813891609845,
+      "inflation_z_score": 0.4939073486934663,
+      "max_optimism": 0.0028650247621758718,
+      "is_inflated": false
+    },
+    "logistic_regression": {
+      "reported_seed": 42,
+      "reported_auroc": 0.6464986728640458,
+      "mean_auroc_multi_seed": 0.6464986728640458,
+      "std_auroc_multi_seed": 0.0,
+      "inflation_z_score": 0.0,
+      "max_optimism": 0.0,
+      "is_inflated": false
+    },
+    "random_forest": {
+      "reported_seed": 42,
+      "reported_auroc": 0.6889028783449367,
+      "mean_auroc_multi_seed": 0.6888846932406434,
+      "std_auroc_multi_seed": 0.0005535973754974018,
+      "inflation_z_score": 0.03284897128885587,
+      "max_optimism": 0.0009436291296985866,
+      "is_inflated": false
+    }
+  },
+  "summary": {
+    "any_inflation_detected": true,
+    "max_z_score": 40.999620058001476,
+    "max_optimism_any_model": 0.005125602386151562
+  }
+}

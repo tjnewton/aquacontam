@@ -1,0 +1,61 @@
+{
+  "baseline_single_nearest": {
+    "pct_people_of_color": 1.878035356537437,
+    "pct_low_income": 1.4044576088347687,
+    "pct_limited_english": null,
+    "pct_less_hs_education": 1.5369931196018152
+  },
+  "apportioned": {
+    "5km": {
+      "pct_people_of_color": 1.6915766150975668,
+      "pct_low_income": 1.2152111480267005,
+      "pct_limited_english": 1.5993290438875396,
+      "pct_less_hs_education": 1.4148451445590096
+    },
+    "10km": {
+      "pct_people_of_color": 1.5867021690118945,
+      "pct_low_income": 1.1649099967453622,
+      "pct_limited_english": 1.622023690022084,
+      "pct_less_hs_education": 1.3669278872093331
+    }
+  },
+  "reproduction_gate": {
+    "per_group": {
+      "pct_people_of_color": {
+        "baseline": 1.878035356537437,
+        "frozen": 1.878035356537437,
+        "abs_dev": 0.0
+      },
+      "pct_low_income": {
+        "baseline": 1.4044576088347687,
+        "frozen": 1.4044576088347687,
+        "abs_dev": 0.0
+      },
+      "pct_limited_english": {
+        "baseline": null,
+        "frozen": null,
+        "abs_dev": null
+      },
+      "pct_less_hs_education": {
+        "baseline": 1.5369931196018152,
+        "frozen": 1.5369931196018152,
+        "abs_dev": 0.0
+      }
+    },
+    "max_abs_dev": 0.0,
+    "tolerance": 0.05,
+    "passed": true
+  },
+  "_meta": {
+    "n_test_systems": 3780,
+    "buffers_km": [
+      5.0,
+      10.0
+    ],
+    "degenerate_baseline_dimensions": [
+      "pct_limited_english"
+    ],
+    "method": "population-weighted areal apportionment: weight = ACSTOTPOP * (BG area within buffer / BG area); demographic shares from EJScreen 2023; block-group polygons from TIGER 2023 (EPSG:5070).",
+    "scope": "geographically held-out test set (EPA regions 8/9/10)."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "source": "C6 (m1) data-source recoverability from the provenance-free FEATURE SET (the deployment set), vs raw inputs. Same held-out probe and assembly as icp_recoverability.json; reproduction gate ties the raw-feature logistic AUROC to the frozen value within 0.02.",
+    "n_source_classes": 4,
+    "source_classes": [
+      "ucmr5",
+      "ucmr3",
+      "sdwis",
+      "wqp"
+    ],
+    "n_pf_features": 142,
+    "n_dropped": 11,
+    "seed": 42
+  },
+  "chance_auroc": 0.5,
+  "probes": {
+    "logistic": {
+      "auroc_from_raw_features": 0.7949166823961437,
+      "auroc_from_pf_features": 0.6532551987387399
+    },
+    "mlp": {
+      "auroc_from_raw_features": 0.7596503626902481,
+      "auroc_from_pf_features": 0.6341970674753901
+    }
+  },
+  "interpretation": "PF-set AUROC well above 0.5 but below the raw-feature AUROC means dropping the explicit provenance features reduces but does not eliminate source-recoverability (residual dummy_na re-encoding), so the provenance-free signal is an upper bound on the environmental signal \u2014 consistent with m1."
+}

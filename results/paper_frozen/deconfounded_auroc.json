@@ -1,0 +1,5 @@
+{
+  "deconfounded_auroc": 0.7293484000757833,
+  "original_auroc": 0.8350746663898063,
+  "n_features": 131
+}

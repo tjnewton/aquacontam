@@ -1,0 +1,12 @@
+## Supplementary Table 2: Multi-Seed Stability
+
+| Task   | Model               | AUROC (mean ± SD)   | AUPRC (mean ± SD)   |   N Seeds |
+|:-------|:--------------------|:--------------------|:--------------------|----------:|
+| T1     | catboost            | 0.795 ± 0.005       | 0.683 ± 0.006       |         5 |
+| T1     | logistic_regression | 0.654 ± 0.000       | 0.455 ± 0.000       |         5 |
+| T1     | random_forest       | 0.814 ± 0.001       | 0.710 ± 0.002       |         5 |
+| T1     | xgboost             | 0.809 ± 0.003       | 0.700 ± 0.003       |         5 |
+| T4     | catboost            | 0.694 ± 0.002       | 0.402 ± 0.002       |         5 |
+| T4     | logistic_regression | 0.646 ± 0.000       | 0.322 ± 0.000       |         5 |
+| T4     | random_forest       | 0.689 ± 0.001       | 0.368 ± 0.002       |         5 |
+| T4     | xgboost             | 0.697 ± 0.002       | 0.387 ± 0.004       |         5 |

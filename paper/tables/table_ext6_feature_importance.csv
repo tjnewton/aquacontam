@@ -1,0 +1,31 @@
+Feature,Mean |SHAP|
+n_samples,0.4593
+pct_wetland_5km,0.1681
+mean_detection_limit,0.1367
+pct_forest_5km,0.1272
+dist_nearest_industrial,0.0849
+population_served,0.0812
+source_water_type_GW,0.0691
+pct_forest_1km,0.0686
+pct_grassland_5km,0.0660
+n_wwtp_5000m,0.0639
+dist_nearest_wwtp,0.0623
+prox_superfund,0.0613
+pct_developed_5km,0.0601
+pct_shrub_5km,0.0582
+pct_people_of_color,0.0480
+aquifer_lithology,0.0470
+pct_water_5km,0.0458
+prox_wastewater_discharge,0.0431
+pct_barren_5km,0.0423
+ej_index_water,0.0376
+nlcd_majority_class_developed,0.0374
+owner_type_P,0.0373
+aquifer_type_Piedmont and Blue Ridge crystalline-rock aquifers,0.0354
+pct_over_64,0.0341
+pct_developed_high_5km,0.0284
+pct_water_1km,0.0280
+prox_rmp_facility,0.0270
+aquifer_type_Silurian-Devonian aquifers,0.0266
+dist_nearest_landfill,0.0257
+prox_hazardous_waste,0.0256

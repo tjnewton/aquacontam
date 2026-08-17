@@ -1,0 +1,57 @@
+# SHA-256 checksums for all data files.
+# Format: <sha256>  <relative-path>
+# Verify: cd project-root && shasum -a 256 -c data/checksums.sha256
+#
+# === UCMR5 (EPA Unregulated Contaminant Monitoring Rule, 5th cycle) ===
+39ca7179d7d2ab682073104708721b4022ab9b66ff2a947910fde738c5febb1f  data/raw/UCMR5_All.txt
+420e3f4cb1538422dd5f51cd4384327cf0120469e3607ab998e5988929ba60d7  data/raw/UCMR5_ZIPCodes.txt
+5999c657a7a667773eed8bfd358354cbfcb95c3f96ea8c3f2fe254709bdf2f89  data/raw/UCMR5_AddtlDataElem.txt
+#
+# === UCMR3 (EPA Unregulated Contaminant Monitoring Rule, 3rd cycle) ===
+1716789ed0db73f11ad29fcf5cbfaf8984cb86ebfbf22597322071b2842004da  data/raw/UCMR3_All.txt
+cffd2db348abb92f17fa855b2b432a123661ace4775b06a6f94ccdbcd9beebd8  data/raw/UCMR3_ZIPCodes.txt
+0c02f723d2416915333916b894854c4c6e65ef222aa87a5b859ef51484c3003d  data/raw/UCMR3_Disinfectant_AddtlDataElem.txt
+7b825cfb269ab89c5c2c10da901826f0bc3f248d98c5f9012bf2c3f2a85ec43a  data/raw/UCMR3_Virus_Indicators.txt
+#
+# === SDWA (Safe Drinking Water Act via EPA ECHO) ===
+e893bc83d571171f7a7abb3b432aa2126382a367fedbdd9a174ae37667947b27  data/raw/SDWA_PUB_WATER_SYSTEMS.csv
+bc4562cd7fea0199df9610d52d1ec93e101852b09708f776d0d0672c30264693  data/raw/SDWA_LCR_SAMPLES.csv
+239c1767ce121819519f07c4bfcd524df517c5fad09475ee05b23be7eab9e846  data/raw/SDWA_VIOLATIONS_ENFORCEMENT.csv
+0467d9018fe5803910606e0f8615408245ff160216450f69a04cf4dfb462e685  data/raw/SDWA_FACILITIES.csv
+350c8f91b6da228f1306d1f029338ac821fcf73d1c759434f28e250875a8ff81  data/raw/SDWA_GEOGRAPHIC_AREAS.csv
+70a3939e3558b11a06d67b669f338d8b5581ebac8b15c7585ec781c9303044f1  data/raw/SDWA_EVENTS_MILESTONES.csv
+da5c2437b4b656f5ea2974612f38c2843bb33527af2554b5b1afa720c956b574  data/raw/SDWA_PN_VIOLATION_ASSOC.csv
+bed1577c8316b473d301cabb747a347f23ac4c5635958be79f51ea47c91abbc9  data/raw/SDWA_REF_ANSI_AREAS.csv
+deea0c6da816a4bed034ff2872f492f569151273e56d81a13ca7d6cfc2c32327  data/raw/SDWA_REF_CODE_VALUES.csv
+08b74d87041b793b51f0a3c0dfcbbcf62247255649e13028e625ce8e04e585a0  data/raw/SDWA_SERVICE_AREAS.csv
+b710c965f068d70132a40d9588f882110c57576d33c6e98bcdef9fae52b6c67c  data/raw/SDWA_SITE_VISITS.csv
+#
+# === State databases ===
+752f9b3e3d99430a9ecd0fe19b4f6efa671dda5dbda349ceae7c99f12ec04877  data/raw/ca_geotracker_pfas.csv
+d70eac46e4db973322dcaa05f17f3a45f42aab6dc4a750ffd8dbf0c5bb85926d  data/raw/nj_dep_pfas_export.csv
+14e384ae34a9febec3322070bb1900cb6f0a72640c60b8fc33cede73f6e120eb  data/raw/nc_deq_pfas.xlsx
+c937216263943cdc566ba7814708b7e7de24f498567ea6c1fe1d0367af6520c5  data/raw/mn_mdh_pfas.xlsx
+#
+# === EPA Facility Registry Service (FRS) ===
+6a899fd86469e84ae99b9dc27d136ca903dd607001a1430f062c62e466f55ddf  data/raw/NATIONAL_SINGLE.CSV
+#
+# === Census ZCTA Gazetteer ===
+dd7e3573594f3898e503482a7538f1b9682be31ad095abe9bdcb427453a036eb  data/raw/2023_Gaz_zcta_national.txt
+#
+# === NLCD Land Cover ===
+35686427e37824c97c1e94f517239b2bb9d98528bbd50018fd9a371efcf7e30b  data/raw/Annual_NLCD_LndCov_2021_CU_C1V1.tif
+#
+# === EJScreen (EPA Environmental Justice) ===
+f6fd10cca981ff9eca4d206205724201ccc4cab7630dbed0737b82c04b64eca1  data/raw/EJSCREEN_2023_BG_with_AS_CNMI_GU_VI.csv
+#
+# === USGS Aquifer boundaries ===
+8f561f8bd377af0f3e641aac551283a44f444a3663d4a3f563e391ef81af7d03  data/raw/us_aquifers.shp
+b7348a6793aacc99d6f5145fb6d507976e10d7e4cc79c323b7c876715f3d5b2e  data/raw/us_aquifers.dbf
+84cf5b9a3c1a444f83ac30ff76f8c5035990223027ba69b2f4d628388adcbd65  data/raw/us_aquifers.prj
+059fb360d7d6a2b086aebcb29f2fdc89467c9a3f73145245ed09c3ce8fba1121  data/raw/us_aquifers.shx
+#
+# === Processed Parquet outputs ===
+d09ea94cc73800403f0f591dc5c8d29aa2d17d28760d7b6b876f4e7b581f7497  data/processed/ucmr5.parquet
+2b9024f1e0208e4561ec8a7881c532e33072b18adb128690647cb6b3911cf313  data/processed/ucmr3.parquet
+f3f59d4156d0779a4f1fc2d31284fd9f9eb42cc020b0828ff11fed6a5d3d82f6  data/processed/nj_dep.parquet
+b8b868a4207accdda13d3734986188e0dac3ac1f5a7e9a2472a5f91232df0017  data/processed/mn_mdh.parquet

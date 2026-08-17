@@ -1,0 +1,3 @@
+# Byte-exact checkouts: the paper gate verifies SHA-256s of committed files;
+# EOL conversion on clone would break them.
+* -text

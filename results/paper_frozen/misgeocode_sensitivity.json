@@ -1,0 +1,28 @@
+{
+  "_meta": {
+    "source": "C-F (#55 item 6) wrong-ZIP mis-geocode sensitivity. Flag: PWSID-prefix EPA region != coordinate-derived region (paper/_geo_flags.region_mismatch_mask; identical rule to the ED Fig. 1 split-map exclusion). Sensitivity: T1/T4 xgboost on the canonical headline harness (train_and_evaluate task fns, ambient sources excluded, geographic holdout, seed 42) with flagged systems removed end-to-end. Reproduction gate (tol 0.002): unperturbed run reproduces frozen results.json T1/T4 xgboost AUROC. Material-degradation escalation band: |delta AUROC| > 0.02.",
+    "reproduction_gate": "PASSED",
+    "material_degradation": false
+  },
+  "n_mapped_systems": 87450,
+  "n_flagged_systems": 6889,
+  "n_flagged_systems_in_benchmark_frame": 6883,
+  "per_task": {
+    "T1": {
+      "auroc_unperturbed": 0.8636253029361376,
+      "auprc_unperturbed": 0.7809783620874269,
+      "auroc_excluded": 0.8669741748995007,
+      "auprc_excluded": 0.7855677976713831,
+      "delta_auroc": 0.003348871963363087,
+      "delta_auprc": 0.004589435583956192
+    },
+    "T4": {
+      "auroc_unperturbed": 0.6991935079509133,
+      "auprc_unperturbed": 0.38666937620302755,
+      "auroc_excluded": 0.6911323289838054,
+      "auprc_excluded": 0.39304756417541764,
+      "delta_auroc": -0.008061178967107896,
+      "delta_auprc": 0.0063781879723900925
+    }
+  }
+}

@@ -1,0 +1,611 @@
+{
+  "simple": {
+    "random_split_metrics": {
+      "auroc": 0.8688130864246203,
+      "auprc": 0.7437438343931879
+    },
+    "geographic_split_metrics": {
+      "auroc": 0.6992450700432238,
+      "auprc": 0.5323019027651877
+    },
+    "inflation_ratio": {
+      "auroc": 1.2425015543848092,
+      "auprc": 1.3972218219202435
+    },
+    "baseline_features_used": [
+      "n_samples",
+      "mean_detection_limit",
+      "pct_agriculture_1km",
+      "pct_barren_1km",
+      "pct_developed_1km",
+      "pct_developed_high_1km",
+      "pct_forest_1km",
+      "pct_grassland_1km",
+      "pct_ice_snow_1km",
+      "pct_shrub_1km",
+      "pct_water_1km",
+      "pct_wetland_1km",
+      "pct_agriculture_5km",
+      "pct_barren_5km",
+      "pct_developed_5km",
+      "pct_developed_high_5km",
+      "pct_forest_5km",
+      "pct_grassland_5km",
+      "pct_ice_snow_5km",
+      "pct_shrub_5km",
+      "pct_water_5km",
+      "pct_wetland_5km",
+      "pct_urban_high_1km",
+      "pct_people_of_color",
+      "pct_low_income",
+      "pct_less_hs_education",
+      "pct_limited_english",
+      "pct_under_5",
+      "pct_over_64",
+      "nearest_tri_pfas_m",
+      "count_tri_pfas_5km",
+      "count_tri_pfas_10km",
+      "count_tri_pfas_25km",
+      "nearest_dod_pfas_m",
+      "count_dod_pfas_5km",
+      "count_dod_pfas_10km",
+      "count_dod_pfas_25km"
+    ],
+    "n_features": 37
+  },
+  "matrix": {
+    "results": [
+      {
+        "model_name": "XGBoost",
+        "feature_set": "fernandez",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.6994087521310446,
+          "auprc": 0.49923738210190804
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.6994087521310446,
+            "ci_lower": 0.6804828849291803,
+            "ci_upper": 0.7184854371587545,
+            "std": 0.009387778847531617
+          },
+          "auprc": {
+            "point": 0.49923738210190804,
+            "ci_lower": 0.4706049710235499,
+            "ci_upper": 0.5305978765147744,
+            "std": 0.015269339626976259
+          }
+        }
+      },
+      {
+        "model_name": "XGBoost",
+        "feature_set": "fernandez",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8602931442196425,
+          "auprc": 0.7219616915901631
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8454646799717221,
+            "auprc": 0.6844158196863043
+          },
+          {
+            "auroc": 0.878080374136712,
+            "auprc": 0.7416200621724706
+          },
+          {
+            "auroc": 0.8630500841361208,
+            "auprc": 0.7308196219566243
+          },
+          {
+            "auroc": 0.863674434055252,
+            "auprc": 0.7394933127396033
+          },
+          {
+            "auroc": 0.8511961487984054,
+            "auprc": 0.7134596413958129
+          }
+        ]
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "fernandez",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.7004892600161242,
+          "auprc": 0.5319333759782083
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.7004892600161242,
+            "ci_lower": 0.6824694831354559,
+            "ci_upper": 0.7192296508436989,
+            "std": 0.009324228142037589
+          },
+          "auprc": {
+            "point": 0.5319333759782083,
+            "ci_lower": 0.5039749269750476,
+            "ci_upper": 0.5600532981563888,
+            "std": 0.014051271972884763
+          }
+        }
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "fernandez",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8619135665592687,
+          "auprc": 0.7105530294790514
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8484806134101911,
+            "auprc": 0.6945240075292713
+          },
+          {
+            "auroc": 0.8773853934417314,
+            "auprc": 0.726537671930172
+          },
+          {
+            "auroc": 0.8640376624861814,
+            "auprc": 0.6994631375135449
+          },
+          {
+            "auroc": 0.8697044616649694,
+            "auprc": 0.7295879487615516
+          },
+          {
+            "auroc": 0.8499597017932703,
+            "auprc": 0.7026523816607169
+          }
+        ]
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "fernandez",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.6285203242313726,
+          "auprc": 0.4509629382397606
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.6285203242313726,
+            "ci_lower": 0.6071547110617529,
+            "ci_upper": 0.647766554475233,
+            "std": 0.010209602121823739
+          },
+          "auprc": {
+            "point": 0.4509629382397606,
+            "ci_lower": 0.42271522426272673,
+            "ci_upper": 0.47960402606817787,
+            "std": 0.01469298693496338
+          }
+        }
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "fernandez",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.7047592844836335,
+          "auprc": 0.426565010720373
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.6924446680080483,
+            "auprc": 0.42081483151993043
+          },
+          {
+            "auroc": 0.7206408722605906,
+            "auprc": 0.4273807230774833
+          },
+          {
+            "auroc": 0.6979366229013619,
+            "auprc": 0.4127486234087296
+          },
+          {
+            "auroc": 0.7198171877297407,
+            "auprc": 0.4573059835993194
+          },
+          {
+            "auroc": 0.6929570715184254,
+            "auprc": 0.41457489199640235
+          }
+        ]
+      },
+      {
+        "model_name": "XGBoost",
+        "feature_set": "baseline",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.6992450700432238,
+          "auprc": 0.5323019027651877
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.6992450700432238,
+            "ci_lower": 0.6798535203798537,
+            "ci_upper": 0.7189560332377166,
+            "std": 0.009748943551487465
+          },
+          "auprc": {
+            "point": 0.5323019027651877,
+            "ci_lower": 0.5035718878385246,
+            "ci_upper": 0.564271447961631,
+            "std": 0.015450898738493682
+          }
+        }
+      },
+      {
+        "model_name": "XGBoost",
+        "feature_set": "baseline",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8688130864246203,
+          "auprc": 0.7437438343931879
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8690108216868782,
+            "auprc": 0.7387278666374724
+          },
+          {
+            "auroc": 0.8853159497525696,
+            "auprc": 0.7650082511423306
+          },
+          {
+            "auroc": 0.8611370084571777,
+            "auprc": 0.7416416854231735
+          },
+          {
+            "auroc": 0.8694438847471287,
+            "auprc": 0.7420029086650853
+          },
+          {
+            "auroc": 0.859157767479347,
+            "auprc": 0.7313384600978778
+          }
+        ]
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "baseline",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.7187572458951521,
+          "auprc": 0.5506140946673267
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.7187572458951521,
+            "ci_lower": 0.7015483691811383,
+            "ci_upper": 0.7376203290926833,
+            "std": 0.009219896833526888
+          },
+          "auprc": {
+            "point": 0.5506140946673267,
+            "ci_lower": 0.5240536090669683,
+            "ci_upper": 0.579839607024368,
+            "std": 0.014223962480830875
+          }
+        }
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "baseline",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8689289963852034,
+          "auprc": 0.7178368248733864
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8620229485018217,
+            "auprc": 0.7155349636227867
+          },
+          {
+            "auroc": 0.8868084180760238,
+            "auprc": 0.738061488448041
+          },
+          {
+            "auroc": 0.8636207938746726,
+            "auprc": 0.6941077660053172
+          },
+          {
+            "auroc": 0.8742576144550757,
+            "auprc": 0.7332353700509087
+          },
+          {
+            "auroc": 0.8579352070184229,
+            "auprc": 0.7082445362398788
+          }
+        ]
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "baseline",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.736240656981771,
+          "auprc": 0.5591597191468862
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.736240656981771,
+            "ci_lower": 0.7172116803291079,
+            "ci_upper": 0.7555482221150327,
+            "std": 0.009730244039980275
+          },
+          "auprc": {
+            "point": 0.5591597191468862,
+            "ci_lower": 0.5291409221254496,
+            "ci_upper": 0.5897013540054803,
+            "std": 0.01548536390171204
+          }
+        }
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "baseline",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.7494383939438867,
+          "auprc": 0.47021972881008234
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.7430950568274511,
+            "auprc": 0.47524710482601484
+          },
+          {
+            "auroc": 0.7618910761868509,
+            "auprc": 0.47491474993352045
+          },
+          {
+            "auroc": 0.736907167090524,
+            "auprc": 0.4428594159853736
+          },
+          {
+            "auroc": 0.7647872635883919,
+            "auprc": 0.49598773193503864
+          },
+          {
+            "auroc": 0.7405114060262156,
+            "auprc": 0.46208964137046393
+          }
+        ]
+      },
+      {
+        "model_name": "XGBoost",
+        "feature_set": "full",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.7898528097842386,
+          "auprc": 0.6719401611608683
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.7898528097842386,
+            "ci_lower": 0.7738922523383259,
+            "ci_upper": 0.8064796500431638,
+            "std": 0.008163696176641339
+          },
+          "auprc": {
+            "point": 0.6719401611608683,
+            "ci_lower": 0.647531074684713,
+            "ci_upper": 0.6975428485587509,
+            "std": 0.01297068928784536
+          }
+        }
+      },
+      {
+        "model_name": "XGBoost",
+        "feature_set": "full",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.9010570099973148,
+          "auprc": 0.8050906056559077
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.901593343846865,
+            "auprc": 0.8052167867705473
+          },
+          {
+            "auroc": 0.9194529338191311,
+            "auprc": 0.8250850776214735
+          },
+          {
+            "auroc": 0.8987393196137907,
+            "auprc": 0.7991036773379755
+          },
+          {
+            "auroc": 0.8978081042961156,
+            "auprc": 0.7993222728613746
+          },
+          {
+            "auroc": 0.8876913484106714,
+            "auprc": 0.7967252136881677
+          }
+        ]
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "full",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.8045604955599731,
+          "auprc": 0.6884447011172914
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.8045604955599731,
+            "ci_lower": 0.788326883029684,
+            "ci_upper": 0.8201814018958035,
+            "std": 0.00817408297625191
+          },
+          "auprc": {
+            "point": 0.6884447011172914,
+            "ci_lower": 0.662514529609935,
+            "ci_upper": 0.7130249388198873,
+            "std": 0.012974000336125842
+          }
+        }
+      },
+      {
+        "model_name": "RandomForest",
+        "feature_set": "full",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8891513756039074,
+          "auprc": 0.7734117599631384
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8805356463102942,
+            "auprc": 0.7631523939104224
+          },
+          {
+            "auroc": 0.911042471042471,
+            "auprc": 0.7948850025300581
+          },
+          {
+            "auroc": 0.889462835795699,
+            "auprc": 0.7727845585227052
+          },
+          {
+            "auroc": 0.8880382397307645,
+            "auprc": 0.77283478382127
+          },
+          {
+            "auroc": 0.8766776851403085,
+            "auprc": 0.7634020610312363
+          }
+        ]
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "full",
+        "split_strategy": "geographic",
+        "metrics": {
+          "auroc": 0.6538716395792563,
+          "auprc": 0.4570906687385398
+        },
+        "n_train": 9087,
+        "n_test": 3780,
+        "bootstrap_ci": {
+          "auroc": {
+            "point": 0.6538716395792563,
+            "ci_lower": 0.6349976658008424,
+            "ci_upper": 0.6737682934046084,
+            "std": 0.009998487362083771
+          },
+          "auprc": {
+            "point": 0.4570906687385398,
+            "ci_lower": 0.4287007677076749,
+            "ci_upper": 0.4885224999136461,
+            "std": 0.015290470935483087
+          }
+        }
+      },
+      {
+        "model_name": "LogisticRegression",
+        "feature_set": "full",
+        "split_strategy": "random",
+        "metrics": {
+          "auroc": 0.8726636069993704,
+          "auprc": 0.7226204452298326
+        },
+        "n_train": 13197,
+        "n_test": 3299,
+        "fold_metrics": [
+          {
+            "auroc": 0.8752879438794932,
+            "auprc": 0.7167733824271489
+          },
+          {
+            "auroc": 0.8851209962477569,
+            "auprc": 0.735184112092733
+          },
+          {
+            "auroc": 0.873087877319189,
+            "auprc": 0.7202970856148585
+          },
+          {
+            "auroc": 0.8740642919768449,
+            "auprc": 0.7285475095254775
+          },
+          {
+            "auroc": 0.8557569255735686,
+            "auprc": 0.7123001364889443
+          }
+        ]
+      }
+    ],
+    "delong_tests": {
+      "XGBoost": {
+        "auroc_a": 0.6992450700432238,
+        "auroc_b": 0.7898528097842386,
+        "delta": -0.09060773974101477,
+        "z_statistic": -10.004908829282599,
+        "p_value": 1.4502521220715896e-23
+      },
+      "RandomForest": {
+        "auroc_a": 0.718757245895152,
+        "auroc_b": 0.8045604955599732,
+        "delta": -0.08580324966482122,
+        "z_statistic": -8.878641542310755,
+        "p_value": 6.768183436063749e-19
+      },
+      "LogisticRegression": {
+        "auroc_a": 0.736240656981771,
+        "auroc_b": 0.6538716395792563,
+        "delta": 0.08236901740251468,
+        "z_statistic": 7.132020191704931,
+        "p_value": 9.8906360422434e-13
+      }
+    },
+    "n_models": 3,
+    "feature_set_sizes": {
+      "fernandez": 12,
+      "baseline": 35,
+      "full": 71
+    }
+  }
+}

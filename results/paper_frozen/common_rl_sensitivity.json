@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "source": "C2 (M6a) common-reporting-limit sensitivity: PFOS detections below the coarser UCMR3 reporting limit (0.04 ug/L; UCMR5 is ~0.004) are re-censored to non-detect, the T1 label rebuilt, and XGBoost retrained on the same assembly. Reproduction gate ties the un-recensored baseline to the frozen T1 headline within 0.02.",
+    "common_rl_ug_l": 0.04,
+    "n_pfos_detections_recensored": 29583,
+    "seed": 42
+  },
+  "baseline": {
+    "auroc": 0.8277099175543801,
+    "auprc": 0.7274055239900402,
+    "n_test": 3780
+  },
+  "common_rl": {
+    "auroc": 0.7812571289179404,
+    "auprc": 0.10240024360121734,
+    "n_test": 3780
+  },
+  "auroc_shift": -0.046452788636439646,
+  "auprc_shift": -0.6250052803888229,
+  "interpretation": "A small AUROC shift means the pooled detection signal is robust to reporting-limit heterogeneity; a large shift would mean detection-limit differences drive part of the apparent T1 performance."
+}

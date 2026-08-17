@@ -1,0 +1,99 @@
+# Data (tracked via checksums.sha256 and .gitkeep only)
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+!data/checksums.sha256
+
+# Results (ignore all, except the tracked frozen snapshot that backs the paper)
+/results/*
+!/results/paper_frozen/
+results_random/
+results_no_monitoring/
+results_reframe/
+results_reframe_v2/
+results_provenance_free/
+results_provenance_free_v2/
+
+# CatBoost training logs
+catboost_info/
+
+# Pipeline logs
+*.log
+
+# Trained model checkpoints
+/models/
+*.ckpt
+
+# Build artifacts
+/dist/
+/build/
+*.egg-info/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.*
+
+# Claude Code local settings
+.claude/settings.local.json
+.claude/.session-baseline-sha
+.claude/.stop-block-count
+.claude/scheduled_tasks.lock
+.claude/*.bak
+
+# Sphinx docs build
+docs/_build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Backups / editor temp files
+*.bak
+*.orig
+*.pre-*
+*.pre_*
+*~
+# the backup glob above must not swallow the tracked pre-commit config
+# (a fresh `git add -A` of an exported tree would silently drop it)
+!.pre-commit-config.yaml
+
+# Optuna HPO studies
+*.db
+optuna_studies/
+
+# Node tooling (assets/)
+node_modules/
+
+# Divergent results trees (generic; future-proofs the explicit list above)
+/results_*/

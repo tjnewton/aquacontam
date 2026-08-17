@@ -1,0 +1,4 @@
+Test,Effect Size,Power,Alpha
+Delong Auroc,0.0072,0.110,0.05
+Ej Burden Ratio,0.1900,1.000,0.05
+Dml Coefficient,0.0380,0.717,0.05

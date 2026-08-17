@@ -1,0 +1,15 @@
+\begin{table}
+\caption{Literature comparison. *XGBoost on the baseline feature set (controlled split comparison; split_comparison.json).}
+\label{tab:ext-literature}
+\begin{tabular}{lrllllllll}
+\toprule
+Study & Year & Dataset Size & Analytes & Geographic Scope & Split Method & Best AUROC & Best AUPRC & Feature Categories & Open Code \\
+\midrule
+Hu et al. & 2016 & ~4800 sites & 6 PFAS & National (US) & N/A (spatial regression) & R²=0.38-0.62 & NR & Industrial proximity, land use, hydrology & No \\
+Tokranov et al. & 2024 & ~5000 wells & PFAS & National (US) & Random CV & ~0.85 & NR & Land use, hydrogeology, demographics & Partial \\
+Fernandez et al. & 2023 & ~4200 wells & 6 PFAS & Michigan & 10-fold stratified CV & >0.90 & NR & Proximity, land use, demographics, hydrogeology & No \\
+AquaContam (random split)* & 2026 & 12136 systems & 29 PFAS + heavy metals & National (US) & Random split & 0.869 & 0.744 & Proximity, land use, hydrogeology, demographics, system chars & Yes \\
+AquaContam (geographic)* & 2026 & 12136 systems & 29 PFAS + heavy metals & National (US) & Geographic (EPA region) & 0.699 & 0.532 & Proximity, land use, hydrogeology, demographics, system chars & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "source": "C19 (R5 m10) system-level bootstrap CIs for each demographic dimension's burden ratio (labels only, no model fit), + the excluded unknown-demographics group. Reproduction gate ties each point burden ratio to equity_analysis.json within 0.005. n_boot=5000, seed=42."
+  },
+  "burden_cis": {
+    "pct_people_of_color": {
+      "burden_ratio": 1.878035356537437,
+      "burden_ratio_ci": [
+        1.6209248243158374,
+        2.1821450284211688
+      ],
+      "n_high": 618,
+      "n_low": 1544,
+      "excludes_one": true
+    },
+    "pct_low_income": {
+      "burden_ratio": 1.4044576088347687,
+      "burden_ratio_ci": [
+        1.2105002762535146,
+        1.635452976740814
+      ],
+      "n_high": 618,
+      "n_low": 1544,
+      "excludes_one": true
+    },
+    "pct_less_hs_education": {
+      "burden_ratio": 1.5369931196018152,
+      "burden_ratio_ci": [
+        1.325623220110412,
+        1.7801922064880107
+      ],
+      "n_high": 621,
+      "n_low": 1544,
+      "excludes_one": true
+    }
+  },
+  "unknown_group": {
+    "auroc": 0.9837958124303233,
+    "n_samples": 692,
+    "n_test": 3780,
+    "fraction_of_test": 0.18306878306878308,
+    "note": "high AUROC on unknown-demographics systems is a provenance artifact consistent with the thesis; excluded from the high/low burden comparison"
+  }
+}

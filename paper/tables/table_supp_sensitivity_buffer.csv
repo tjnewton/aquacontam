@@ -1,0 +1,6 @@
+Variant,Proximity Cols,AUROC,AUPRC
+all_radii,19,0.8580,0.6882
+1km_only,19,0.8652,0.7043
+5km_only,19,0.8638,0.7003
+10km_only,19,0.8537,0.6773
+dist_only,13,0.8571,0.6823

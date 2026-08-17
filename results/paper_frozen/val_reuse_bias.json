@@ -1,0 +1,127 @@
+{
+  "conditions": {
+    "triple_use": {
+      "label": "triple_use",
+      "description": "Train R1,3,4,5,6; val R2,7 for ES; test R8,9,10",
+      "n_train": 9087,
+      "n_val": 3414,
+      "n_test": 3780,
+      "n_seeds": 5,
+      "auroc_per_seed": [
+        0.8068508425076028,
+        0.81255498292588,
+        0.8124071022568204,
+        0.8038013404412236,
+        0.8098328450351427
+      ],
+      "mean_auroc": 0.8090894226333338,
+      "std_auroc": 0.0033628808287750403,
+      "per_region": {
+        "8": {
+          "mean_auroc": 0.7587538733953075,
+          "std_auroc": 0.003511591654618293
+        },
+        "9": {
+          "mean_auroc": 0.7627282370616477,
+          "std_auroc": 0.00441902698729902
+        },
+        "10": {
+          "mean_auroc": 0.955626177024482,
+          "std_auroc": 0.0011949276945513977
+        }
+      }
+    },
+    "internal_val": {
+      "label": "internal_val",
+      "description": "Train ~85% of R1,3,4,5,6; internal 15% val for ES; R2,7 excluded",
+      "n_train": 7724,
+      "n_val": 1363,
+      "n_test": 3780,
+      "n_seeds": 5,
+      "auroc_per_seed": [
+        0.7972181602270733,
+        0.7923779452041149,
+        0.8132916381983497,
+        0.8004650082734168,
+        0.8058033114964597
+      ],
+      "mean_auroc": 0.8018312126798829,
+      "std_auroc": 0.007205969129187413,
+      "per_region": {
+        "8": {
+          "mean_auroc": 0.7297587428065515,
+          "std_auroc": 0.014642040710079492
+        },
+        "9": {
+          "mean_auroc": 0.7574909826243005,
+          "std_auroc": 0.005957638141781182
+        },
+        "10": {
+          "mean_auroc": 0.9399546845574388,
+          "std_auroc": 0.009879826767219645
+        }
+      }
+    },
+    "no_es": {
+      "label": "no_es",
+      "description": "Train R1,3,4,5,6; no early stopping (all 500 rounds); test R8,9,10",
+      "n_train": 9087,
+      "n_val": 0,
+      "n_test": 3780,
+      "n_seeds": 5,
+      "auroc_per_seed": [
+        0.7865951412011346,
+        0.7966486221334594,
+        0.7813822188008714,
+        0.7875313752627415,
+        0.781910879311168
+      ],
+      "mean_auroc": 0.786813647341875,
+      "std_auroc": 0.005492306579425166,
+      "per_region": {
+        "8": {
+          "mean_auroc": 0.7082558654271802,
+          "std_auroc": 0.01640846104655472
+        },
+        "9": {
+          "mean_auroc": 0.7431333331634746,
+          "std_auroc": 0.006946222987350061
+        },
+        "10": {
+          "mean_auroc": 0.9290254237288135,
+          "std_auroc": 0.0025734907510379405
+        }
+      }
+    }
+  },
+  "decomposition": {
+    "val_reuse_effect": 0.0223,
+    "val_reuse_effect_description": "AUROC difference: ES on external val regions vs no ES (same training data, same test). Isolates total effect of using R2,7 for early stopping.",
+    "val_identity_effect": 0.0073,
+    "val_identity_effect_description": "AUROC difference: ES on external R2,7 vs ES on internal val (~15% training holdout). Positive = external val helps more.",
+    "es_benefit": 0.015,
+    "es_benefit_description": "AUROC difference: ES on internal val vs no ES. Early stopping benefit independent of val source.",
+    "holdout_loro_gap": 0.0811,
+    "holdout_auroc": 0.8636253029361376,
+    "loro_mean_auroc": 0.7824892795063257,
+    "pct_explained_by_val_reuse": 27.5
+  },
+  "per_region_comparison": {
+    "8": {
+      "holdout_auroc": 0.7588,
+      "loro_auroc": 0.7495,
+      "delta": 0.0093
+    },
+    "9": {
+      "holdout_auroc": 0.7627,
+      "loro_auroc": 0.8056,
+      "delta": -0.0429
+    },
+    "10": {
+      "holdout_auroc": 0.9556,
+      "loro_auroc": 0.9706,
+      "delta": -0.015
+    }
+  },
+  "methodology_note": "AUROC is threshold-independent; only early stopping (not threshold optimization) can bias AUROC via val set reuse. Hyperparameters are pre-set in experiment.yaml, not tuned on the validation set."
+}

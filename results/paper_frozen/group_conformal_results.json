@@ -1,0 +1,95 @@
+[
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.05,
+    "target_coverage": 0.95,
+    "coverage": 0.91005291005291,
+    "avg_set_size": 1.3275132275132275,
+    "per_region": {
+      "8": {
+        "coverage": 0.966542750929368,
+        "avg_set_size": 1.3977695167286246,
+        "n": 538,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "9": {
+        "coverage": 0.8780082987551867,
+        "avg_set_size": 1.3095435684647303,
+        "n": 2410,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "10": {
+        "coverage": 0.9663461538461539,
+        "avg_set_size": 1.3341346153846154,
+        "n": 832,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      }
+    }
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.1,
+    "target_coverage": 0.9,
+    "coverage": 0.8449735449735449,
+    "avg_set_size": 1.1375661375661377,
+    "per_region": {
+      "8": {
+        "coverage": 0.9256505576208178,
+        "avg_set_size": 1.1691449814126393,
+        "n": 538,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "9": {
+        "coverage": 0.8,
+        "avg_set_size": 1.120746887966805,
+        "n": 2410,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "10": {
+        "coverage": 0.9230769230769231,
+        "avg_set_size": 1.1658653846153846,
+        "n": 832,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      }
+    }
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "alpha": 0.2,
+    "target_coverage": 0.8,
+    "coverage": 0.762962962962963,
+    "avg_set_size": 0.9637566137566138,
+    "per_region": {
+      "8": {
+        "coverage": 0.8308550185873605,
+        "avg_set_size": 0.9423791821561338,
+        "n": 538,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "9": {
+        "coverage": 0.7282157676348547,
+        "avg_set_size": 0.9697095435684647,
+        "n": 2410,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      },
+      "10": {
+        "coverage": 0.8197115384615384,
+        "avg_set_size": 0.9603365384615384,
+        "n": 832,
+        "n_calibration": 0,
+        "reliable_guarantee": false
+      }
+    }
+  }
+]

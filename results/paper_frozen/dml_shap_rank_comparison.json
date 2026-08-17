@@ -1,0 +1,521 @@
+{
+  "n_features": 80,
+  "spearman_rho": 0.24007970239157989,
+  "spearman_p": 0.03195120838300817,
+  "feature_ranks": [
+    {
+      "feature": "source_water_type_nan",
+      "dml_rank": 23,
+      "shap_rank": 1,
+      "displacement": -22
+    },
+    {
+      "feature": "owner_type_nan",
+      "dml_rank": 23,
+      "shap_rank": 2,
+      "displacement": -21
+    },
+    {
+      "feature": "nlcd_majority_class_agriculture",
+      "dml_rank": 9,
+      "shap_rank": 78,
+      "displacement": 69
+    },
+    {
+      "feature": "aquifer_type_Northern Atlantic Coastal Plain aquifer system",
+      "dml_rank": 1,
+      "shap_rank": 19,
+      "displacement": 18
+    },
+    {
+      "feature": "aquifer_type_Early Mesozoic basin aquifers",
+      "dml_rank": 3,
+      "shap_rank": 7,
+      "displacement": 4
+    },
+    {
+      "feature": "aquifer_type_Biscayne aquifer",
+      "dml_rank": 2,
+      "shap_rank": 4,
+      "displacement": 2
+    },
+    {
+      "feature": "prox_hazardous_waste",
+      "dml_rank": 5,
+      "shap_rank": 55,
+      "displacement": 50
+    },
+    {
+      "feature": "pct_agriculture_5km",
+      "dml_rank": 14,
+      "shap_rank": 39,
+      "displacement": 25
+    },
+    {
+      "feature": "pct_developed_1km",
+      "dml_rank": 7,
+      "shap_rank": 70,
+      "displacement": 63
+    },
+    {
+      "feature": "n_landfill_10000m",
+      "dml_rank": 4,
+      "shap_rank": 42,
+      "displacement": 38
+    },
+    {
+      "feature": "system_type_nan",
+      "dml_rank": 23,
+      "shap_rank": 3,
+      "displacement": -20
+    },
+    {
+      "feature": "aquifer_type_Texas coastal uplands aquifer system",
+      "dml_rank": 32,
+      "shap_rank": 56,
+      "displacement": 24
+    },
+    {
+      "feature": "pct_agriculture_1km",
+      "dml_rank": 17,
+      "shap_rank": 49,
+      "displacement": 32
+    },
+    {
+      "feature": "log1p_dist_nearest_landfill",
+      "dml_rank": 13,
+      "shap_rank": 52,
+      "displacement": 39
+    },
+    {
+      "feature": "pct_people_of_color",
+      "dml_rank": 12,
+      "shap_rank": 51,
+      "displacement": 39
+    },
+    {
+      "feature": "n_industrial_10000m",
+      "dml_rank": 6,
+      "shap_rank": 38,
+      "displacement": 32
+    },
+    {
+      "feature": "prox_superfund",
+      "dml_rank": 15,
+      "shap_rank": 25,
+      "displacement": 10
+    },
+    {
+      "feature": "aquifer_type_Piedmont and Blue Ridge crystalline-rock aquifers",
+      "dml_rank": 8,
+      "shap_rank": 6,
+      "displacement": -2
+    },
+    {
+      "feature": "source_water_type_GW",
+      "dml_rank": 16,
+      "shap_rank": 18,
+      "displacement": 2
+    },
+    {
+      "feature": "aquifer_type_Silurian-Devonian aquifers",
+      "dml_rank": 35,
+      "shap_rank": 9,
+      "displacement": -26
+    },
+    {
+      "feature": "aquifer_type_Floridan aquifer system",
+      "dml_rank": 10,
+      "shap_rank": 8,
+      "displacement": -2
+    },
+    {
+      "feature": "owner_type_P",
+      "dml_rank": 21,
+      "shap_rank": 32,
+      "displacement": 11
+    },
+    {
+      "feature": "aquifer_type_Coastal lowlands aquifer system",
+      "dml_rank": 34,
+      "shap_rank": 17,
+      "displacement": -17
+    },
+    {
+      "feature": "owner_type_L",
+      "dml_rank": 28,
+      "shap_rank": 14,
+      "displacement": -14
+    },
+    {
+      "feature": "pct_limited_english",
+      "dml_rank": 18,
+      "shap_rank": 33,
+      "displacement": 15
+    },
+    {
+      "feature": "log1p_nearest_dod_pfas",
+      "dml_rank": 26,
+      "shap_rank": 22,
+      "displacement": -4
+    },
+    {
+      "feature": "ej_index_water",
+      "dml_rank": 25,
+      "shap_rank": 54,
+      "displacement": 29
+    },
+    {
+      "feature": "pct_barren_5km",
+      "dml_rank": 40,
+      "shap_rank": 57,
+      "displacement": 17
+    },
+    {
+      "feature": "pct_shrub_1km",
+      "dml_rank": 33,
+      "shap_rank": 58,
+      "displacement": 25
+    },
+    {
+      "feature": "aquifer_type_Surficial aquifer system",
+      "dml_rank": 20,
+      "shap_rank": 20,
+      "displacement": 0
+    },
+    {
+      "feature": "nearest_tri_pfas_m",
+      "dml_rank": 30,
+      "shap_rank": 24,
+      "displacement": -6
+    },
+    {
+      "feature": "n_airport_10000m",
+      "dml_rank": 19,
+      "shap_rank": 30,
+      "displacement": 11
+    },
+    {
+      "feature": "log1p_dist_nearest_industrial",
+      "dml_rank": 29,
+      "shap_rank": 73,
+      "displacement": 44
+    },
+    {
+      "feature": "pct_developed_5km",
+      "dml_rank": 27,
+      "shap_rank": 36,
+      "displacement": 9
+    },
+    {
+      "feature": "source_water_type_SW",
+      "dml_rank": 31,
+      "shap_rank": 10,
+      "displacement": -21
+    },
+    {
+      "feature": "n_industrial_5000m",
+      "dml_rank": 11,
+      "shap_rank": 60,
+      "displacement": 49
+    },
+    {
+      "feature": "aquifer_type_Pennsylvanian aquifers",
+      "dml_rank": 46,
+      "shap_rank": 53,
+      "displacement": 7
+    },
+    {
+      "feature": "log1p_dist_nearest_military",
+      "dml_rank": 38,
+      "shap_rank": 44,
+      "displacement": 6
+    },
+    {
+      "feature": "pct_shrub_5km",
+      "dml_rank": 41,
+      "shap_rank": 15,
+      "displacement": -26
+    },
+    {
+      "feature": "pct_urban_high_1km",
+      "dml_rank": 36,
+      "shap_rank": 65,
+      "displacement": 29
+    },
+    {
+      "feature": "pct_developed_high_1km",
+      "dml_rank": 36,
+      "shap_rank": 66,
+      "displacement": 30
+    },
+    {
+      "feature": "pct_less_hs_education",
+      "dml_rank": 39,
+      "shap_rank": 76,
+      "displacement": 37
+    },
+    {
+      "feature": "pct_barren_1km",
+      "dml_rank": 51,
+      "shap_rank": 63,
+      "displacement": 12
+    },
+    {
+      "feature": "log1p_dist_nearest_wwtp",
+      "dml_rank": 42,
+      "shap_rank": 61,
+      "displacement": 19
+    },
+    {
+      "feature": "system_type_NTNCWS",
+      "dml_rank": 43,
+      "shap_rank": 80,
+      "displacement": 37
+    },
+    {
+      "feature": "nlcd_majority_class_nan",
+      "dml_rank": 44,
+      "shap_rank": 11,
+      "displacement": -33
+    },
+    {
+      "feature": "log1p_dist_nearest_airport",
+      "dml_rank": 47,
+      "shap_rank": 79,
+      "displacement": 32
+    },
+    {
+      "feature": "pct_grassland_5km",
+      "dml_rank": 48,
+      "shap_rank": 31,
+      "displacement": -17
+    },
+    {
+      "feature": "n_wwtp_5000m",
+      "dml_rank": 45,
+      "shap_rank": 16,
+      "displacement": -29
+    },
+    {
+      "feature": "aquifer_type_nan",
+      "dml_rank": 50,
+      "shap_rank": 5,
+      "displacement": -45
+    },
+    {
+      "feature": "ej_supplemental_index",
+      "dml_rank": 49,
+      "shap_rank": 59,
+      "displacement": 10
+    },
+    {
+      "feature": "count_tri_pfas_25km",
+      "dml_rank": 52,
+      "shap_rank": 23,
+      "displacement": -29
+    },
+    {
+      "feature": "aquifer_type_Cambrian-Ordovician aquifer system",
+      "dml_rank": 56,
+      "shap_rank": 41,
+      "displacement": -15
+    },
+    {
+      "feature": "owner_type_M",
+      "dml_rank": 64,
+      "shap_rank": 75,
+      "displacement": 11
+    },
+    {
+      "feature": "nearest_dod_pfas_m",
+      "dml_rank": 61,
+      "shap_rank": 48,
+      "displacement": -13
+    },
+    {
+      "feature": "pct_water_1km",
+      "dml_rank": 54,
+      "shap_rank": 67,
+      "displacement": 13
+    },
+    {
+      "feature": "dist_nearest_military",
+      "dml_rank": 62,
+      "shap_rank": 46,
+      "displacement": -16
+    },
+    {
+      "feature": "system_type_CWS",
+      "dml_rank": 55,
+      "shap_rank": 12,
+      "displacement": -43
+    },
+    {
+      "feature": "nlcd_majority_class_forest",
+      "dml_rank": 58,
+      "shap_rank": 28,
+      "displacement": -30
+    },
+    {
+      "feature": "pct_over_64",
+      "dml_rank": 57,
+      "shap_rank": 69,
+      "displacement": 12
+    },
+    {
+      "feature": "pct_under_5",
+      "dml_rank": 59,
+      "shap_rank": 64,
+      "displacement": 5
+    },
+    {
+      "feature": "dist_nearest_industrial",
+      "dml_rank": 65,
+      "shap_rank": 40,
+      "displacement": -25
+    },
+    {
+      "feature": "aquifer_type_Valley and Ridge aquifers",
+      "dml_rank": 53,
+      "shap_rank": 43,
+      "displacement": -10
+    },
+    {
+      "feature": "aquifer_type_Other rocks",
+      "dml_rank": 63,
+      "shap_rank": 74,
+      "displacement": 11
+    },
+    {
+      "feature": "dist_nearest_landfill",
+      "dml_rank": 68,
+      "shap_rank": 68,
+      "displacement": 0
+    },
+    {
+      "feature": "pct_forest_5km",
+      "dml_rank": 67,
+      "shap_rank": 27,
+      "displacement": -40
+    },
+    {
+      "feature": "prox_wastewater_discharge",
+      "dml_rank": 60,
+      "shap_rank": 47,
+      "displacement": -13
+    },
+    {
+      "feature": "count_dod_pfas_25km",
+      "dml_rank": 66,
+      "shap_rank": 29,
+      "displacement": -37
+    },
+    {
+      "feature": "dist_nearest_airport",
+      "dml_rank": 71,
+      "shap_rank": 71,
+      "displacement": 0
+    },
+    {
+      "feature": "pct_wetland_5km",
+      "dml_rank": 69,
+      "shap_rank": 21,
+      "displacement": -48
+    },
+    {
+      "feature": "pct_developed_high_5km",
+      "dml_rank": 70,
+      "shap_rank": 72,
+      "displacement": 2
+    },
+    {
+      "feature": "dist_nearest_wwtp",
+      "dml_rank": 74,
+      "shap_rank": 62,
+      "displacement": -12
+    },
+    {
+      "feature": "pct_low_income",
+      "dml_rank": 73,
+      "shap_rank": 77,
+      "displacement": 4
+    },
+    {
+      "feature": "pct_water_5km",
+      "dml_rank": 72,
+      "shap_rank": 50,
+      "displacement": -22
+    },
+    {
+      "feature": "aquifer_lithology",
+      "dml_rank": 75,
+      "shap_rank": 13,
+      "displacement": -62
+    },
+    {
+      "feature": "pct_grassland_1km",
+      "dml_rank": 76,
+      "shap_rank": 37,
+      "displacement": -39
+    },
+    {
+      "feature": "pct_forest_1km",
+      "dml_rank": 77,
+      "shap_rank": 35,
+      "displacement": -42
+    },
+    {
+      "feature": "release_weighted_tri_25km",
+      "dml_rank": 78,
+      "shap_rank": 26,
+      "displacement": -52
+    },
+    {
+      "feature": "prox_rmp_facility",
+      "dml_rank": 79,
+      "shap_rank": 45,
+      "displacement": -34
+    },
+    {
+      "feature": "pct_wetland_1km",
+      "dml_rank": 80,
+      "shap_rank": 34,
+      "displacement": -46
+    }
+  ],
+  "demographic_ranks": [
+    {
+      "feature": "pct_people_of_color",
+      "dml_rank": 12,
+      "shap_rank": 51,
+      "displacement": 39
+    },
+    {
+      "feature": "pct_limited_english",
+      "dml_rank": 18,
+      "shap_rank": 33,
+      "displacement": 15
+    },
+    {
+      "feature": "ej_index_water",
+      "dml_rank": 25,
+      "shap_rank": 54,
+      "displacement": 29
+    },
+    {
+      "feature": "pct_less_hs_education",
+      "dml_rank": 39,
+      "shap_rank": 76,
+      "displacement": 37
+    },
+    {
+      "feature": "pct_low_income",
+      "dml_rank": 73,
+      "shap_rank": 77,
+      "displacement": 4
+    }
+  ],
+  "demographic_mean_displacement": 24.8,
+  "demographic_n": 5
+}

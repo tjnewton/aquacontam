@@ -1,0 +1,26 @@
+name: aquacontam
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.12
+  # --- Geospatial (C libraries managed by conda) ---
+  - geopandas>=0.14
+  - rasterio>=1.3
+  - shapely>=2.0
+  # --- GMT / PyGMT (geographic map figures for paper) ---
+  - gmt>=6.5
+  - pygmt>=0.13
+  # --- HDF5 ---
+  - h5py>=3.10
+  # --- PyTorch (uses MPS on Apple Silicon, CPU otherwise) ---
+  - pytorch>=2.4
+  # torch-geometric is installed via pip below for cross-platform compatibility.
+  # pyg-lib is optional graph-kernel acceleration; not available on Windows conda-forge.
+  # On Linux/macOS: `conda install -c pyg pyg-lib` post-activate to enable acceleration.
+  # --- NumPy (pin <2 for PyTorch compatibility) ---
+  - numpy<2
+  - pip
+  - pip:
+      - -e ".[dev,test,dl,boost,interpret,hpo,paper,webapp,foundation]"
+      - torch-geometric>=2.4

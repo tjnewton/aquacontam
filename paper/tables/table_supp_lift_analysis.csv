@@ -1,0 +1,23 @@
+Model,Decile,Detection Rate,Cumulative Lift
+Full model,D1,84.4%,2.96x
+Full model,D2,65.6%,2.63x
+Full model,D3,44.2%,2.27x
+Full model,D4,22.8%,1.90x
+Full model,D5,15.1%,1.63x
+Full model,D6,14.0%,1.44x
+Full model,D7,18.5%,1.33x
+Full model,D8,8.5%,1.20x
+Full model,D9,6.9%,1.09x
+Full model,D10,5.0%,1.00x
+Full model,Summary,Overall: 28.5%,"Top-decile lift: 3.0x, Top-quintile capture: 52.6%"
+Monitoring-free,D1,86.8%,3.05x
+Monitoring-free,D2,48.7%,2.38x
+Monitoring-free,D3,25.4%,1.88x
+Monitoring-free,D4,24.9%,1.63x
+Monitoring-free,D5,17.7%,1.43x
+Monitoring-free,D6,17.7%,1.29x
+Monitoring-free,D7,19.3%,1.21x
+Monitoring-free,D8,15.6%,1.12x
+Monitoring-free,D9,15.3%,1.06x
+Monitoring-free,D10,13.5%,1.00x
+Monitoring-free,Summary,Overall: 28.5%,"Top-decile lift: 3.0x, Top-quintile capture: 47.5%"

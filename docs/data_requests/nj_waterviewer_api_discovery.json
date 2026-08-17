@@ -1,0 +1,7 @@
+{
+  "timestamp": "v11",
+  "target_system": "NJ0714001",
+  "is_number": 127,
+  "api_base": "https://waterviewer.nj.gov/sdwis/",
+  "auth": "X-XSRF-TOKEN from XSRF-TOKEN cookie"
+}

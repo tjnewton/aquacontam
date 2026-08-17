@@ -1,0 +1,597 @@
+# AquaContam — Experiment Configuration
+#
+# Defines benchmark tasks, model hyperparameters, and training settings.
+# Loaded by benchmark tasks and model training scripts.
+
+# ---------------------------------------------------------------------------
+# Random seed
+# ---------------------------------------------------------------------------
+seed: 42
+stability_seeds: [42, 123, 456, 789, 2024]
+
+# ---------------------------------------------------------------------------
+# Geographic split settings
+# ---------------------------------------------------------------------------
+split:
+  train_regions: [1, 3, 4, 5, 6]
+  val_regions: [2, 7]
+  test_regions: [8, 9, 10]
+
+# ---------------------------------------------------------------------------
+# Feature assembly settings
+# ---------------------------------------------------------------------------
+features:
+  categorical_columns:
+    - aquifer_type
+    - aquifer_lithology
+    - aquifer_confinement
+    - nlcd_majority_class
+    - source_water_type
+    - system_type
+    - owner_type
+  drop_na_threshold: 0.5
+  # System characteristics from SDWIS metadata
+  # These are standard in domain literature (Hu et al. 2016, Fernandez et al. 2023)
+  system_characteristics:
+    - population_served     # numeric (also log-transformed)
+    - system_type           # CWS, NTNCWS, TNCWS (categorical)
+    - source_water_type     # GW, SW, GU (categorical)
+    - owner_type            # F, S, L, P, N (categorical)
+
+# ---------------------------------------------------------------------------
+# Feature extraction hyperparameters
+# ---------------------------------------------------------------------------
+# Module-level constants in features/*.py use these as defaults.
+# Override here to tune without editing source code.
+feature_extraction:
+  proximity:
+    facility_configs:
+      industrial: [1000.0, 5000.0, 10000.0]
+      military: [5000.0]
+      airport: [10000.0]
+      wwtp: [5000.0]
+      landfill: [10000.0]
+    tri_radii: [5000.0, 10000.0, 25000.0]
+    dod_radii: [5000.0, 10000.0, 25000.0]
+  multiscale:
+    kernel_bandwidths: [500.0, 2000.0, 5000.0, 10000.0, 25000.0]
+    knn_k_values: [1, 3, 5, 10]
+    ring_pairs: [[500.0, 2000.0], [1000.0, 5000.0], [2000.0, 10000.0], [5000.0, 25000.0]]
+    diversity_buffers: [1000.0, 5000.0, 10000.0]
+  spatial_graph:
+    neighbor_k_values: [5, 10, 20]
+
+# ---------------------------------------------------------------------------
+# Benchmark tasks
+# ---------------------------------------------------------------------------
+tasks:
+  T1:
+    name: "PFAS Binary Detection"
+    description: "Predict whether PFAS is detected at a water system"
+    task_type: "classification"
+    primary_metric: "auprc"
+    analytes:
+      - "PFOS"
+      - "PFOA"
+      - "PFBS"
+      - "PFHxS"
+      - "HFPO-DA"
+    target: "detected"
+
+  T2:
+    name: "PFAS Concentration Regression"
+    description: "Predict maximum PFAS concentration at a water system"
+    task_type: "regression"
+    primary_metric: "rmse"
+    analytes:
+      - "PFOS"
+      - "PFOA"
+      - "PFHxS"
+    target: "max_concentration"
+
+  T4:
+    name: "Heavy Metal Prediction"
+    description: "Predict heavy metal detection at a water system"
+    task_type: "classification"
+    primary_metric: "auprc"
+    analytes:
+      - "lead"
+      - "copper"
+      - "arsenic"
+    target: "detected"
+
+  T3:
+    name: "Multi-PFAS Profile Prediction"
+    description: "Predict detection profile across multiple PFAS analytes simultaneously"
+    task_type: "multilabel_classification"
+    primary_metric: "macro_auprc"
+    analytes:
+      - "PFOS"
+      - "PFOA"
+      - "PFBS"
+      - "PFHxS"
+      - "HFPO-DA"
+    target: "detected_profile"
+
+  T5:
+    name: "Cross-Contaminant Transfer"
+    description: "Train on source contaminant, evaluate on target contaminant"
+    task_type: "classification"
+    primary_metric: "auprc"
+    transfer_directions:
+      - source: "lead"
+        target: "PFOS"
+      - source: "PFOS"
+        target: "lead"
+
+  # NOTE: STUB — this NJ private-well PFOS/PFOA/lead definition does NOT match
+  # the task actually run and frozen. The pipeline hardcodes an arsenic next-generation-analyte
+  # (NGA) probe; the frozen result is results/paper_frozen/t6_arsenic.json. Retained for
+  # provenance only; no result depends on the analytes listed below.
+  T6:
+    name: "Private Well Risk Extrapolation"
+    description: "Train on public system data, evaluate on NJ private well ground truth"
+    task_type: "classification"
+    primary_metric: "auprc"
+    analytes:
+      - "PFOS"
+      - "PFOA"
+      - "lead"
+    target: "detected"
+
+  T7:
+    name: "Temporal Prediction UCMR3→UCMR5"
+    description: "Train on UCMR3 (2013-2015), predict UCMR5 (2023)"
+    task_type: "classification"
+    primary_metric: "auprc"
+    analytes:
+      - "PFOS"
+      - "PFOA"
+      - "PFBS"
+      - "PFHxS"
+    target: "detected"
+
+# ---------------------------------------------------------------------------
+# Model hyperparameters
+# ---------------------------------------------------------------------------
+models:
+  xgboost_classifier:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+    scale_pos_weight: "auto"  # computed from class ratio
+    early_stopping_rounds: 50
+    eval_metric: "aucpr"
+    random_state: 42
+
+  xgboost_regressor:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+    early_stopping_rounds: 50
+    eval_metric: "rmse"
+    random_state: 42
+
+  random_forest_classifier:
+    n_estimators: 500
+    max_features: "sqrt"
+    max_depth: null
+    min_samples_leaf: 5
+    class_weight: "balanced"
+    n_jobs: -1
+    random_state: 42
+
+  random_forest_regressor:
+    n_estimators: 500
+    max_features: "sqrt"
+    max_depth: null
+    min_samples_leaf: 5
+    n_jobs: -1
+    random_state: 42
+
+  mlp_classifier:
+    hidden_sizes: [128, 64, 32]
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    random_state: 42
+
+  mlp_regressor:
+    hidden_sizes: [128, 64, 32]
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    random_state: 42
+
+  cnn1d_classifier:
+    n_filters: [32, 64, 32]
+    kernel_size: 3
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    random_state: 42
+
+  cnn1d_regressor:
+    n_filters: [32, 64, 32]
+    kernel_size: 3
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    random_state: 42
+
+  lightgbm_classifier:
+    n_estimators: 500
+    num_leaves: 63
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_samples: 20
+    is_unbalance: true
+    early_stopping_rounds: 50
+    verbose: -1
+    random_state: 42
+
+  lightgbm_regressor:
+    n_estimators: 500
+    num_leaves: 63
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_samples: 20
+    early_stopping_rounds: 50
+    verbose: -1
+    random_state: 42
+
+  catboost_classifier:
+    iterations: 500
+    depth: 6
+    learning_rate: 0.05
+    auto_class_weights: "Balanced"
+    early_stopping_rounds: 50
+    verbose: 0
+    random_state: 42
+
+  catboost_regressor:
+    iterations: 500
+    depth: 6
+    learning_rate: 0.05
+    early_stopping_rounds: 50
+    verbose: 0
+    random_state: 42
+
+  deep_tobit_classifier:
+    hidden_sizes: [128, 64, 32]
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    default_detection_limit: 0.004
+    random_state: 42
+
+  deep_tobit_regressor:
+    hidden_sizes: [128, 64, 32]
+    dropout: 0.3
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    default_detection_limit: 0.004
+    log_transform: true
+    random_state: 42
+
+  tobit_regressor:
+    max_iter: 500
+    random_state: 42
+
+  aft_regressor:
+    penalizer: 0.01
+    random_state: 42
+
+  gnn_gcn_classifier:
+    arch: "gcn"
+    n_hidden: 64
+    dropout: 0.3
+    learning_rate: 0.01
+    epochs: 200
+    patience: 20
+    k: 10
+    random_state: 42
+
+  gnn_sage_classifier:
+    arch: "sage"
+    n_hidden: 64
+    dropout: 0.3
+    learning_rate: 0.01
+    epochs: 200
+    patience: 20
+    k: 10
+    random_state: 42
+
+  logistic_regression:
+    max_iter: 1000
+    solver: "lbfgs"
+    class_weight: "balanced"
+    random_state: 42
+
+  voting_ensemble_classifier:
+    voting: "soft"
+    base_models: ["xgboost", "random_forest", "lightgbm", "catboost"]
+    random_state: 42
+
+  stacking_ensemble_classifier:
+    final_estimator: "logistic"
+    cv: 5
+    passthrough: false
+    base_models: ["xgboost", "random_forest", "lightgbm", "catboost"]
+    random_state: 42
+
+  tabpfn_classifier:
+    max_train_size: 10000
+    n_estimators: 1
+    device: "cpu"
+    fit_mode: "low_memory"
+    random_state: 42
+
+  hurdle_regressor:
+    gate_model: "xgboost_classifier"
+    gate_config:
+      n_estimators: 500
+      max_depth: 6
+      learning_rate: 0.05
+      subsample: 0.8
+      colsample_bytree: 0.8
+      min_child_weight: 5
+      scale_pos_weight: "auto"
+      early_stopping_rounds: 50
+      eval_metric: "aucpr"
+      random_state: 42
+    intensity_model: "xgboost_regressor"
+    intensity_config:
+      n_estimators: 200
+      max_depth: 2
+      learning_rate: 0.03
+      subsample: 0.7
+      colsample_bytree: 0.5
+      min_child_weight: 15
+      reg_alpha: 1.0
+      reg_lambda: 5.0
+      gamma: 1.0
+      random_state: 42
+    log_transform: true
+    random_state: 42
+
+  xgboost_aft_regressor:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 5
+    aft_loss_distribution: "normal"
+    aft_loss_distribution_scale: 1.0
+    early_stopping_rounds: 50
+    random_state: 42
+
+  zi_tobit_classifier:
+    hidden_sizes: [64, 32]
+    dropout: 0.4
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    default_detection_limit: 0.004
+    random_state: 42
+
+  zi_tobit_regressor:
+    hidden_sizes: [64, 32]
+    dropout: 0.4
+    learning_rate: 0.001
+    epochs: 200
+    batch_size: 256
+    patience: 20
+    default_detection_limit: 0.004
+    log_transform: true
+    random_state: 42
+
+  icp_classifier:
+    encoder_sizes: [128, 64]
+    head_size: 32
+    dropout: 0.3
+    learning_rate: 0.001
+    adv_learning_rate: 0.01
+    epochs: 200
+    warmup_epochs: 20
+    batch_size: 256
+    patience: 20
+    lambda_adv: 1.0
+    lambda_dro: 0.1
+    adv_steps: 5
+    # Run the full schedule (no early stopping) so the gradient-reversal adversary
+    # actually trains; otherwise task val loss plateaus during warmup and training
+    # halts right as the adversary activates, leaving the GRL effectively a no-op.
+    early_stopping: false
+    random_state: 42
+
+  icp_regressor:
+    encoder_sizes: [128, 64]
+    head_size: 32
+    dropout: 0.3
+    learning_rate: 0.001
+    adv_learning_rate: 0.01
+    epochs: 200
+    warmup_epochs: 20
+    batch_size: 256
+    patience: 20
+    lambda_adv: 1.0
+    lambda_dro: 0.1
+    adv_steps: 5
+    early_stopping: false  # train the full adversarial schedule (see icp_classifier note)
+    default_detection_limit: 0.004
+    log_transform: true
+    random_state: 42
+
+  dummy_classifier:
+    strategy: "prior"
+    random_state: 42
+
+# ---------------------------------------------------------------------------
+# XGBoost with sklearn defaults (for tuning fairness ablation)
+# Reports "XGBoost (default)" alongside the tuned XGBoost to show the
+# performance delta attributable to hyperparameter optimization.
+# ---------------------------------------------------------------------------
+xgboost_classifier_default:
+  n_estimators: 100
+  max_depth: 6
+  learning_rate: 0.3
+  subsample: 1.0
+  colsample_bytree: 1.0
+  min_child_weight: 1
+  scale_pos_weight: "auto"
+  eval_metric: "aucpr"
+  random_state: 42
+
+# ---------------------------------------------------------------------------
+# Optuna Bayesian HPO settings (used by --optuna)
+# ---------------------------------------------------------------------------
+optuna:
+  enabled: true
+  storage_dir: "results/optuna_studies"
+  default_seed: 42
+  default_n_trials: 300
+  default_sampler: "tpe_multi"   # tpe | tpe_multi | cmaes
+  default_pruner: "hyperband"    # hyperband | median | none
+  # Per-task primary metric (driver inverts to maximize/minimize automatically).
+  metrics:
+    T1: "auprc"
+    T2: "rmse"
+    T3: "mean_auprc"
+    T4: "mean_auprc"
+    T5: "auprc"
+    T6: "auprc"
+    T7: "auprc"
+  # GPU defaults; overridable on CLI via --gpu-id. Index is post-CVD, so 0
+  # after the early env-var setup remaps the user-facing physical index.
+  gpu:
+    enabled: true
+    gpu_id: 0
+    enable_xgboost_gpu: true
+    enable_lightgbm_gpu: true
+    enable_catboost_gpu: true
+
+# ---------------------------------------------------------------------------
+# Hyperparameter tuning grid (for grid search ablation)
+# ---------------------------------------------------------------------------
+tuning:
+  xgboost_classifier:
+    max_depth: [4, 6, 8]
+    learning_rate: [0.01, 0.05, 0.1]
+    n_estimators: [200, 500]
+    subsample: [0.8]
+    colsample_bytree: [0.8]
+  random_forest_classifier:
+    n_estimators: [200, 500]
+    max_depth: [10, 20, null]
+    max_features: ["sqrt", "log2"]
+  lightgbm_classifier:
+    num_leaves: [31, 63, 127]
+    learning_rate: [0.01, 0.05, 0.1]
+    n_estimators: [200, 500]
+  catboost_classifier:
+    depth: [4, 6, 8]
+    learning_rate: [0.01, 0.05, 0.1]
+    iterations: [200, 500]
+  mlp_classifier:
+    hidden_sizes: [[64, 32], [128, 64, 32], [256, 128, 64]]
+    learning_rate: [0.0005, 0.001, 0.005]
+    dropout: [0.2, 0.3]
+  cnn1d_classifier:
+    n_filters: [[32, 64], [32, 64, 32], [64, 128, 64]]
+    learning_rate: [0.0005, 0.001, 0.005]
+    dropout: [0.2, 0.3]
+
+# ---------------------------------------------------------------------------
+# Feature ablation study categories
+# ---------------------------------------------------------------------------
+ablation:
+  feature_categories:
+    proximity:
+      - "dist_nearest_"
+      - "n_industrial_"
+      - "n_military_"
+      - "n_wwtp_"
+      - "n_airport_"
+      - "n_landfill_"
+      - "prox_"
+    land_use:
+      - "pct_developed_"
+      - "pct_agriculture_"
+      - "pct_forest_"
+      - "pct_wetland_"
+      - "pct_water_"
+      - "pct_shrub_"
+      - "pct_grassland_"
+      - "pct_barren_"
+      - "nlcd_majority_class_"
+    hydrogeology:
+      - "aquifer_"
+      - "lithology_"
+      - "confinement_"
+    # Aquifer type only — removes aquifer_type_* one-hot columns but keeps
+    # lithology and confinement.  Tests whether aquifer_type acts as a
+    # "spatial identity indicator" circumventing geographic stratification.
+    aquifer_type_only:
+      - "aquifer_type_"
+    demographics:
+      - "pct_people_of_color"
+      - "pct_low_income"
+      - "pct_less_hs"
+      - "pct_limited_english"
+      - "ej_index"
+    # Standalone n_samples ablation — tests whether the top SHAP feature
+    # (monitoring intensity) is essential or the model is robust without it.
+    n_samples_only:
+      - "n_samples"
+    # Monitoring intensity features — tests whether the model predicts
+    # "who gets monitored more" vs "who is contaminated".
+    monitoring_intensity:
+      - "n_samples"
+      - "mean_detection_limit"
+    # All system characteristics — tests dependence on metadata features
+    # that are not environmental/geospatial.
+    system_characteristics:
+      - "n_samples"
+      - "population_served"
+      - "log_population_served"
+      - "mean_detection_limit"
+
+  # MCL thresholds in ug/L for supplementary MCL-exceedance analysis
+  mcl_thresholds:
+    PFOS: 0.004   # EPA MCL effective April 2024
+    PFOA: 0.004
+    PFHxS: 0.010
+    HFPO-DA: 0.010
+    PFBS: 2.0
+
+  # Causal deconfounding via Double Machine Learning (DML)
+  causal_analysis:
+    confounders:
+      - "n_samples"
+      - "population_served"
+      - "log_population_served"
+      - "mean_detection_limit"
+    n_folds: 5

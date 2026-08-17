@@ -1,0 +1,560 @@
+[
+  {
+    "task": "T1",
+    "model": "dummy_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.5,
+    "ci_lower": 0.5,
+    "ci_upper": 0.5,
+    "std": 0.0
+  },
+  {
+    "task": "T1",
+    "model": "dummy_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.2157622739018088,
+    "ci_lower": 0.19938630490956075,
+    "ci_upper": 0.23298880275624462,
+    "std": 0.008559743004858086
+  },
+  {
+    "task": "T1",
+    "model": "logistic_regression",
+    "metric": "auroc",
+    "point_estimate": 0.7534464294913741,
+    "ci_lower": 0.7254071946057004,
+    "ci_upper": 0.7807671386773716,
+    "std": 0.014674985462529773
+  },
+  {
+    "task": "T1",
+    "model": "logistic_regression",
+    "metric": "auprc",
+    "point_estimate": 0.674162409897729,
+    "ci_lower": 0.6342716610108148,
+    "ci_upper": 0.7153050793204447,
+    "std": 0.02110280042250733
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.8636253029361376,
+    "ci_lower": 0.8420947746548383,
+    "ci_upper": 0.885015179265193,
+    "std": 0.010834905170338825
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.7809783620874269,
+    "ci_lower": 0.7504251345850962,
+    "ci_upper": 0.8120350336177213,
+    "std": 0.015590227914393776
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_default",
+    "metric": "auroc",
+    "point_estimate": 0.8362440412968681,
+    "ci_lower": 0.8128529265724388,
+    "ci_upper": 0.859910549466862,
+    "std": 0.011966024724934191
+  },
+  {
+    "task": "T1",
+    "model": "xgboost_default",
+    "metric": "auprc",
+    "point_estimate": 0.7490695051054352,
+    "ci_lower": 0.7156387008347695,
+    "ci_upper": 0.7814741574232529,
+    "std": 0.01677288329992192
+  },
+  {
+    "task": "T1",
+    "model": "random_forest_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.8499409747227128,
+    "ci_lower": 0.8275544416074985,
+    "ci_upper": 0.8720538540630931,
+    "std": 0.010975073592516848
+  },
+  {
+    "task": "T1",
+    "model": "random_forest_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.75292729882087,
+    "ci_lower": 0.7215158287424213,
+    "ci_upper": 0.7862014331153713,
+    "std": 0.01620721302278714
+  },
+  {
+    "task": "T1",
+    "model": "mlp_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.7158779640060899,
+    "ci_lower": 0.6871211914040195,
+    "ci_upper": 0.7478308899487427,
+    "std": 0.015609127472554489
+  },
+  {
+    "task": "T1",
+    "model": "mlp_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.47649988354538797,
+    "ci_lower": 0.43672185082517695,
+    "ci_upper": 0.5247287720470489,
+    "std": 0.022600416520039142
+  },
+  {
+    "task": "T1",
+    "model": "cnn1d_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.7871894870336209,
+    "ci_lower": 0.7615251082592153,
+    "ci_upper": 0.811600826792264,
+    "std": 0.013017009842883183
+  },
+  {
+    "task": "T1",
+    "model": "cnn1d_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.5067466121268461,
+    "ci_lower": 0.4646144966018275,
+    "ci_upper": 0.5529841227035747,
+    "std": 0.022390766238915515
+  },
+  {
+    "task": "T1",
+    "model": "lightgbm_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.8470264303901807,
+    "ci_lower": 0.8245603177240404,
+    "ci_upper": 0.8683232780091167,
+    "std": 0.011459471959679187
+  },
+  {
+    "task": "T1",
+    "model": "lightgbm_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.7627899978248927,
+    "ci_lower": 0.7307766242843813,
+    "ci_upper": 0.7951624724852557,
+    "std": 0.016154192251105468
+  },
+  {
+    "task": "T1",
+    "model": "catboost_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.8449208118633682,
+    "ci_lower": 0.8225113733321208,
+    "ci_upper": 0.8674140245111664,
+    "std": 0.011439086441269855
+  },
+  {
+    "task": "T1",
+    "model": "catboost_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.7581857759394605,
+    "ci_lower": 0.7266493708485425,
+    "ci_upper": 0.7898655051751047,
+    "std": 0.016060038169411248
+  },
+  {
+    "task": "T1",
+    "model": "gnn_gcn_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6417823331919357,
+    "ci_lower": 0.6151676760521229,
+    "ci_upper": 0.6692974318928838,
+    "std": 0.013590353700985327
+  },
+  {
+    "task": "T1",
+    "model": "gnn_gcn_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.2847630399096937,
+    "ci_lower": 0.2600488398468681,
+    "ci_upper": 0.3130406803698385,
+    "std": 0.013368696667468863
+  },
+  {
+    "task": "T1",
+    "model": "gnn_sage_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.4817109328843686,
+    "ci_lower": 0.4558077295014586,
+    "ci_upper": 0.5048140033234578,
+    "std": 0.012905198710668956
+  },
+  {
+    "task": "T1",
+    "model": "gnn_sage_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.19525136838104318,
+    "ci_lower": 0.17867028696752135,
+    "ci_upper": 0.2162618732823901,
+    "std": 0.0095063727882792
+  },
+  {
+    "task": "T1",
+    "model": "deep_tobit_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.60237241058794,
+    "ci_lower": 0.5740334020194002,
+    "ci_upper": 0.6294951328692823,
+    "std": 0.01414369328940288
+  },
+  {
+    "task": "T1",
+    "model": "deep_tobit_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.25077225615686116,
+    "ci_lower": 0.2290616089676994,
+    "ci_upper": 0.27540602041288265,
+    "std": 0.011738878723129313
+  },
+  {
+    "task": "T1",
+    "model": "tabpfn_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.8563805941110639,
+    "ci_lower": 0.8348496253877182,
+    "ci_upper": 0.8787707783587742,
+    "std": 0.011269769029970273
+  },
+  {
+    "task": "T1",
+    "model": "tabpfn_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.7672148618370074,
+    "ci_lower": 0.7373477860905664,
+    "ci_upper": 0.7980064183710847,
+    "std": 0.01573630045260753
+  },
+  {
+    "task": "T1",
+    "model": "voting_ensemble",
+    "metric": "auroc",
+    "point_estimate": 0.8497305224805743,
+    "ci_lower": 0.8283699581038612,
+    "ci_upper": 0.8710996316011863,
+    "std": 0.011037143583499805
+  },
+  {
+    "task": "T1",
+    "model": "voting_ensemble",
+    "metric": "auprc",
+    "point_estimate": 0.7548170708618306,
+    "ci_lower": 0.7226527952344168,
+    "ci_upper": 0.7872264713249092,
+    "std": 0.01629535239410173
+  },
+  {
+    "task": "T1",
+    "model": "stacking_ensemble",
+    "metric": "auroc",
+    "point_estimate": 0.8491375294441321,
+    "ci_lower": 0.8275145599037769,
+    "ci_upper": 0.8707261975001324,
+    "std": 0.010983844037488203
+  },
+  {
+    "task": "T1",
+    "model": "stacking_ensemble",
+    "metric": "auprc",
+    "point_estimate": 0.7539029879439166,
+    "ci_lower": 0.722560804098071,
+    "ci_upper": 0.7864294733896469,
+    "std": 0.016157567799229437
+  },
+  {
+    "task": "T1",
+    "model": "icp_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.731063956655607,
+    "ci_lower": 0.702674252617483,
+    "ci_upper": 0.7605983224550176,
+    "std": 0.014967903760898928
+  },
+  {
+    "task": "T1",
+    "model": "icp_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.6721625145526477,
+    "ci_lower": 0.6373348070146885,
+    "ci_upper": 0.7079408220365895,
+    "std": 0.01813999773941271
+  },
+  {
+    "task": "T4",
+    "model": "dummy_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.5,
+    "ci_lower": 0.5,
+    "ci_upper": 0.5,
+    "std": 0.0
+  },
+  {
+    "task": "T4",
+    "model": "dummy_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.2051548946716233,
+    "ci_lower": 0.19960346964064435,
+    "ci_upper": 0.21090458488228006,
+    "std": 0.0028524295326442907
+  },
+  {
+    "task": "T4",
+    "model": "logistic_regression",
+    "metric": "auroc",
+    "point_estimate": 0.6464986728640458,
+    "ci_lower": 0.6372113394614133,
+    "ci_upper": 0.6556151074339069,
+    "std": 0.004963114025919223
+  },
+  {
+    "task": "T4",
+    "model": "logistic_regression",
+    "metric": "auprc",
+    "point_estimate": 0.3216665929710154,
+    "ci_lower": 0.3086667822925292,
+    "ci_upper": 0.33514364426678267,
+    "std": 0.006650547229980545
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6991935079509133,
+    "ci_lower": 0.6896813312119362,
+    "ci_upper": 0.7083828417882633,
+    "std": 0.004798631857507836
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.38666937620302755,
+    "ci_lower": 0.37191158199585467,
+    "ci_upper": 0.4018747756262004,
+    "std": 0.007809085601578899
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_default",
+    "metric": "auroc",
+    "point_estimate": 0.6831029901855881,
+    "ci_lower": 0.6738930994530927,
+    "ci_upper": 0.6925714244299809,
+    "std": 0.004796242785727887
+  },
+  {
+    "task": "T4",
+    "model": "xgboost_default",
+    "metric": "auprc",
+    "point_estimate": 0.37614593960950365,
+    "ci_lower": 0.36177933621038855,
+    "ci_upper": 0.3915429799107362,
+    "std": 0.007789385954030709
+  },
+  {
+    "task": "T4",
+    "model": "random_forest_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6889028783449367,
+    "ci_lower": 0.679429861799906,
+    "ci_upper": 0.6984064901998683,
+    "std": 0.004744050349804922
+  },
+  {
+    "task": "T4",
+    "model": "random_forest_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.3679724040368241,
+    "ci_lower": 0.35352753153131133,
+    "ci_upper": 0.38275073524789804,
+    "std": 0.007498876075229183
+  },
+  {
+    "task": "T4",
+    "model": "mlp_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6299972500867973,
+    "ci_lower": 0.6201643401418415,
+    "ci_upper": 0.6398515074122199,
+    "std": 0.00506748690590387
+  },
+  {
+    "task": "T4",
+    "model": "mlp_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.2798861432688981,
+    "ci_lower": 0.26903375996450307,
+    "ci_upper": 0.29040783576770973,
+    "std": 0.005423736113425965
+  },
+  {
+    "task": "T4",
+    "model": "cnn1d_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6412588542775614,
+    "ci_lower": 0.632041552901088,
+    "ci_upper": 0.6503628032123351,
+    "std": 0.004795620542659818
+  },
+  {
+    "task": "T4",
+    "model": "cnn1d_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.31382187327583844,
+    "ci_lower": 0.3017195377872714,
+    "ci_upper": 0.32791215124408424,
+    "std": 0.006553055619009376
+  },
+  {
+    "task": "T4",
+    "model": "lightgbm_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.691836706682735,
+    "ci_lower": 0.6827304954558528,
+    "ci_upper": 0.7010931335469459,
+    "std": 0.00468645770508224
+  },
+  {
+    "task": "T4",
+    "model": "lightgbm_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.3831178740428126,
+    "ci_lower": 0.36831452472093446,
+    "ci_upper": 0.39919686528321663,
+    "std": 0.007835641982012911
+  },
+  {
+    "task": "T4",
+    "model": "catboost_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.6950990948066778,
+    "ci_lower": 0.6860152311894562,
+    "ci_upper": 0.7048066650969074,
+    "std": 0.004773731327827335
+  },
+  {
+    "task": "T4",
+    "model": "catboost_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.4031237650122436,
+    "ci_lower": 0.38760275151030804,
+    "ci_upper": 0.41898312705695934,
+    "std": 0.008174439584795929
+  },
+  {
+    "task": "T4",
+    "model": "gnn_gcn_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.5724396924990769,
+    "ci_lower": 0.5628228548043229,
+    "ci_upper": 0.5822949643120476,
+    "std": 0.004977176584572522
+  },
+  {
+    "task": "T4",
+    "model": "gnn_gcn_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.2453896376540139,
+    "ci_lower": 0.23612997491258622,
+    "ci_upper": 0.2550391814710598,
+    "std": 0.004912905653651179
+  },
+  {
+    "task": "T4",
+    "model": "gnn_sage_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.5207390643340476,
+    "ci_lower": 0.510895877665303,
+    "ci_upper": 0.5306738963483499,
+    "std": 0.005232372907537053
+  },
+  {
+    "task": "T4",
+    "model": "gnn_sage_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.22365246676624087,
+    "ci_lower": 0.2146786799934097,
+    "ci_upper": 0.23248863276934328,
+    "std": 0.00460404704448458
+  },
+  {
+    "task": "T4",
+    "model": "deep_tobit_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.5048081521216066,
+    "ci_lower": 0.49497014091739133,
+    "ci_upper": 0.5147157455265112,
+    "std": 0.005204763633003215
+  },
+  {
+    "task": "T4",
+    "model": "deep_tobit_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.20785712373117773,
+    "ci_lower": 0.2004159564106844,
+    "ci_upper": 0.21591747315242724,
+    "std": 0.0039810128800760874
+  },
+  {
+    "task": "T4",
+    "model": "voting_ensemble",
+    "metric": "auroc",
+    "point_estimate": 0.703664904183032,
+    "ci_lower": 0.6944483886890652,
+    "ci_upper": 0.7128521973334955,
+    "std": 0.004703438125138358
+  },
+  {
+    "task": "T4",
+    "model": "voting_ensemble",
+    "metric": "auprc",
+    "point_estimate": 0.3988844297668448,
+    "ci_lower": 0.3831381773479216,
+    "ci_upper": 0.4144088360554627,
+    "std": 0.007949147842489413
+  },
+  {
+    "task": "T4",
+    "model": "stacking_ensemble",
+    "metric": "auroc",
+    "point_estimate": 0.695505653171883,
+    "ci_lower": 0.6861287375158065,
+    "ci_upper": 0.7049195107886463,
+    "std": 0.004718372256456784
+  },
+  {
+    "task": "T4",
+    "model": "stacking_ensemble",
+    "metric": "auprc",
+    "point_estimate": 0.3968586909003718,
+    "ci_lower": 0.38242527018699185,
+    "ci_upper": 0.4119910329611093,
+    "std": 0.007849891179399672
+  },
+  {
+    "task": "T4",
+    "model": "icp_classifier",
+    "metric": "auroc",
+    "point_estimate": 0.587113851288093,
+    "ci_lower": 0.576915506457785,
+    "ci_upper": 0.596761381237943,
+    "std": 0.00510266442838415
+  },
+  {
+    "task": "T4",
+    "model": "icp_classifier",
+    "metric": "auprc",
+    "point_estimate": 0.27008737551364775,
+    "ci_lower": 0.2590271300501998,
+    "ci_upper": 0.2827682280727535,
+    "std": 0.005989045262385689
+  }
+]

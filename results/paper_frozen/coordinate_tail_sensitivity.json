@@ -1,0 +1,102 @@
+{
+  "_meta": {
+    "source": "C3 (M6b) coordinate-perturbation robustness extended to the empirical geocoding-error tail (50/100/270 km added to the published <=20 km). Same run_coordinate_sensitivity harness, XGBoost config, seeds. Reproduction gate ties 0 km AUROC to coordinate_sensitivity.json within 0.02.",
+    "n_seeds": 5,
+    "base_seed": 42,
+    "magnitudes_km": [
+      0.0,
+      1.0,
+      5.0,
+      10.0,
+      20.0,
+      50.0,
+      100.0,
+      270.0
+    ]
+  },
+  "summary": [
+    {
+      "magnitude_km": 0.0,
+      "auroc_mean": 0.8084229119198003,
+      "auroc_std": 0.0034753001286341677,
+      "auprc_mean": 0.6999378377991458,
+      "auprc_std": 0.0014864703021915482,
+      "delta_auroc": 0.0,
+      "delta_auprc": 0.0,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 1.0,
+      "auroc_mean": 0.8062817853267337,
+      "auroc_std": 0.004965771779379759,
+      "auprc_mean": 0.6969833834311162,
+      "auprc_std": 0.004382007275803256,
+      "delta_auroc": -0.0021411265930666445,
+      "delta_auprc": -0.0029544543680295465,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 5.0,
+      "auroc_mean": 0.8126327877378241,
+      "auroc_std": 0.0059178597212548685,
+      "auprc_mean": 0.7028550310419831,
+      "auprc_std": 0.0009939405731617214,
+      "delta_auroc": 0.004209875818023789,
+      "delta_auprc": 0.002917193242837346,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 10.0,
+      "auroc_mean": 0.813073887777637,
+      "auroc_std": 0.0027273573741339622,
+      "auprc_mean": 0.6976158270858498,
+      "auprc_std": 0.005105468842852557,
+      "delta_auroc": 0.004650975857836692,
+      "delta_auprc": -0.0023220107132959633,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 20.0,
+      "auroc_mean": 0.8179246485300731,
+      "auroc_std": 0.005017925259426064,
+      "auprc_mean": 0.7047903278185238,
+      "auprc_std": 0.00691538412357302,
+      "delta_auroc": 0.00950173661027276,
+      "delta_auprc": 0.004852490019378042,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 50.0,
+      "auroc_mean": 0.8215359940861472,
+      "auroc_std": 0.005967861405851347,
+      "auprc_mean": 0.7031423307672442,
+      "auprc_std": 0.0027065774805653904,
+      "delta_auroc": 0.013113082166346879,
+      "delta_auprc": 0.003204492968098438,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 100.0,
+      "auroc_mean": 0.816407197065333,
+      "auroc_std": 0.005719258152000623,
+      "auprc_mean": 0.6962942653624193,
+      "auprc_std": 0.008012824103751771,
+      "delta_auroc": 0.007984285145532732,
+      "delta_auprc": -0.0036435724367264166,
+      "n_runs": 5
+    },
+    {
+      "magnitude_km": 270.0,
+      "auroc_mean": 0.8203270481472664,
+      "auroc_std": 0.003589582555476306,
+      "auprc_mean": 0.7008191376812369,
+      "auprc_std": 0.005168134020810199,
+      "delta_auroc": 0.011904136227466111,
+      "delta_auprc": 0.0008812998820911799,
+      "n_runs": 5
+    }
+  ],
+  "auroc_0km": 0.8084229119198003,
+  "auroc_270km": 0.8203270481472664,
+  "auroc_drop_0_to_270km": -0.011904136227466111
+}

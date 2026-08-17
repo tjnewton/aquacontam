@@ -1,0 +1,10 @@
+# number_whitelist.tsv — EXPLICIT reviewed whitelist entries (the v1 contract's promised
+# file, first populated in the v2 pass). Format (tab-separated):
+#   filename	line	value	category	note
+# Line-keyed on purpose: if the file shifts, the audit re-FAILS loudly and the entry is
+# re-reviewed (fail-closed). Table-row decimals are never predicate-whitelistable (G9
+# rule), so historically-cited decimals in tables land here after one adversarial look.
+supplementary_information.md	1223	0.962	citation	Pre-leakage-fix T4 AUROC cited deliberately as the historical "before" in the before/after narrative (S17 decision-guide table). No frozen source carries it after the v2 re-freeze; archival provenance = git history @ 9cf4d56 (DECIDE D8).
+supplementary_information.md	953	ten	config	Structural LORO fold count (10 EPA regions -> ten folds) in the GCN/GraphSAGE note; design constant, per-fold metrics carry pn markers (#55 item 0 SI note).
+supplementary_information.md	327	3.0	config	S7b nearest-state fallback tolerance (degrees) of the polygon mis-geocode flag; design constant of paper/_geo_flags.py, recorded in misgeocode_sensitivity_v2.json _meta (ED Fig. 1 polygon-flag fix).
+extended_data.md	59	200	config	ICP canonical training length (200 epochs) in the ED Fig. 4a provenance note; matches the S17 scoped ICP training-schedule config (#55 item 7 caption).

@@ -1,0 +1,67 @@
+{
+  "_meta": {
+    "source": "C9 (m10) per-demographic-group conformal coverage. Mirrors _run_group_conformal_analysis (same assembly, XGBoost config+seed, splits, GroupConformalClassifier) but stratifies by a val-set median split of each flagged demographic instead of by EPA region. Reproduction gate ties the overall alpha=0.05 coverage to group_conformal_results.json within 0.01.",
+    "seed": 42,
+    "note": "Per-group conformal guarantees are approximate: calibration is on the val regions (2,7), so per-demographic coverage on the test regions is a transfer estimate, not a within-group exchangeable guarantee."
+  },
+  "results": {
+    "pct_people_of_color": {
+      "median_threshold_val": 0.1271523035,
+      "by_alpha": {
+        "0.05": {
+          "target_coverage": 0.95,
+          "overall_coverage": 0.9132275132275133,
+          "high_group_coverage": 0.9189102564102564,
+          "low_group_coverage": 0.8863636363636364,
+          "high_n": 3120,
+          "low_n": 660
+        },
+        "0.10": {
+          "target_coverage": 0.9,
+          "overall_coverage": 0.8608465608465609,
+          "high_group_coverage": 0.867948717948718,
+          "low_group_coverage": 0.8272727272727273,
+          "high_n": 3120,
+          "low_n": 660
+        },
+        "0.20": {
+          "target_coverage": 0.8,
+          "overall_coverage": 0.7783068783068783,
+          "high_group_coverage": 0.7923076923076923,
+          "low_group_coverage": 0.7121212121212122,
+          "high_n": 3120,
+          "low_n": 660
+        }
+      }
+    },
+    "pct_low_income": {
+      "median_threshold_val": 0.2293899325,
+      "by_alpha": {
+        "0.05": {
+          "target_coverage": 0.95,
+          "overall_coverage": 0.9108465608465608,
+          "high_group_coverage": 0.9083619702176403,
+          "low_group_coverage": 0.9164513350559862,
+          "high_n": 2619,
+          "low_n": 1161
+        },
+        "0.10": {
+          "target_coverage": 0.9,
+          "overall_coverage": 0.8267195767195767,
+          "high_group_coverage": 0.8025964108438335,
+          "low_group_coverage": 0.8811369509043928,
+          "high_n": 2619,
+          "low_n": 1161
+        },
+        "0.20": {
+          "target_coverage": 0.8,
+          "overall_coverage": 0.7296296296296296,
+          "high_group_coverage": 0.6899579992363497,
+          "low_group_coverage": 0.8191214470284238,
+          "high_n": 2619,
+          "low_n": 1161
+        }
+      }
+    }
+  }
+}

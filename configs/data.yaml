@@ -1,0 +1,534 @@
+# AquaContam — Data Source Configuration
+#
+# Each source section defines download URLs, file format, column mappings,
+# and expected analytes. Used by the corresponding DataSource loader.
+
+defaults:
+  crs_storage: "EPSG:4326"
+  crs_distance: "EPSG:5070"
+  parquet_compression: "snappy"
+
+ucmr5:
+  url: "https://www.epa.gov/system/files/other-files/2023-08/ucmr5-occurrence-data.zip"
+  expected_files:
+    - "UCMR5_All.txt"
+  format:
+    delimiter: "\t"
+    encoding: "latin-1"
+    dtype_overrides:
+      PWSID: "str"
+      ZipCode: "str"
+      FacilityID: "str"
+  column_map:
+    PWSID: "pwsid"
+    Contaminant: "analyte"
+    AnalyticalResultValue: "concentration"
+    MRL: "detection_limit"
+    CollectionDate: "sample_date"
+  derived_columns:
+    censored:
+      source_column: "AnalyticalResultsSign"
+      condition: "<"
+    unit: "ug/L"
+  extra_columns:
+    - "PWSName"
+    - "Size"
+    - "FacilityName"
+    - "FacilityID"
+    - "FacilityWaterType"
+    - "Region"
+    - "State"
+    - "ZipCode"
+    - "SamplePointName"
+    - "SamplePointType"
+    - "AnalyticalMethodNumber"
+
+ucmr3:
+  url: "https://www.epa.gov/system/files/other-files/2024-04/ucmr3-occurrence-data.zip"
+  expected_files:
+    - "UCMR3_All.txt"
+  format:
+    delimiter: "\t"
+    encoding: "latin-1"
+    dtype_overrides:
+      PWSID: "str"
+      ZipCode: "str"
+      FacilityID: "str"
+  column_map:
+    PWSID: "pwsid"
+    Contaminant: "analyte"
+    AnalyticalResultValue: "concentration"
+    MRL: "detection_limit"
+    CollectionDate: "sample_date"
+  derived_columns:
+    censored:
+      source_column: "AnalyticalResultsSign"
+      condition: "<"
+    unit: "ug/L"
+  extra_columns:
+    - "PWSName"
+    - "Size"
+    - "FacilityName"
+    - "FacilityID"
+    - "FacilityWaterType"
+    - "Region"
+    - "State"
+    - "ZipCode"
+    - "SamplePointName"
+    - "SamplePointType"
+    - "AnalyticalMethodNumber"
+
+# ---------------------------------------------------------------------------
+# EPA Facility Registry Service (FRS) — auxiliary geospatial data
+# ---------------------------------------------------------------------------
+epa_frs:
+  url: "https://ordsext.epa.gov/FLA/www3/state_files/national_single.zip"
+  expected_files:
+    - "NATIONAL_SINGLE.CSV"
+  format:
+    encoding: "latin-1"
+  column_map:
+    REGISTRY_ID: "registry_id"
+    PRIMARY_NAME: "facility_name"
+    LATITUDE83: "latitude"
+    LONGITUDE83: "longitude"
+    SIC_CODES: "sic_codes"
+    NAICS_CODES: "naics_codes"
+    STATE_CODE: "state_code"
+    INTEREST_TYPES: "interest_types"
+
+# ---------------------------------------------------------------------------
+# NLCD Land Cover — 30m categorical raster
+# ---------------------------------------------------------------------------
+nlcd:
+  url: "https://www.sciencebase.gov/catalog/file/get/655ceb8ad34ee4b6e05cc51a?f=__disk__a1%2F42%2Ff0%2Fa142f097f75ab6790cce77d764be4f0c7a24d0cf"
+  unavailable: true
+  unavailable_reason: >-
+    ScienceBase direct download URL is unstable (returns 404 periodically).
+    Download manually from https://www.sciencebase.gov/catalog/item/655ceb8ad34ee4b6e05cc51a
+    and place the .tif or .img file in data/raw/.
+  expected_files:
+    - "nlcd_2021_land_cover_l48_20230630.img"
+  alternative_filenames:
+    - "nlcd_2021_land_cover_l48_20230630.img"
+    - "Annual_NLCD_LndCov_2021_20230630.tif"
+    - "nlcd_2021_land_cover_l48_20230630.tif"
+  year: 2021  # Reference only — code uses _constants.py
+  classes:  # Reference only — code uses NLCD_CLASS_MAP in _constants.py
+    11: "Open Water"
+    21: "Developed, Open Space"
+    22: "Developed, Low Intensity"
+    23: "Developed, Medium Intensity"
+    24: "Developed, High Intensity"
+    31: "Barren Land"
+    41: "Deciduous Forest"
+    42: "Evergreen Forest"
+    43: "Mixed Forest"
+    52: "Shrub/Scrub"
+    71: "Grassland/Herbaceous"
+    81: "Pasture/Hay"
+    82: "Cultivated Crops"
+    90: "Woody Wetlands"
+    95: "Emergent Herbaceous Wetlands"
+
+# ---------------------------------------------------------------------------
+# USGS Principal Aquifers — polygon shapefile
+# ---------------------------------------------------------------------------
+usgs_aquifers:
+  url: "https://water.usgs.gov/GIS/dsdl/aquifers_us.zip"
+  expected_files:
+    - "us_aquifers.shp"
+  column_map:
+    AQ_NAME: "aquifer_type"
+    ROCK_TYPE: "aquifer_lithology"
+    # NOTE: this USGS Principal Aquifers release exposes
+    # only ROCK_NAME / ROCK_TYPE / AQ_NAME / AQ_CODE — there is no confinement
+    # attribute. The mapping below therefore resolves to an all-missing column,
+    # which enters the feature matrix only as a constant ``aquifer_confinement_nan``
+    # missingness indicator (zero variance, no signal; ignored by the tree models).
+    # Retained as-is for feature-matrix and frozen-artifact stability.
+    AQ_TYPE: "aquifer_confinement"
+
+# ---------------------------------------------------------------------------
+# Michigan MPART — PFAS sampling via ArcGIS REST API
+# ---------------------------------------------------------------------------
+mi_mpart:
+  arcgis_base_url: "https://gisagoegle.state.mi.us/arcgis/rest/services/EGLE/PfasOpenData/MapServer"
+  layer_id: 3  # PFAS Compliance Monitoring table (wide format, 23K+ records)
+  expected_files:
+    - "mi_mpart_results.csv"
+  format:
+    encoding: "utf-8"
+  unit: "ppt"  # ng/L — must convert to ug/L (× 0.001)
+  non_detect_flags: ["ND", "U", "<"]
+  # Wide-format columns: HFPODA, PFBS, PFHxA, PFHxS, PFNA, PFOA, PFOS, etc.
+  # System ID is WSSN (integer), not PWSID. Prefix with "MI" for normalization.
+  # No coordinates in table — use Layer 2 (hexbin polygons) centroids for approx lat/lon.
+
+# ---------------------------------------------------------------------------
+# California GeoTracker — GAMA groundwater PFAS data
+# ---------------------------------------------------------------------------
+ca_geotracker:
+  url: "https://data.ca.gov/dataset/81d1347c-891d-4f09-abc5-6eeb521b55d2/resource/c7cd50a2-2a68-44a1-8d40-4e767f363964/download/pfas.csv"
+  expected_files:
+    - "ca_geotracker_pfas.csv"
+  format:
+    encoding: "latin-1"
+  source_crs: "EPSG:4269"  # NAD83 → reproject to WGS84
+
+# ---------------------------------------------------------------------------
+# New Jersey DEP — Drinking Water Viewer (waterviewer.nj.gov)
+# ---------------------------------------------------------------------------
+nj_dep:
+  base_url: "https://waterviewer.nj.gov"
+  inventory_endpoint: "/sdwis/DashMain"
+  facility_endpoint: "/sdwis/FacilityList"
+  analyte_codes_endpoint: "/LookUp/AnalyteCodes"
+  samples_endpoint: "/sdwis/SamplesSearchResults"
+  page_size: 1000
+  expected_files:
+    - "nj_dep_inventory.csv"
+    - "nj_dep_facilities.csv"
+  manual_export_file: "nj_dep_pfas_export.xlsx"
+  scraper_output_file: "nj_dep_pfas_export.csv"
+  scraper_page_size: 1000
+  scraper_delay_seconds: 0.5
+  inventory_available: true
+  unavailable: false
+  unavailable_reason: >-
+    Chemical sample data requires reCAPTCHA bypass (use scripts/scrape_nj_dep.py).
+    Inventory and facilities download automatically. Manual export CSV (87MB,
+    248k records) was scraped 2026-03-16 and is present in data/raw/.
+
+# ---------------------------------------------------------------------------
+# North Carolina DEQ — PFAS sampling at public water systems
+# ---------------------------------------------------------------------------
+nc_deq:
+  # NC DEQ publishes PFAS data only as PDF tables (2022, 2023, 2024).
+  # 2024 data: https://www.deq.nc.gov/water-resources/pws/2024-small-system-pfas-sampling/open
+  # 2023 data: https://www.deq.nc.gov/water-resources/pws/2023-public-water-system-sampling-data-table/download?attachment
+  # Both serve application/pdf. NC data is partially available via WQP
+  # (North Carolina submissions to STORET/WQX).
+  url: "https://www.deq.nc.gov/water-resources/pws/2024-small-system-pfas-sampling/open"
+  expected_files:
+    - "nc_deq_pfas.pdf"
+  format:
+    encoding: "utf-8"
+  unavailable: true
+  unavailable_reason: >-
+    NC DEQ publishes data only as PDF tables (no machine-readable CSV/Excel).
+    NC public water system PFAS data is partially available via the Water
+    Quality Portal (WQP) for NC (US:37). Contact NC DEQ Division of Water
+    Resources for bulk CSV export.
+
+# ---------------------------------------------------------------------------
+# SDWIS — Safe Drinking Water Information System (heavy metals)
+# ---------------------------------------------------------------------------
+sdwis:
+  url: "https://echo.epa.gov/files/echodownloads/SDWA_latest_downloads.zip"
+  expected_files:
+    - "SDWA_LCR_SAMPLES.csv"
+    - "SDWA_PUB_WATER_SYSTEMS.csv"
+  format:
+    encoding: "latin-1"
+    dtype_overrides:
+      PWSID: "str"
+      CONTAMINANT_CODE: "str"
+  column_map:
+    PWSID: "pwsid"
+    CONTAMINANT_CODE: "contaminant_code"
+    RESULT_SIGN_CODE: "result_sign"
+    SAMPLE_MEASURE: "concentration"
+    SAMPLE_COLLECTION_DATE: "sample_date"
+    UNIT_OF_MEASURE: "raw_unit"
+  system_column_map:
+    PWSID: "pwsid"
+    PWS_NAME: "pws_name"
+    EPA_REGION: "raw_epa_region"
+    GW_SW_CODE: "raw_gw_sw_code"
+    POPULATION_SERVED_COUNT: "raw_population_served"
+    STATE_CODE: "state_code"
+
+# ---------------------------------------------------------------------------
+# EPA EJScreen — environmental justice screening indices (block group level)
+# ---------------------------------------------------------------------------
+ejscreen:
+  url: "https://zenodo.org/records/14767363/files/2023.zip?download=1"
+  expected_files:
+    - "EJSCREEN_2023_BG_with_AS_CNMI_GU_VI.csv"
+  # Note: Zenodo 2023.zip contains nested files. The CSV may be at a
+  # subdirectory path inside the archive. The loader searches for the
+  # expected filename recursively after extraction.
+  # GDB alternative: when CSV lacks coordinates and BG gazetteer is
+  # unavailable, the loader extracts centroids from the GDB polygon layer.
+  gdb_file: "EJSCREEN_2023_BG_with_AS_CNMI_GU_VI.gdb.zip"
+  format:
+    encoding: "latin-1"
+  column_map:
+    ID: "block_group_id"
+    PEOPCOLORPCT: "pct_people_of_color"
+    LOWINCPCT: "pct_low_income"
+    LINGISOPCT: "pct_limited_english"
+    LESSHSPCT: "pct_less_hs_education"
+    UNDER5PCT: "pct_under_5"
+    OVER64PCT: "pct_over_64"
+    PWDIS: "prox_wastewater_discharge"
+    P_PWDIS: "ej_index_water"
+    P_PNPL: "prox_superfund"
+    P_PRMP: "prox_rmp_facility"
+    P_PTSDF: "prox_hazardous_waste"
+    DEMOGIDX_5: "ej_supplemental_index"
+
+# ---------------------------------------------------------------------------
+# NJ Private Well Testing Act (PWTA) — private well test results
+# ---------------------------------------------------------------------------
+nj_private_wells:
+  url: "https://www.nj.gov/dep/dsr/pwta/PWTA_Data.zip"
+  unavailable: true
+  unavailable_reason: >-
+    NJ PWTA bulk data download (PWTA_Data.zip) returns 404 (since ~2024).
+    Individual well test results require direct request to NJ DEP Division of
+    Science and Research. Municipality-level summaries with PFOA/PFOS/PFNA
+    exceedance data are available via ArcGIS FeatureServer at
+    https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/
+    Private_Well_Testing_Act_Summary_Results_by_Municipality_for_New_Jersey/FeatureServer/64
+  expected_files:
+    - "PWTA_Data.csv"
+  format:
+    encoding: "utf-8"
+  column_map:
+    SAMPLE_ID: "sample_id"
+    LATITUDE: "latitude"
+    LONGITUDE: "longitude"
+    ANALYTE_NAME: "analyte"
+    RESULT_VALUE: "concentration"
+    DETECTION_LIMIT: "detection_limit"
+    SAMPLE_DATE: "sample_date"
+    RESULT_QUALIFIER: "result_qualifier"
+
+# ---------------------------------------------------------------------------
+# US Census Block Group Gazetteer — centroid lookup for EJScreen geocoding
+# ---------------------------------------------------------------------------
+bg_gazetteer:
+  url: "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2020_Gazetteer/2020_Gaz_bg_national.zip"
+  unavailable: true
+  unavailable_reason: >-
+    Census Bureau does not publish block group gazetteer files. The primary
+    path uses EJScreen GDB polygon centroids (see ejscreen.gdb_file config).
+    Future alternative: derive BG centroids from TIGER/Line shapefiles
+    (https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html).
+  expected_files:
+    - "2020_Gaz_bg_national.txt"
+  format:
+    delimiter: "\t"
+    encoding: "utf-8"
+
+# ---------------------------------------------------------------------------
+# US Census ZCTA Gazetteer — ZIP code centroid lookup for geocoding
+# ---------------------------------------------------------------------------
+zcta_gazetteer:
+  url: "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2023_Gazetteer/2023_Gaz_zcta_national.zip"
+  expected_files:
+    - "2023_Gaz_zcta_national.txt"
+  format:
+    delimiter: "\t"
+    encoding: "utf-8"
+  column_map:
+    GEOID: "zipcode"
+    INTPTLAT: "latitude"
+    INTPTLONG: "longitude"
+
+# ---------------------------------------------------------------------------
+# Missouri DNR — PFAS sampling via ArcGIS REST API
+# ---------------------------------------------------------------------------
+mo_dnr:
+  arcgis_base_url: "https://gis.dnr.mo.gov/host/rest/services/water/PFAS_Samples/MapServer"
+  layer_id: 0
+  expected_files:
+    - "mo_dnr_pfas.csv"
+  format:
+    encoding: "utf-8"
+  unit: "ng/L"  # typically NG/L — must convert to ug/L (× 0.001)
+
+# ---------------------------------------------------------------------------
+# Water Quality Portal (WQP) — national PFAS data via REST API
+# ---------------------------------------------------------------------------
+wqp:
+  url: "https://www.waterqualitydata.us/data/Result/search"
+  station_url: "https://www.waterqualitydata.us/data/Station/search"
+  request_delay_seconds: 2
+  download_timeout: 300
+  states:
+    # EPA Region 1 — New England
+    - "US:09"  # Connecticut
+    - "US:25"  # Massachusetts
+    - "US:23"  # Maine
+    - "US:33"  # New Hampshire
+    - "US:44"  # Rhode Island
+    - "US:50"  # Vermont
+    # EPA Region 2
+    - "US:34"  # New Jersey
+    - "US:36"  # New York
+    # EPA Region 3
+    - "US:11"  # District of Columbia
+    - "US:10"  # Delaware
+    - "US:24"  # Maryland
+    - "US:42"  # Pennsylvania
+    - "US:51"  # Virginia
+    - "US:54"  # West Virginia
+    # EPA Region 4 — Southeast
+    - "US:01"  # Alabama
+    - "US:12"  # Florida
+    - "US:13"  # Georgia
+    - "US:21"  # Kentucky
+    - "US:28"  # Mississippi
+    - "US:37"  # North Carolina
+    - "US:45"  # South Carolina
+    - "US:47"  # Tennessee
+    # EPA Region 5 — Great Lakes
+    - "US:17"  # Illinois
+    - "US:18"  # Indiana
+    - "US:26"  # Michigan
+    - "US:27"  # Minnesota
+    - "US:39"  # Ohio
+    - "US:55"  # Wisconsin
+    # EPA Region 6 — South Central
+    - "US:05"  # Arkansas
+    - "US:22"  # Louisiana
+    - "US:35"  # New Mexico
+    - "US:40"  # Oklahoma
+    - "US:48"  # Texas
+    # EPA Region 7 — Midwest
+    - "US:19"  # Iowa
+    - "US:20"  # Kansas
+    - "US:29"  # Missouri
+    - "US:31"  # Nebraska
+    # EPA Region 8 — Mountain
+    - "US:08"  # Colorado
+    - "US:30"  # Montana
+    - "US:38"  # North Dakota
+    - "US:46"  # South Dakota
+    - "US:49"  # Utah
+    - "US:56"  # Wyoming
+    # EPA Region 9 — Pacific Southwest
+    - "US:04"  # Arizona
+    - "US:06"  # California
+    - "US:32"  # Nevada
+    # EPA Region 10 — Pacific Northwest
+    - "US:16"  # Idaho
+    - "US:41"  # Oregon
+    - "US:53"  # Washington
+  expected_files:
+    - "wqp_pfas_results.csv"
+    - "wqp_pfas_stations.csv"
+  format:
+    encoding: "utf-8"
+
+# ---------------------------------------------------------------------------
+# Texas TCEQ — PFAS data (unavailable — requires manual request)
+# ---------------------------------------------------------------------------
+tx_tceq:
+  unavailable: true
+  unavailable_reason: >-
+    TCEQ PFAS data requires manual request via openrecs@tceq.texas.gov.
+    No public API available. Texas PFAS data is partially available via WQP.
+  expected_files:
+    - "tx_tceq_pfas.csv"
+
+# ---------------------------------------------------------------------------
+# Ohio EPA — PFAS sampling results (ArcGIS MapServer)
+# ---------------------------------------------------------------------------
+oh_epa:
+  unavailable: true  # Excluded: 0 unique PWSIDs (all overlap SDWIS), 0% censoring
+  arcgis_base_url: "https://geo.epa.ohio.gov/arcgis/rest/services/DrinkingWater/PFAS_SAMPLING/MapServer"
+  results_layer_id: 2  # Table "PFAS Results All" — 26K+ records
+  systems_layer_id: 0  # Point layer "Water Treatment Plants Sampled for PFAS"
+  expected_files:
+    - "oh_epa_pfas.csv"
+  format:
+    encoding: "utf-8"
+  unit: "ng/L"  # NG/L — convert to ug/L (× 0.001)
+
+# ---------------------------------------------------------------------------
+# Washington State DOH — PFAS drinking water testing results (CSV download)
+# ---------------------------------------------------------------------------
+wa_doh:
+  url: "https://doh.wa.gov/sites/default/files/Data/Auto-Uploads/PFAS/PFAS_Downloadable_Data.csv"
+  expected_files:
+    - "wa_doh_pfas.csv"
+  format:
+    encoding: "utf-8"
+  unit: "ng/L"  # Values are in ng/L — convert to ug/L (× 0.001)
+
+# ---------------------------------------------------------------------------
+# NJ Private Wells (PWTA) — municipality-level summary from ArcGIS
+# ---------------------------------------------------------------------------
+nj_private_wells_summary:
+  arcgis_url: "https://services1.arcgis.com/QWdNfRs7lkPq4g4Q/arcgis/rest/services/Private_Well_Testing_Act_Summary_Results_by_Municipality_for_New_Jersey/FeatureServer/64"
+  expected_files:
+    - "nj_pwta_municipality_summary.csv"
+  format:
+    encoding: "utf-8"
+
+# ---------------------------------------------------------------------------
+# EPA Toxics Release Inventory (TRI) — PFAS releases (feature source)
+# ---------------------------------------------------------------------------
+tri:
+  url_template: "https://data.epa.gov/efservice/downloads/tri/mv_tri_basic_download/{year}_US/csv"
+  years:
+    - 2023
+    - 2022
+    - 2021
+    - 2020
+  expected_files:
+    - "tri_pfas_facilities.csv"
+  format:
+    encoding: "utf-8"
+  # TRI has a "48. PFAS" column = "YES" for PFAS chemicals.
+  # Key columns: 12. LATITUDE, 13. LONGITUDE, 37. CHEMICAL, 65. ON-SITE RELEASE TOTAL
+
+# ---------------------------------------------------------------------------
+# Minnesota MDH — PFAS monitoring (manual bulk export; no public API/download)
+# ---------------------------------------------------------------------------
+# No public bulk-download endpoint — MDH provides an Excel export on request
+# (health.drinkingwater@state.mn.us). Stage the workbook at
+# data/raw/mn_mdh_pfas.xlsx (the loader also accepts the original emailed name).
+# 410,363 raw rows -> 247,230 after collapsing the ANALYTE_GROUP replication
+# (PFAS_533 / PFC_EXPANDED / PFAS_Regulated). 1,357 PWS systems, 27 PFAS
+# analytes, 2005-2026, ~79% non-detect (RESULT == REPORTING_LIMIT substitution).
+mn_mdh:
+  url: "https://www.health.state.mn.us/communities/environment/water/pfasmap.html"
+  manual_export_file: "mn_mdh_pfas.xlsx"
+  unit: "mixed"  # ng/L and ug/L both present; converted per-row to ug/L
+  expected_files:
+    - "mn_mdh_pfas.xlsx"
+
+# ---------------------------------------------------------------------------
+# Maine CDC — PFAS drinking water testing via MaineTracking Network
+# ---------------------------------------------------------------------------
+me_cdc:
+  url: "https://data.mainepublichealth.gov/tracking/public-water"
+  unavailable: true
+  unavailable_reason: >-
+    Maine CDC PFAS data is available via MaineTracking Network interactive
+    portal with CSV export capability. 383 community water systems + 272
+    schools tested (Aug 2021 - Oct 2024). 6 PFAS: PFOA, PFOS, PFHpA, PFNA,
+    PFDA, PFHxS. Maine standard = 20 ppt combined. Manual download required
+    from the portal. Contact data.mainepublichealth.gov for programmatic access.
+  expected_files:
+    - "me_cdc_pfas.csv"
+  format:
+    encoding: "utf-8"
+
+# ---------------------------------------------------------------------------
+# DoD PFAS Sites — EPA PFAS Analytic Tools, Layer 13 (Federal Sites)
+# ---------------------------------------------------------------------------
+dod_pfas:
+  arcgis_url: "https://services.arcgis.com/cJ9YHowT8TU7DUyn/ArcGIS/rest/services/PFAS_Analytic_Tools_Layers/FeatureServer/13"
+  expected_files:
+    - "dod_pfas_sites.csv"
+  format:
+    encoding: "utf-8"
+  # 761 federal sites (724 DoD/military) with known or suspected PFAS
+  # contamination. Agencies: Army, Air Force, Navy, DLA, FUDS, USCG, DOE,
+  # DOT FAA, NASA, USDA. Includes lat/lon, PFAS presence, cleanup status.

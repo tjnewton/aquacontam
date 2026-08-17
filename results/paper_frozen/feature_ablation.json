@@ -1,0 +1,380 @@
+[
+  {
+    "category": "all_features",
+    "task": "T1",
+    "n_features_removed": 0,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6653656864315299,
+    "delta": 0.0,
+    "significance": {}
+  },
+  {
+    "category": "proximity",
+    "task": "T1",
+    "n_features_removed": 16,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6534716130715095,
+    "delta": -0.011894073360020463,
+    "significance": {
+      "auroc": {
+        "delta": -0.002027562483447265,
+        "p_value": 0.674,
+        "ci_lower": -0.010265844206724956,
+        "ci_upper": 0.005947372541593048,
+        "p_value_fdr": 0.674,
+        "significant_fdr": false
+      },
+      "auprc": {
+        "delta": 0.011894073360020463,
+        "p_value": 0.012,
+        "ci_lower": 0.00278205837041767,
+        "ci_upper": 0.02121262541472545,
+        "p_value_fdr": 0.024,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "land_use",
+    "task": "T1",
+    "n_features_removed": 28,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6674516040482722,
+    "delta": 0.002085917616742261,
+    "significance": {
+      "auroc": {
+        "delta": -0.0035424376299107996,
+        "p_value": 0.46,
+        "ci_lower": -0.013193452969322709,
+        "ci_upper": 0.005624611562044264,
+        "p_value_fdr": 0.5257142857142857,
+        "significant_fdr": false
+      },
+      "auprc": {
+        "delta": -0.002085917616742261,
+        "p_value": 0.696,
+        "ci_lower": -0.013968368240308513,
+        "ci_upper": 0.008535793525781526,
+        "p_value_fdr": 0.696,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "hydrogeology",
+    "task": "T1",
+    "n_features_removed": 45,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6695194241452275,
+    "delta": 0.004153737713697536,
+    "significance": {
+      "auroc": {
+        "delta": -0.0028021755118543545,
+        "p_value": 0.4,
+        "ci_lower": -0.00945779948231576,
+        "ci_upper": 0.004208842930652381,
+        "p_value_fdr": 0.5257142857142857,
+        "significant_fdr": false
+      },
+      "auprc": {
+        "delta": -0.004153737713697536,
+        "p_value": 0.368,
+        "ci_lower": -0.01288446219451879,
+        "ci_upper": 0.005319015609577319,
+        "p_value_fdr": 0.42057142857142854,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "aquifer_type_only",
+    "task": "T1",
+    "n_features_removed": 43,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6555516717422865,
+    "delta": -0.009814014689243478,
+    "significance": {
+      "auroc": {
+        "delta": 0.005706888491105344,
+        "p_value": 0.084,
+        "ci_lower": -0.0006921118958845367,
+        "ci_upper": 0.012042057060950772,
+        "p_value_fdr": 0.168,
+        "significant_fdr": false
+      },
+      "auprc": {
+        "delta": 0.009814014689243478,
+        "p_value": 0.038,
+        "ci_lower": 0.0003365285660692164,
+        "ci_upper": 0.01972015542226861,
+        "p_value_fdr": 0.0608,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "demographics",
+    "task": "T1",
+    "n_features_removed": 5,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6714056329086125,
+    "delta": 0.006039946477082614,
+    "significance": {
+      "auroc": {
+        "delta": -0.0027466987916380248,
+        "p_value": 0.412,
+        "ci_lower": -0.009823883738621675,
+        "ci_upper": 0.004061536921707588,
+        "p_value_fdr": 0.5257142857142857,
+        "significant_fdr": false
+      },
+      "auprc": {
+        "delta": -0.006039946477082614,
+        "p_value": 0.128,
+        "ci_lower": -0.014262026731546102,
+        "ci_upper": 0.00216503627577019,
+        "p_value_fdr": 0.17066666666666666,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "n_samples_only",
+    "task": "T1",
+    "n_features_removed": 1,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.6328986155344327,
+    "delta": -0.03246707089709722,
+    "significance": {
+      "auroc": {
+        "delta": 0.047063667007771204,
+        "p_value": 0.0,
+        "ci_lower": 0.03566833725977313,
+        "ci_upper": 0.05913915378144941,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      },
+      "auprc": {
+        "delta": 0.03246707089709722,
+        "p_value": 0.0,
+        "ci_lower": 0.02038629697817878,
+        "ci_upper": 0.04577472065393781,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "monitoring_intensity",
+    "task": "T1",
+    "n_features_removed": 2,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.598082850391046,
+    "delta": -0.0672828360404839,
+    "significance": {
+      "auroc": {
+        "delta": 0.0473151156715379,
+        "p_value": 0.0,
+        "ci_lower": 0.03637135997642364,
+        "ci_upper": 0.05842341177330265,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      },
+      "auprc": {
+        "delta": 0.0672828360404839,
+        "p_value": 0.0,
+        "ci_lower": 0.04904302884796567,
+        "ci_upper": 0.08498028048574281,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "system_characteristics",
+    "task": "T1",
+    "n_features_removed": 4,
+    "baseline_score": 0.6653656864315299,
+    "ablated_score": 0.5972765832380759,
+    "delta": -0.06808910319345407,
+    "significance": {
+      "auroc": {
+        "delta": 0.04899624922409884,
+        "p_value": 0.0,
+        "ci_lower": 0.036197111051182874,
+        "ci_upper": 0.06283061364896385,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      },
+      "auprc": {
+        "delta": 0.06808910319345407,
+        "p_value": 0.0,
+        "ci_lower": 0.04936731891775874,
+        "ci_upper": 0.08672227689304043,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "all_features",
+    "n_features_removed": 0,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.4214544797697082,
+    "delta": 0.0,
+    "task": "T4",
+    "n_folds": 10
+  },
+  {
+    "category": "proximity",
+    "n_features_removed": 16,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.42028564620580433,
+    "delta": -0.0011688335639038483,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.002696840654726751,
+        "p_value": 0.104,
+        "ci_lower": -0.0007108169970520827,
+        "ci_upper": 0.006333542219185715,
+        "p_value_fdr": 0.11885714285714286,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "land_use",
+    "n_features_removed": 28,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.4183673698586414,
+    "delta": -0.0030871099110667544,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.007323658447561943,
+        "p_value": 0.0,
+        "ci_lower": 0.0035635304069998068,
+        "ci_upper": 0.011289392564762621,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "hydrogeology",
+    "n_features_removed": 55,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.4178410572774468,
+    "delta": -0.0036134224922613756,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.011633483432543446,
+        "p_value": 0.0,
+        "ci_lower": 0.007979812421157254,
+        "ci_upper": 0.015182125414671815,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "aquifer_type_only",
+    "n_features_removed": 53,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.4192629763095356,
+    "delta": -0.0021915034601726058,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.01039915838592248,
+        "p_value": 0.0,
+        "ci_lower": 0.006710575089997893,
+        "ci_upper": 0.014446124552467146,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "demographics",
+    "n_features_removed": 5,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.4224112054083758,
+    "delta": 0.0009567256386676104,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": -0.001410670465412156,
+        "p_value": 0.444,
+        "ci_lower": -0.004681776347366398,
+        "ci_upper": 0.002047865727452533,
+        "p_value_fdr": 0.444,
+        "significant_fdr": false
+      }
+    }
+  },
+  {
+    "category": "n_samples_only",
+    "n_features_removed": 1,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.30202750392219374,
+    "delta": -0.11942697584751444,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.12781365544409945,
+        "p_value": 0.0,
+        "ci_lower": 0.1222767752692221,
+        "ci_upper": 0.13408685429534106,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "monitoring_intensity",
+    "n_features_removed": 1,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.30202750392219374,
+    "delta": -0.11942697584751444,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.12781365544409945,
+        "p_value": 0.0,
+        "ci_lower": 0.1222767752692221,
+        "ci_upper": 0.13408685429534106,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  },
+  {
+    "category": "system_characteristics",
+    "n_features_removed": 3,
+    "baseline_score": 0.4214544797697082,
+    "ablated_score": 0.3029279840857343,
+    "delta": -0.11852649568397389,
+    "task": "T4",
+    "n_folds": 10,
+    "significance": {
+      "auprc": {
+        "delta": 0.1296976992890474,
+        "p_value": 0.0,
+        "ci_lower": 0.12383672375325924,
+        "ci_upper": 0.13576668781630574,
+        "p_value_fdr": 0.0,
+        "significant_fdr": true
+      }
+    }
+  }
+]

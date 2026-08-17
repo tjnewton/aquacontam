@@ -1,0 +1,265 @@
+[build-system]
+requires = ["setuptools>=68", "setuptools-scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aquacontam"
+dynamic = ["version"]
+description = "ML-ready benchmark for predicting PFAS and heavy metal contamination in U.S. drinking water."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [
+    { name = "Tyler J. Newton" },
+]
+keywords = ["PFAS", "water-quality", "machine-learning", "benchmark", "contamination"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
+]
+dependencies = [
+    "numpy>=1.24,<2",
+    "pandas>=2.0,<3",
+    "openpyxl>=3.1",
+    # jinja2 backs pandas DataFrame.to_latex / .style, used by paper/generate_tables.py to
+    # emit the committed paper/tables/*.tex — a repo deliverable exercised by the G4 gate
+    # clause. Core (like openpyxl) so any `-e .[test]` install can run it, without a
+    # workflow-scope edit to add it per-job.
+    "jinja2>=3.1",
+    "pyarrow>=14,<19",
+    "geopandas>=0.14,<2",
+    "shapely>=2.0,<3",
+    "pyproj>=3.4,<4",
+    "rasterio>=1.3,<2",
+    "rasterstats>=0.19,<1",
+    "scipy>=1.10,<2",
+    "scikit-learn>=1.3,<2",
+    "xgboost>=2.0,<4",
+    "pyyaml>=6.0,<7",
+    "tqdm>=4.66,<5",
+    "requests>=2.31,<3",
+    "click>=8.1,<9",
+    "joblib>=1.3,<2",
+    "tenacity>=8.0,<10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+    # mypy/pandas-stubs bounded to a major line, not exact-pinned. mypy 2.x
+    # tightened `no-any-return` inference on pandas constructors (a wave hit CI
+    # on 2026-07); the code is now cast-clean under the latest (verified against
+    # mypy 2.2.0 + pandas-stubs 3.0.3), so these ranges are honest reproducibility
+    # rails (allow current releases, block an unvalidated next major) rather than
+    # a mask over broken code. Bump the caps deliberately after re-running mypy.
+    "mypy>=1.8,<3",
+    "pre-commit>=3.6",
+    "types-PyYAML>=6.0",
+    # 3.0.5.260730 is excluded as a known-broken release, not to mask our code:
+    # in it `Series.astype(str)` resolves to an overload returning `Series[bool]`
+    # (`reveal_type(df["x"].astype(str))` -> `Series[bool]`), so every downstream
+    # `.str` accessor becomes `SeriesStringMethods[bool]` and errors with [misc].
+    # `astype("string")` still correctly yields `Series[str]` in the same release,
+    # which is what identifies it as a stub bug rather than a real typing defect.
+    # 23 such errors across 9 data loaders; clean on 3.0.3.260530 and expected to
+    # be clean again once upstream fixes the overload, which the `!=` (rather than
+    # a `<` cap) deliberately leaves room for. Re-test and drop the exclusion then.
+    "pandas-stubs>=2.0,<4,!=3.0.5.260730",
+    "types-requests>=2.31",
+    "types-tqdm>=4.66",
+]
+test = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "hypothesis>=6.98",
+]
+dl = [
+    "torch>=2.4",
+    "torch-geometric>=2.4",
+]
+docs = [
+    "sphinx>=7.2",
+    "sphinx-rtd-theme>=2.0",
+]
+webapp = [
+    "dash>=2.14",
+    "plotly>=5.18",
+]
+paper = [
+    "matplotlib>=3.8",
+    "seaborn>=0.13",
+    "cartopy>=0.22",
+    "pygmt>=0.13",
+    "tabulate>=0.9",
+    "python-docx>=1.1",
+]
+# Exactly what `python paper/final_gate.py --check` needs beyond [test], WITHOUT the heavy
+# [paper] plotting stack (matplotlib/cartopy/pygmt) the gate never touches. Keep the CI
+# final-gate job on `.[test,gate]` so a newly-added gate dependency is a pyproject edit, not
+# another workflow edit. tabulate: G4 df.to_markdown; python-docx: G5 paper-test fixtures
+# (the G12 clause reads DOCX via stdlib zipfile). jinja2 (G4 df.to_latex) and openpyxl are
+# already core, so the gate also runs under a plain `.[test]`.
+gate = [
+    "tabulate>=0.9",
+    "python-docx>=1.1",
+]
+boost = [
+    "lightgbm>=4.0",
+    "catboost>=1.2",
+]
+hpo = [
+    "optuna>=3.4",
+]
+interpret = [
+    "shap>=0.44",
+    "lifelines>=0.28",
+]
+foundation = [
+    "tabpfn>=2.0,<7",  # <7: newer releases default to non-commercial TabPFN-3 weights
+]
+
+[project.urls]
+Homepage = "https://github.com/tjnewton/aquacontam"
+Repository = "https://github.com/tjnewton/aquacontam"
+Issues = "https://github.com/tjnewton/aquacontam/issues"
+
+[project.scripts]
+aquacontam = "aquacontam.__main__:main"
+
+[tool.setuptools_scm]
+fallback_version = "0.0.0"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ---------------------------------------------------------------------------
+# Ruff
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 99
+target-version = "py310"
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific
+    "NPY", # numpy-specific
+    "PD",  # pandas-vet
+]
+ignore = [
+    "E501",  # line length handled by formatter
+    "N803",  # allow uppercase X_train/X_test (ML convention)
+    "N806",  # allow uppercase variable names in functions (ML convention)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["aquacontam"]
+
+[tool.ruff.lint.per-file-ignores]
+# scripts/reproduce.py runs _early_gpu_env_setup() before any heavy imports
+# so that CUDA_VISIBLE_DEVICES is honored by torch / xgboost / lightgbm /
+# catboost. That places imports below module-level code on purpose.
+"scripts/reproduce.py" = ["E402"]
+
+# ---------------------------------------------------------------------------
+# Mypy
+# ---------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+packages = ["aquacontam"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = [
+    "geopandas.*",
+    "rasterio.*",
+    "rasterstats.*",
+    "scipy.*",
+    "shapely.*",
+    "xgboost.*",
+    "torch.*",
+    "torch_geometric.*",
+    "dash.*",
+    "plotly.*",
+    "sklearn.*",
+    "joblib.*",
+    "lightgbm.*",
+    "catboost.*",
+    "shap.*",
+    "lifelines.*",
+    "fiona.*",
+    "optuna.*",
+    "docx.*",
+    "tabpfn.*",
+    "pygmt.*",
+    "cartopy.*",
+    "matplotlib.*",
+    "tenacity.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "aquacontam.webapp.components"
+disable_error_code = ["arg-type"]
+
+# The webapp package is excluded from the public release copy (.gitattributes
+# export-ignore); __main__.py imports it lazily and degrades gracefully. Without
+# this override, mypy fails with import-not-found in the exported tree.
+[[tool.mypy.overrides]]
+module = ["aquacontam.webapp", "aquacontam.webapp.*"]
+ignore_missing_imports = true
+
+# ---------------------------------------------------------------------------
+# Pytest
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "-m",
+    "not slow",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks integration tests requiring external data",
+    "network: marks tests requiring network access to external APIs",
+    "gpu: marks tests requiring GPU",
+]
+
+# ---------------------------------------------------------------------------
+# Coverage
+# ---------------------------------------------------------------------------
+[tool.coverage.run]
+source = ["aquacontam"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+fail_under = 62
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.",
+    "@overload",
+]

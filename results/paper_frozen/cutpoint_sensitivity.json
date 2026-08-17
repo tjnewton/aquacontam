@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "source": "C4 (M8a) cutpoint sensitivity: burden ratios re-derived from the reproduced frozen-equity test set (labels + EJScreen demographics; predictions not required for burden ratios) under three cutpoint schemes. Reproduction gate: (80,50) POC ratio matches equity_analysis.json within 0.05.",
+    "reproduction_gate": {
+      "poc_ratio": 1.878035356537437,
+      "frozen": 1.878035356537437
+    },
+    "n_test_systems": 3780
+  },
+  "schemes": {
+    "published_80_50": {
+      "high_percentile": 80.0,
+      "low_percentile": 50.0
+    },
+    "median_50_50": {
+      "high_percentile": 50.0,
+      "low_percentile": 50.0
+    },
+    "interquartile_75_25": {
+      "high_percentile": 75.0,
+      "low_percentile": 25.0
+    }
+  },
+  "results": {
+    "published_80_50": {
+      "pct_people_of_color": {
+        "burden_ratio": 1.878035356537437,
+        "n_high": 618,
+        "n_low": 1544
+      },
+      "pct_low_income": {
+        "burden_ratio": 1.4044576088347687,
+        "n_high": 618,
+        "n_low": 1544
+      },
+      "pct_limited_english": {
+        "burden_ratio": Infinity,
+        "n_high": 619,
+        "n_low": 0
+      },
+      "pct_less_hs_education": {
+        "burden_ratio": 1.5369931196018152,
+        "n_high": 621,
+        "n_low": 1544
+      }
+    },
+    "median_50_50": {
+      "pct_people_of_color": {
+        "burden_ratio": 1.7244897959183672,
+        "n_high": 1544,
+        "n_low": 1544
+      },
+      "pct_low_income": {
+        "burden_ratio": 1.2627118644067794,
+        "n_high": 1544,
+        "n_low": 1544
+      },
+      "pct_limited_english": {
+        "burden_ratio": Infinity,
+        "n_high": 3088,
+        "n_low": 0
+      },
+      "pct_less_hs_education": {
+        "burden_ratio": 1.427272727272727,
+        "n_high": 1544,
+        "n_low": 1544
+      }
+    },
+    "interquartile_75_25": {
+      "pct_people_of_color": {
+        "burden_ratio": 1.9068247454020368,
+        "n_high": 774,
+        "n_low": 772
+      },
+      "pct_low_income": {
+        "burden_ratio": 1.49317309603535,
+        "n_high": 774,
+        "n_low": 772
+      },
+      "pct_limited_english": {
+        "burden_ratio": Infinity,
+        "n_high": 775,
+        "n_low": 0
+      },
+      "pct_less_hs_education": {
+        "burden_ratio": 1.5870967741935487,
+        "n_high": 772,
+        "n_low": 772
+      }
+    }
+  },
+  "poc_summary": {
+    "published_80_50": 1.878035356537437,
+    "median_50_50": 1.7244897959183672,
+    "interquartile_75_25": 1.9068247454020368,
+    "direction_stable": true,
+    "min_ratio": 1.7244897959183672,
+    "max_ratio": 1.9068247454020368
+  }
+}

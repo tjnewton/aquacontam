@@ -1,0 +1,10 @@
+{
+  "_meta": {
+    "source": "C1 (M5) per-split prevalence, mirrored from run_split_ablation's data prep (no training). Random StratifiedKFold folds carry the pooled prevalence by construction. Reproduction gate: geographic n_test equals the frozen split_comparison matrix geographic entry.",
+    "n_systems": 16497,
+    "n_test_geographic": 3780
+  },
+  "prevalence_geographic_test": 0.2849206349206349,
+  "prevalence_random_folds_pooled": 0.21500878947687457,
+  "note": "The geographic test set has the HIGHER base rate, so the prevalence difference biases the random-vs-geographic AUPRC gap conservatively (against the leakage claim), not in its favor."
+}

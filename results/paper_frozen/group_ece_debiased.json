@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "source": "C15 (R5 m2) equal-MASS (equal-count) binned subgroup ECE with bootstrap CIs, from a gated T1 reproduction (xgboost seed 42) replaying the _run_equity_analysis prediction/grouping path. Gate: per-group equal-width ECE reproduces group_error_calibration.json within 0.005. n_boot=2000, seed=42.",
+    "n_bins": 10,
+    "pooled_ece_reference": 0.0376
+  },
+  "pct_people_of_color": {
+    "high": {
+      "n": 618,
+      "ece_equal_width": 0.17912199679147273,
+      "ece_equal_mass": 0.1786052322370817,
+      "ece_equal_mass_ci": [
+        0.1460780066153197,
+        0.21339218757261483
+      ],
+      "auroc": 0.7993605890331331
+    },
+    "low": {
+      "n": 1544,
+      "ece_equal_width": 0.06426480700746855,
+      "ece_equal_mass": 0.051618566173804344,
+      "ece_equal_mass_ci": [
+        0.04375449199239432,
+        0.07708608851667945
+      ],
+      "auroc": 0.749717006802721
+    },
+    "ece_equal_mass_gap": 0.12698666606327735
+  },
+  "pct_low_income": {
+    "high": {
+      "n": 618,
+      "ece_equal_width": 0.13155584600015655,
+      "ece_equal_mass": 0.12740700220249135,
+      "ece_equal_mass_ci": [
+        0.10358016844123036,
+        0.16624407692236712
+      ],
+      "auroc": 0.7967282714287426
+    },
+    "low": {
+      "n": 1544,
+      "ece_equal_width": 0.06134897061150733,
+      "ece_equal_mass": 0.05013398200616124,
+      "ece_equal_mass_ci": [
+        0.036753352907355964,
+        0.07132763600494432
+      ],
+      "auroc": 0.7677158999192897
+    },
+    "ece_equal_mass_gap": 0.07727302019633012
+  },
+  "pct_less_hs_education": {
+    "high": {
+      "n": 621,
+      "ece_equal_width": 0.15556967966018567,
+      "ece_equal_mass": 0.16052582833298068,
+      "ece_equal_mass_ci": [
+        0.12541052516468842,
+        0.1917144885179459
+      ],
+      "auroc": 0.8269149386373253
+    },
+    "low": {
+      "n": 1544,
+      "ece_equal_width": 0.051687973609358236,
+      "ece_equal_mass": 0.04665370161495524,
+      "ece_equal_mass_ci": [
+        0.03699773948988273,
+        0.07006629768619073
+      ],
+      "auroc": 0.7603913933403226
+    },
+    "ece_equal_mass_gap": 0.11387212671802543
+  }
+}

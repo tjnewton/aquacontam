@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+title: "AquaContam: An ML Benchmark for Predicting PFAS and Heavy Metal Contamination in U.S. Drinking Water"
+message: "If you use this software or dataset, please cite it as below."
+type: software
+version: 4.0.0
+date-released: '2026-07-03'
+abstract: >-
+  AquaContam is a machine learning benchmark for predicting PFAS and heavy metal
+  contamination in U.S. public drinking water systems. It integrates EPA monitoring
+  data with geospatial features and provides standardized tasks, geographic splits,
+  and equity analysis tools for reproducible environmental health research.
+url: "https://github.com/tjnewton/aquacontam"
+authors:
+  - family-names: Newton
+    given-names: Tyler J.
+    orcid: "https://orcid.org/0000-0002-4304-0103"
+license: Apache-2.0
+repository-code: "https://github.com/tjnewton/aquacontam"
+keywords:
+  - PFAS
+  - water-quality
+  - machine-learning
+  - benchmark
+  - contamination
+  - drinking-water
+  - environmental-justice
+  - heavy-metals
+preferred-citation:
+  type: article
+  title: "AquaContam: machine-learning models of drinking-water contamination learn who is monitored as much as where contamination occurs"
+  authors:
+    - family-names: Newton
+      given-names: Tyler J.
+      orcid: "https://orcid.org/0000-0002-4304-0103"
+  year: 2026
+  journal: "Nature Water"
+  url: "https://github.com/tjnewton/aquacontam"

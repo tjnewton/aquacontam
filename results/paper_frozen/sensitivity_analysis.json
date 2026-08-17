@@ -1,0 +1,71 @@
+{
+  "drop_na_threshold": [
+    {
+      "threshold": 0.3,
+      "n_features": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    },
+    {
+      "threshold": 0.4,
+      "n_features": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    },
+    {
+      "threshold": 0.5,
+      "n_features": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    },
+    {
+      "threshold": 0.6,
+      "n_features": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    },
+    {
+      "threshold": 0.7,
+      "n_features": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    }
+  ],
+  "buffer_radii": [
+    {
+      "variant": "all_radii",
+      "n_proximity_cols": 19,
+      "n_total_cols": 135,
+      "auroc": 0.8579735393663047,
+      "auprc": 0.6882278775501849
+    },
+    {
+      "variant": "1km_only",
+      "n_proximity_cols": 19,
+      "n_total_cols": 129,
+      "auroc": 0.8652141077350798,
+      "auprc": 0.7043202721558662
+    },
+    {
+      "variant": "5km_only",
+      "n_proximity_cols": 19,
+      "n_total_cols": 131,
+      "auroc": 0.8637689260398949,
+      "auprc": 0.700338541602671
+    },
+    {
+      "variant": "10km_only",
+      "n_proximity_cols": 19,
+      "n_total_cols": 131,
+      "auroc": 0.8536789001108005,
+      "auprc": 0.6773346295582363
+    },
+    {
+      "variant": "dist_only",
+      "n_proximity_cols": 13,
+      "n_total_cols": 129,
+      "auroc": 0.8571123888862878,
+      "auprc": 0.6822862341455058
+    }
+  ]
+}

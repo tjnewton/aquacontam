@@ -1,0 +1,44 @@
+## Supplementary Table 20: LORO Per-Region EJ Burden Ratios
+
+| Region            | Group             |   N Systems |   N High |   N Low |   Burden Ratio |   p-value |   p (FDR) | Sig.   |
+|:------------------|:------------------|------------:|---------:|--------:|---------------:|----------:|----------:|:-------|
+| 1 (New England)   | People of Color   |         526 |      102 |     253 |           1.32 |    0.5385 |    0.7977 | No     |
+| 1 (New England)   | Low Income        |         526 |      102 |     253 |           0.29 |    0.01   |    0.04   | Yes    |
+| 1 (New England)   | Limited English   |         526 |      102 |       0 |         inf    |    1      |    1      | No     |
+| 1 (New England)   | Less HS Education |         526 |      102 |     253 |           0.65 |    0.1818 |    0.3397 | No     |
+| 2 (NY/NJ)         | People of Color   |        1863 |      346 |     863 |           1.13 |    0.2847 |    0.4745 | No     |
+| 2 (NY/NJ)         | Low Income        |        1863 |      346 |     862 |           0.67 |    0.002  |    0.02   | Yes    |
+| 2 (NY/NJ)         | Limited English   |        1863 |      346 |       0 |         inf    |    1      |    1      | No     |
+| 2 (NY/NJ)         | Less HS Education |        1863 |      346 |     863 |           0.77 |    0.1149 |    0.2419 | No     |
+| 3 (Mid-Atlantic)  | People of Color   |         870 |      165 |     411 |           1.19 |    0.0689 |    0.1532 | No     |
+| 3 (Mid-Atlantic)  | Low Income        |         870 |      165 |     411 |           0.3  |    0.001  |    0.0133 | Yes    |
+| 3 (Mid-Atlantic)  | Limited English   |         870 |      165 |       0 |         inf    |    1      |    1      | No     |
+| 3 (Mid-Atlantic)  | Less HS Education |         870 |      165 |     411 |           0.41 |    0.003  |    0.02   | Yes    |
+| 4 (Southeast)     | People of Color   |        2262 |      397 |     992 |           1.38 |    0.001  |    0.0133 | Yes    |
+| 4 (Southeast)     | Low Income        |        2262 |      397 |     992 |           0.88 |    0.1868 |    0.3397 | No     |
+| 4 (Southeast)     | Limited English   |        2262 |      397 |       0 |         inf    |    1      |    1      | No     |
+| 4 (Southeast)     | Less HS Education |        2262 |      397 |     992 |           0.69 |    0.019  |    0.0571 | No     |
+| 5 (Great Lakes)   | People of Color   |        3482 |      649 |    1621 |           1.05 |    0.8581 |    1      | No     |
+| 5 (Great Lakes)   | Low Income        |        3482 |      651 |    1621 |           0.68 |    0.004  |    0.02   | Yes    |
+| 5 (Great Lakes)   | Limited English   |        3482 |      649 |       0 |         inf    |    1      |    1      | No     |
+| 5 (Great Lakes)   | Less HS Education |        3482 |      653 |    1618 |           0.66 |    0.026  |    0.0693 | No     |
+| 6 (South Central) | People of Color   |        1947 |      350 |     845 |           1.63 |    0.005  |    0.0222 | Yes    |
+| 6 (South Central) | Low Income        |        1947 |      339 |     845 |           1    |    1      |    1      | No     |
+| 6 (South Central) | Limited English   |        1947 |      339 |       0 |         inf    |    1      |    1      | No     |
+| 6 (South Central) | Less HS Education |        1947 |      338 |     845 |           1.07 |    0.2737 |    0.4745 | No     |
+| 7 (Central)       | People of Color   |        1551 |      308 |     765 |           2.57 |    0.014  |    0.05   | Yes    |
+| 7 (Central)       | Low Income        |        1551 |      307 |     766 |           1.52 |    0.6593 |    0.9094 | No     |
+| 7 (Central)       | Limited English   |        1551 |     1533 |       0 |         inf    |    1      |    1      | No     |
+| 7 (Central)       | Less HS Education |        1551 |      307 |     765 |           0.97 |    0.6394 |    0.9094 | No     |
+| 8 (Mountain)      | People of Color   |         538 |       88 |     218 |           2.48 |    0.038  |    0.0893 | No     |
+| 8 (Mountain)      | Low Income        |         538 |       88 |     217 |           1.41 |    0.3636 |    0.5594 | No     |
+| 8 (Mountain)      | Limited English   |         538 |       88 |       0 |         inf    |    1      |    1      | No     |
+| 8 (Mountain)      | Less HS Education |         538 |       88 |     218 |           1.59 |    0.3536 |    0.5594 | No     |
+| 9 (Pacific SW)    | People of Color   |        2410 |      437 |    1080 |           1.34 |    0.001  |    0.0133 | Yes    |
+| 9 (Pacific SW)    | Low Income        |        2410 |      436 |    1088 |           1.18 |    0.035  |    0.0874 | No     |
+| 9 (Pacific SW)    | Limited English   |        2410 |      436 |    1089 |           1.15 |    0.02   |    0.0571 | No     |
+| 9 (Pacific SW)    | Less HS Education |        2410 |      436 |    1075 |           1.13 |    0.1469 |    0.2937 | No     |
+| 10 (Pacific NW)   | People of Color   |         832 |       96 |     235 |           2.18 |    0.003  |    0.02   | Yes    |
+| 10 (Pacific NW)   | Low Income        |         832 |       95 |     236 |           2    |    0.004  |    0.02   | Yes    |
+| 10 (Pacific NW)   | Limited English   |         832 |       95 |       0 |         inf    |    1      |    1      | No     |
+| 10 (Pacific NW)   | Less HS Education |         832 |       95 |     235 |           2.08 |    0.015  |    0.05   | Yes    |

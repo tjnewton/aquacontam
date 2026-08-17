@@ -1,0 +1,32 @@
+{
+  "title": "AquaContam: An ML Benchmark for Predicting PFAS and Heavy Metal Contamination in U.S. Drinking Water",
+  "version": "4.0.0",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "Newton, Tyler J.",
+      "affiliation": "Independent Researcher",
+      "orcid": "0000-0002-4304-0103"
+    }
+  ],
+  "description": "Integrated water quality dataset and benchmark suite for predicting PFAS and heavy metal contamination across U.S. public water systems. Includes fifteen data sources (thirteen contributing), 7 benchmark tasks, 20 model families (29 classes), geospatial features, and environmental justice analysis. The compiled data are released under CC BY 4.0; the accompanying code is Apache-2.0-licensed in the source repository. The Minnesota MDH records are excluded from this archive pending the agency's redistribution confirmation; the archive documents the request route by which the same export can be requested from the agency and verified against the pinned checksum. AquaContam is a research benchmark, not a regulatory or operational risk-assessment product.",
+  "keywords": [
+    "PFAS",
+    "water quality",
+    "machine learning",
+    "benchmark",
+    "contamination",
+    "drinking water",
+    "environmental justice",
+    "heavy metals"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/tjnewton/aquacontam",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

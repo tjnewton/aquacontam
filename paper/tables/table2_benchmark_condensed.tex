@@ -1,0 +1,24 @@
+\begin{table}
+\caption{T1 PFAS-detection benchmark, ranked by leave-one-region-out (LORO) mean AUROC. LORO mean AUROC carries a t(9) cluster-robust 95\% CI over the 10 EPA-region folds (primary, leakage-resistant). The fixed geographic-split (West-only, EPA Regions 8/9/10) AUROC and its i.i.d. bootstrap CI are shown alongside; that bootstrap CI is anti-conservative under the residual spatial autocorrelation documented in the paper (Moran's I up to ~0.67). Non-converged families are flagged in LORO folds, never shown as a metric. Full multi-task results in Supplementary Table 9.}
+\label{tab:results-condensed}
+\begin{tabular}{llll}
+\toprule
+Model & LORO AUROC (mean, 95% CI) & Fixed-split AUROC (95% CI) & LORO folds \\
+\midrule
+CatBoost & 0.790 [0.717-0.862] & 0.845 [0.823-0.867] & 10/10 \\
+Voting & 0.784 [0.707-0.861] & 0.850 [0.828-0.871] & 10/10 \\
+XGBoost & 0.782 [0.706-0.859] & 0.864 [0.842-0.885] & 10/10 \\
+Random Forest & 0.771 [0.693-0.848] & 0.850 [0.828-0.872] & 10/10 \\
+LightGBM & 0.766 [0.684-0.848] & 0.847 [0.825-0.868] & 10/10 \\
+TabPFN & 0.758 [0.678-0.838] & 0.856 [0.835-0.879] & 10/10 \\
+ICP & 0.713 [0.623-0.804] & 0.731 [0.703-0.761] & 10/10 \\
+Stacking & 0.711 [0.585-0.837] & 0.849 [0.828-0.871] & 10/10 \\
+Deep Tobit & 0.707 [0.611-0.802] & 0.602 [0.574-0.629] & 10/10 \\
+Logistic Reg. & 0.705 [0.607-0.802] & 0.753 [0.725-0.781] & 10/10 \\
+MLP & 0.704 [0.608-0.800] & 0.716 [0.687-0.748] & 10/10 \\
+GCN (linear fallback) & 0.683 [0.594-0.772] & 0.642 [0.615-0.669] & 10/10 \\
+CNN1D & 0.670 [0.561-0.779] & 0.787 [0.762-0.812] & 10/10 \\
+GraphSAGE (linear fallback) & 0.652 [0.559-0.745] & 0.482 [0.456-0.505] & 10/10 \\
+\bottomrule
+\end{tabular}
+\end{table}

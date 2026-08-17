@@ -1,0 +1,152 @@
+{
+  "best_region": 3,
+  "worst_region": 4,
+  "top_features": [
+    "n_samples",
+    "owner_type_nan",
+    "pct_wetland_5km",
+    "source_water_type_GW",
+    "population_served"
+  ],
+  "detection_rates": {
+    "1": {
+      "n_samples": 526,
+      "n_positive": 133,
+      "detection_rate": 0.2529
+    },
+    "2": {
+      "n_samples": 1863,
+      "n_positive": 735,
+      "detection_rate": 0.3945
+    },
+    "3": {
+      "n_samples": 870,
+      "n_positive": 168,
+      "detection_rate": 0.1931
+    },
+    "4": {
+      "n_samples": 2262,
+      "n_positive": 497,
+      "detection_rate": 0.2197
+    },
+    "5": {
+      "n_samples": 3482,
+      "n_positive": 583,
+      "detection_rate": 0.1674
+    },
+    "6": {
+      "n_samples": 1947,
+      "n_positive": 126,
+      "detection_rate": 0.0647
+    },
+    "7": {
+      "n_samples": 1551,
+      "n_positive": 78,
+      "detection_rate": 0.0503
+    },
+    "8": {
+      "n_samples": 538,
+      "n_positive": 36,
+      "detection_rate": 0.0669
+    },
+    "9": {
+      "n_samples": 2410,
+      "n_positive": 681,
+      "detection_rate": 0.2826
+    },
+    "10": {
+      "n_samples": 832,
+      "n_positive": 360,
+      "detection_rate": 0.4327
+    }
+  },
+  "feature_distributions": [
+    {
+      "feature": "n_samples",
+      "ks_statistic": 0.0645,
+      "p_value": 0.010156027799465986,
+      "mean_best": 8.277,
+      "mean_worst": 8.8254,
+      "std_best": 9.4573,
+      "std_worst": 12.7874,
+      "p_value_fdr": 0.012695034749332482,
+      "significant_fdr": true
+    },
+    {
+      "feature": "owner_type_nan",
+      "ks_statistic": 0.034,
+      "p_value": 0.4532247413168136,
+      "mean_best": 0.0379,
+      "mean_worst": 0.004,
+      "std_best": 0.1911,
+      "std_worst": 0.063,
+      "p_value_fdr": 0.4532247413168136,
+      "significant_fdr": false
+    },
+    {
+      "feature": "pct_wetland_5km",
+      "ks_statistic": 0.3085,
+      "p_value": 2.354745844164497e-53,
+      "mean_best": 0.0409,
+      "mean_worst": 0.1032,
+      "std_best": 0.0797,
+      "std_worst": 0.1343,
+      "p_value_fdr": 1.1773729220822485e-52,
+      "significant_fdr": true
+    },
+    {
+      "feature": "source_water_type_GW",
+      "ks_statistic": 0.1729,
+      "p_value": 7.233959208108578e-17,
+      "mean_best": 0.3276,
+      "mean_worst": 0.5004,
+      "std_best": 0.4696,
+      "std_worst": 0.5001,
+      "p_value_fdr": 1.8084898020271443e-16,
+      "significant_fdr": true
+    },
+    {
+      "feature": "population_served",
+      "ks_statistic": 0.121,
+      "p_value": 1.8257352398305483e-08,
+      "mean_best": 30493.7672,
+      "mean_worst": 28675.4861,
+      "std_best": 122322.2433,
+      "std_worst": 89679.8969,
+      "p_value_fdr": 3.042892066384247e-08,
+      "significant_fdr": true
+    }
+  ],
+  "missing_data": {
+    "1": {
+      "overall_missing_rate": 0.0
+    },
+    "2": {
+      "overall_missing_rate": 0.0
+    },
+    "3": {
+      "overall_missing_rate": 0.0
+    },
+    "4": {
+      "overall_missing_rate": 0.0
+    },
+    "5": {
+      "overall_missing_rate": 0.0
+    },
+    "6": {
+      "overall_missing_rate": 0.0
+    },
+    "7": {
+      "overall_missing_rate": 0.0
+    },
+    "8": {
+      "overall_missing_rate": 0.0
+    },
+    "9": {
+      "overall_missing_rate": 0.0
+    },
+    "10": {
+      "overall_missing_rate": 0.0
+    }
+  }
+}

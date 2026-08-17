@@ -1,0 +1,246 @@
+{
+  "core_tests": {
+    "delong_auroc": {
+      "effect_size": 0.007244708825073665,
+      "pooled_se": 0.010182856833978977,
+      "z_statistic": 0.7114613259511748,
+      "power": 0.10970001166323158,
+      "alpha": 0.05
+    },
+    "ej_burden_ratio": {
+      "effect_size": 0.19,
+      "pooled_se": 0.021096088804694015,
+      "z_statistic": 9.006408806817488,
+      "power": 0.9999999999990823,
+      "alpha": 0.05
+    },
+    "dml_coefficient": {
+      "effect_size": 0.038,
+      "se": 0.015,
+      "t_statistic": 2.533333333333333,
+      "power": 0.7167451762320517,
+      "alpha": 0.05,
+      "df": 14213
+    }
+  },
+  "ablation_tests": [
+    {
+      "category": "proximity",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": -0.002027562483447265,
+      "power": 0.07789168932825771
+    },
+    {
+      "category": "proximity",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": 0.011894073360020463,
+      "power": 0.715158048889853
+    },
+    {
+      "category": "land_use",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": -0.0035424376299107996,
+      "power": 0.1142003308890983
+    },
+    {
+      "category": "land_use",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": -0.002085917616742261,
+      "power": 0.06522143871670633
+    },
+    {
+      "category": "hydrogeology",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": -0.0028021755118543545,
+      "power": 0.12649588782918134
+    },
+    {
+      "category": "hydrogeology",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": -0.004153737713697536,
+      "power": 0.14529422246225515
+    },
+    {
+      "category": "aquifer_type_only",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": 0.005706888491105344,
+      "power": 0.41914100460852594
+    },
+    {
+      "category": "aquifer_type_only",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": 0.009814014689243478,
+      "power": 0.5094385856170354
+    },
+    {
+      "category": "demographics",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": -0.0027466987916380248,
+      "power": 0.12106655763481286
+    },
+    {
+      "category": "demographics",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": -0.006039946477082614,
+      "power": 0.3019582444444888
+    },
+    {
+      "category": "n_samples_only",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": 0.047063667007771204,
+      "power": 0.9999999978607182
+    },
+    {
+      "category": "n_samples_only",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": 0.03246707089709722,
+      "power": 0.9988476521547432
+    },
+    {
+      "category": "monitoring_intensity",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": 0.0473151156715379,
+      "power": 0.9999999999298853
+    },
+    {
+      "category": "monitoring_intensity",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": 0.0672828360404839,
+      "power": 0.9999999579287026
+    },
+    {
+      "category": "system_characteristics",
+      "task": "T1",
+      "metric": "auroc",
+      "delta": 0.04899624922409884,
+      "power": 0.9999999159920787
+    },
+    {
+      "category": "system_characteristics",
+      "task": "T1",
+      "metric": "auprc",
+      "delta": 0.06808910319345407,
+      "power": 0.9999998804937598
+    },
+    {
+      "category": "proximity",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.002696840654726751,
+      "power": 0.32290222428491083
+    },
+    {
+      "category": "land_use",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.007323658447561943,
+      "power": 0.9602744879398193
+    },
+    {
+      "category": "hydrogeology",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.011633483432543446,
+      "power": 0.9999934868126542
+    },
+    {
+      "category": "aquifer_type_only",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.01039915838592248,
+      "power": 0.9995229166030377
+    },
+    {
+      "category": "demographics",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": -0.001410670465412156,
+      "power": 0.13004755394713854
+    },
+    {
+      "category": "n_samples_only",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.12781365544409945,
+      "power": 1.0
+    },
+    {
+      "category": "monitoring_intensity",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.12781365544409945,
+      "power": 1.0
+    },
+    {
+      "category": "system_characteristics",
+      "task": "T4",
+      "metric": "auprc",
+      "delta": 0.1296976992890474,
+      "power": 1.0
+    }
+  ],
+  "loro_tests": [
+    {
+      "task": "T1",
+      "model": "xgboost",
+      "mean_auroc": 0.7824892795063257,
+      "std_auroc": 0.10173415877566988,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    },
+    {
+      "task": "T1",
+      "model": "random_forest",
+      "mean_auroc": 0.7705323115582874,
+      "std_auroc": 0.10246122821309009,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    },
+    {
+      "task": "T1",
+      "model": "catboost",
+      "mean_auroc": 0.789597089685751,
+      "std_auroc": 0.09630481859121272,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    },
+    {
+      "task": "T4",
+      "model": "xgboost",
+      "mean_auroc": 0.6756647415721257,
+      "std_auroc": 0.04139250790664035,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    },
+    {
+      "task": "T4",
+      "model": "random_forest",
+      "mean_auroc": 0.6658188361379919,
+      "std_auroc": 0.04387688475553857,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    },
+    {
+      "task": "T4",
+      "model": "catboost",
+      "mean_auroc": 0.6822349907584597,
+      "std_auroc": 0.044668116044889704,
+      "n_folds": 10,
+      "power_vs_chance": 1.0
+    }
+  ]
+}

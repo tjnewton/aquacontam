@@ -1,0 +1,42 @@
+{
+  "_meta": {
+    "source": "ED Fig. 1 wrong-ZIP mis-geocode sensitivity, v2 (exact state-polygon flag). Flag: PWSID-prefix EPA region not among the coordinate's polygon-derived candidate regions (paper/_geo_flags.region_mismatch_mask against paper/assets/us_states_cb2023_5m.geojson; covering state, else nearest state within 3.0 degrees; identical rule to the ED Fig. 1 split-map exclusion). Supersedes misgeocode_sensitivity.json (bounding-box rule, retained), whose loose overlapping first-match-wins boxes falsely flagged ~64 percent of its 6,889 (correctly-located border systems). Sensitivity: T1/T4 xgboost on the canonical headline harness (train_and_evaluate task fns, ambient sources excluded, geographic holdout, seed 42) with flagged systems removed end-to-end. Gate A (tol 0.002): unperturbed run reproduces frozen results.json T1/T4 xgboost AUROC. Gate B: legacy bbox rule reproduces the frozen v1 n_flagged/n_mapped on the same coords frame. Material-degradation escalation band: |delta AUROC| > 0.02.",
+    "reproduction_gate_a": "PASSED",
+    "reproduction_gate_b": "PASSED",
+    "material_degradation": false
+  },
+  "n_mapped_systems": 87450,
+  "n_flagged_systems": 1818,
+  "n_flagged_systems_in_benchmark_frame": 1818,
+  "legacy_bbox_n_flagged": 6889,
+  "flagged_by_prefix_region": {
+    "1": 97,
+    "2": 148,
+    "3": 209,
+    "4": 371,
+    "5": 302,
+    "6": 376,
+    "7": 66,
+    "8": 109,
+    "9": 81,
+    "10": 59
+  },
+  "per_task": {
+    "T1": {
+      "auroc_unperturbed": 0.8636253029361376,
+      "auprc_unperturbed": 0.7809783620874269,
+      "auroc_excluded": 0.8659212635751039,
+      "auprc_excluded": 0.7805379414152805,
+      "delta_auroc": 0.00229596063896631,
+      "delta_auprc": -0.0004404206721463355
+    },
+    "T4": {
+      "auroc_unperturbed": 0.6991935079509133,
+      "auprc_unperturbed": 0.38666937620302755,
+      "auroc_excluded": 0.696876915879302,
+      "auprc_excluded": 0.3881959776116127,
+      "delta_auroc": -0.0023165920716112787,
+      "delta_auprc": 0.0015266014085851265
+    }
+  }
+}

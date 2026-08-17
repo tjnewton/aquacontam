@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "source": "C11 (R5 M4) seed stability of the T1 headline on its own benchmark harness (train_and_evaluate T1 task; ambient sources excluded; geographic holdout; YAML xgboost_classifier config). Reproduction gate: seed-42 reproduces results.json headline 0.8636 within 0.002. Interpretation band (0.85, 0.87).",
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      2024
+    ],
+    "reproduction_gate": "PASSED",
+    "in_band": true
+  },
+  "per_seed_auroc": {
+    "42": 0.8636253029361376,
+    "123": 0.8687616529708294,
+    "456": 0.8613700660184298,
+    "789": 0.862199269774564,
+    "2024": 0.8640401788405616
+  },
+  "seed_42_auroc": 0.8636253029361376,
+  "mean_auroc": 0.8639992941081044,
+  "std_auroc": 0.0028711727065915205,
+  "reconciliation": [
+    {
+      "value": 0.8636,
+      "source": "results.json T1 xgboost_classifier",
+      "harness": "benchmark task_fn",
+      "features": "full",
+      "split": "geographic holdout R8/9/10",
+      "note": "the headline; this compute's seed-42 reproduces it"
+    },
+    {
+      "value": 0.864,
+      "source": "this compute (headline harness)",
+      "harness": "benchmark task_fn",
+      "features": "full",
+      "split": "geographic holdout R8/9/10",
+      "note": "5-seed mean +/- 0.0029 on the headline harness"
+    },
+    {
+      "value": 0.8091,
+      "source": "multi_seed_stability.json T1 xgboost",
+      "harness": "streamlined _robustness",
+      "features": "full",
+      "split": "fixed R8/9/10",
+      "note": "the ~0.81 value \u2014 a different (streamlined) harness"
+    },
+    {
+      "value": 0.7899,
+      "source": "split_comparison.json xgboost full-feature geographic",
+      "harness": "split-comparison",
+      "features": "full",
+      "split": "geographic",
+      "note": "the ~0.790 value"
+    },
+    {
+      "value": 0.7825,
+      "source": "loro_cv.json T1 xgboost",
+      "harness": "LORO",
+      "features": "full",
+      "split": "leave-one-region-out (10 folds)",
+      "note": "out-of-region mean 0.7825"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Feature A,Feature B,Interaction Strength,Category
+n_samples,pct_wetland_5km,0.0763,demographic_x_other
+n_samples,n_wwtp_5000m,0.0304,other_x_other
+n_samples,pct_forest_5km,0.0288,demographic_x_other
+n_samples,pct_forest_1km,0.0244,demographic_x_other
+n_samples,pct_shrub_5km,0.0202,demographic_x_other
+n_samples,pct_developed_5km,0.0189,demographic_x_other
+n_samples,aquifer_lithology,0.0167,other_x_spatial
+n_samples,n_airport_10000m,0.0147,other_x_other
+n_wwtp_5000m,pct_wetland_5km,0.0144,demographic_x_other
+n_samples,mean_detection_limit,0.0138,other_x_other
+n_samples,pct_grassland_5km,0.0137,demographic_x_other
+n_samples,pct_people_of_color,0.0131,demographic_x_other
+n_samples,dist_nearest_industrial,0.0131,other_x_spatial
+pct_forest_1km,pct_wetland_5km,0.0117,demographic_x_demographic
+n_samples,pct_water_5km,0.0114,demographic_x_other

@@ -1,0 +1,6 @@
+## Supplementary Table 14: MCL Exceedance Comparison
+
+| Target         |   AUROC |   AUPRC |    F1 |   N Train |   N Test | Pos Rate (test)   |
+|:---------------|--------:|--------:|------:|----------:|---------:|:------------------|
+| Detection      |   0.807 |   0.7   | 0.628 |      9087 |     3780 | 28.5%             |
+| Mcl Exceedance |   0.719 |   0.515 | 0.445 |      9087 |     3780 | 23.3%             |

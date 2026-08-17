@@ -1,0 +1,23 @@
+# CLAIMS.tsv — G13 claims-layer gate (FINAL_FIX_CONTRACT_v3). One row per load-bearing
+# sentence: id<TAB>file<TAB>exact_sentence<TAB>evidence<TAB>strength. Strength in
+# {SIGNIFICANT, SUGGESTIVE_NS, DESCRIPTIVE, DECIDED}. G13 checks the sentence is present
+# (markers stripped, whitespace/EOL collapsed); SIGNIFICANT/SUGGESTIVE_NS require the
+# frozen evidence artifact; DECIDED cites a DECISIONS.md id. LIVE in Phases 1-3 (rows and
+# sentences updated together), FROZEN at Phase-4 entry.
+# id	file	sentence	evidence	strength
+clm_monitoring_asmuch	paper/skeleton.md	record the monitoring process as much as the contamination	v2-D1	DECIDED
+clm_t4_leak	paper/skeleton.md	an apparent lead-model AUROC of 0.962 is largely a target-leakage artifact (corrected skill 0.699, 0.550 without provenance)	results.json	SIGNIFICANT
+clm_spatial_leak	paper/skeleton.md	spatial leakage separately inflates baseline-feature AUROC 0.699 → 0.869	split_comparison.json	SIGNIFICANT
+clm_mon_ratio	paper/skeleton.md	communities of color are sampled 1.85× more intensively	monitoring_inequity.json	SIGNIFICANT
+clm_burden_fragile	paper/skeleton.md	significant in 3 of 10 regions under a spatially-aware null	inference_strengthening.json	SIGNIFICANT
+clm_lowincome	paper/skeleton.md	low-income communities are under-sampled (0.78×)	equity_analysis.json	DESCRIPTIVE
+clm_fnr_ns	paper/skeleton.md	the group false-negative gap (0.50 versus 0.44) is not significant	group_gap_tests.json	SUGGESTIVE_NS
+clm_no_new_method	paper/skeleton.md	No new learning method is introduced	R5-D1	DECIDED
+clm_benchmark_scope	paper/skeleton.md	a reproducible two-confound protocol with one converged detection task and documented boundary tasks	R5-D1	DECIDED
+clm_antecedents	paper/skeleton.md	sample-selection bias in presence-only species-distribution modeling	refs	DESCRIPTIVE
+clm_pf_upperbound	paper/skeleton.md	an upper-bound estimate of the transportable environmental signal	R5-D4	DECIDED
+clm_group_profile	paper/skeleton.md	their elevated single-threshold false-negative rate (0.50 vs 0.44) is not individually significant (p = 0.16)	group_gap_tests.json	SUGGESTIVE_NS
+clm_seed_stable	paper/skeleton.md	The headline is seed-stable: the five-seed spread on its own harness is a few thousandths of a point, so it is not a favorable-seed artifact.	headline_harness_stability.json	DESCRIPTIVE
+clm_t1_monitoring_label	paper/skeleton.md	This label is monitoring-defined: reporting limits are heterogeneous across programs	common_rl_sensitivity.json	DESCRIPTIVE
+clm_mcl_proxy	paper/skeleton.md	detection-based scores are a weaker but still useful proxy for exceedance risk	mcl_lift.json	DESCRIPTIVE
+clm_loro_ranked	paper/skeleton.md	Table 2 ranks the T1 families by their leave-one-region-out (LORO) mean AUROC across the ten EPA regions, the leakage-resistant protocol	loro_cv_full.json	DESCRIPTIVE

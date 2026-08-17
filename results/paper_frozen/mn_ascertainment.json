@@ -1,0 +1,29 @@
+{
+  "description": "Among MN systems sampled by both UCMR (federal) and MDH (state), the rate at which UCMR-recorded PFOS non-detects become detected once MDH's denser sampling is included. Detection = any uncensored sample (pipeline convention).",
+  "n_mn_systems_ucmr": 280,
+  "n_mn_systems_mdh": 1357,
+  "pfos": {
+    "analyte_set": "PFOS",
+    "n_overlap_systems": 194,
+    "n_ucmr_detected": 14,
+    "n_mdh_detected": 33,
+    "n_ucmr_nondetect": 180,
+    "n_flip_nd_to_detect": 19,
+    "flip_rate_of_ucmr_nondetect": 0.1056,
+    "n_mdh_nondetect_where_ucmr_detected": 0
+  },
+  "regulated6": {
+    "analyte_set": "regulated6",
+    "n_overlap_systems": 194,
+    "n_ucmr_detected": 29,
+    "n_mdh_detected": 45,
+    "n_ucmr_nondetect": 165,
+    "n_flip_nd_to_detect": 18,
+    "flip_rate_of_ucmr_nondetect": 0.1091,
+    "n_mdh_nondetect_where_ucmr_detected": 2
+  },
+  "sampling_intensity_pfos": {
+    "ucmr_median_pfos_samples_per_system": 4.0,
+    "mdh_median_pfos_samples_per_system": 3.0
+  }
+}

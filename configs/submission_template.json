@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "model_name": "ExampleModel",
+  "author": "Jane Doe",
+  "institution": "University of Example",
+  "paper_url": null,
+  "code_url": "https://github.com/example/model",
+  "date": "2026-02-17",
+  "dataset_version": "0.1.0",
+  "hardware": "1x NVIDIA A100 40GB",
+  "results": [
+    {
+      "task": "T1",
+      "analyte": "PFOS",
+      "metrics": {
+        "auroc": 0.92,
+        "auprc": 0.85,
+        "f1": 0.78
+      }
+    },
+    {
+      "task": "T1",
+      "analyte": "PFOA",
+      "metrics": {
+        "auroc": 0.88,
+        "auprc": 0.80,
+        "f1": 0.72
+      }
+    },
+    {
+      "task": "T2",
+      "analyte": "PFOS",
+      "metrics": {
+        "rmse": 3.45,
+        "mae": 2.10,
+        "r2": 0.65
+      }
+    },
+    {
+      "task": "T4",
+      "analyte": "lead",
+      "metrics": {
+        "auroc": 0.75,
+        "auprc": 0.60,
+        "f1": 0.55
+      }
+    }
+  ]
+}

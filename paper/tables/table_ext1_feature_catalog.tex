@@ -1,0 +1,38 @@
+\begin{table}
+\caption{Feature catalog.}
+\label{tab:ext_features}
+\begin{tabular}{lll}
+\toprule
+Feature & Category & Description \\
+\midrule
+nearest_industrial_km & Proximity & Distance to nearest industrial facility (km) \\
+nearest_military_km & Proximity & Distance to nearest military installation (km) \\
+nearest_wwtp_km & Proximity & Distance to nearest wastewater treatment plant (km) \\
+nearest_airport_km & Proximity & Distance to nearest airport (km) \\
+nearest_landfill_km & Proximity & Distance to nearest landfill (km) \\
+count_industrial_1km & Proximity & Industrial facilities within 1 km \\
+count_industrial_5km & Proximity & Industrial facilities within 5 km \\
+count_industrial_10km & Proximity & Industrial facilities within 10 km \\
+count_military_5km & Proximity & Military installations within 5 km \\
+count_wwtp_5km & Proximity & WWTPs within 5 km \\
+frac_developed_1km & Land Use & Developed land fraction (1 km buffer) \\
+frac_developed_5km & Land Use & Developed land fraction (5 km buffer) \\
+frac_agriculture_1km & Land Use & Agricultural land fraction (1 km buffer) \\
+frac_agriculture_5km & Land Use & Agricultural land fraction (5 km buffer) \\
+frac_forest_1km & Land Use & Forest land fraction (1 km buffer) \\
+frac_wetland_1km & Land Use & Wetland fraction (1 km buffer) \\
+frac_water_1km & Land Use & Open water fraction (1 km buffer) \\
+aquifer_type_* & Hydrogeology & Principal aquifer type (one-hot, ~15 categories) \\
+aquifer_lithology_* & Hydrogeology & Aquifer lithology (one-hot) \\
+aquifer_confinement_* & Hydrogeology & Aquifer confinement status (one-hot) \\
+pct_people_of_color & Demographics & Percent people of color (block group) \\
+pct_low_income & Demographics & Percent low income (block group) \\
+pct_less_hs_education & Demographics & Percent less than HS education \\
+pct_limited_english & Demographics & Percent linguistically isolated \\
+ej_index_water & Demographics & EJScreen water quality EJ index \\
+ej_supplemental_index & Demographics & EJScreen supplemental EJ index \\
+n_samples & System & Number of monitoring samples for the system \\
+mean_detection_limit & System & Mean analytical detection limit (µg/L) \\
+\bottomrule
+\end{tabular}
+\end{table}

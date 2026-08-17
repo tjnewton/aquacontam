@@ -1,0 +1,82 @@
+{
+  "T1_xgboost": {
+    "n_folds": 10,
+    "weighted_mean_auroc": 0.7852260648664419,
+    "block_bootstrap": {
+      "mean": 0.7837180124666383,
+      "ci_lower": 0.7054482757527638,
+      "ci_upper": 0.860380615656107,
+      "width": 0.1549323399033432
+    },
+    "naive_fold_normal": {
+      "mean": 0.7824892795063257,
+      "ci_lower": 0.7160241837737282,
+      "ci_upper": 0.8489543752389233,
+      "width": 0.13293019146519502,
+      "se": 0.03391138625855663
+    },
+    "width_ratio_block_over_naive": 1.1655165632098634,
+    "n_boot": 10000,
+    "ci": 0.95
+  },
+  "T1_random_forest": {
+    "n_folds": 10,
+    "weighted_mean_auroc": 0.7693236553987426,
+    "block_bootstrap": {
+      "mean": 0.7678368771802471,
+      "ci_lower": 0.6917491542610097,
+      "ci_upper": 0.8451997314005206,
+      "width": 0.15345057713951094
+    },
+    "naive_fold_normal": {
+      "mean": 0.7705323115582874,
+      "ci_lower": 0.7035922058551555,
+      "ci_upper": 0.8374724172614193,
+      "width": 0.13388021140626383,
+      "se": 0.034153742737696696
+    },
+    "width_ratio_block_over_naive": 1.1461781806861673,
+    "n_boot": 10000,
+    "ci": 0.95
+  },
+  "T4_xgboost": {
+    "n_folds": 10,
+    "weighted_mean_auroc": 0.6796296765839569,
+    "block_bootstrap": {
+      "mean": 0.6791880510528073,
+      "ci_lower": 0.6546530049229133,
+      "ci_upper": 0.7003670087012416,
+      "width": 0.04571400377832824
+    },
+    "naive_fold_normal": {
+      "mean": 0.6756647415721257,
+      "ci_lower": 0.6486221333298576,
+      "ci_upper": 0.7027073498143939,
+      "width": 0.054085216484536236,
+      "se": 0.013797502635546782
+    },
+    "width_ratio_block_over_naive": 0.8452217953384461,
+    "n_boot": 10000,
+    "ci": 0.95
+  },
+  "T4_random_forest": {
+    "n_folds": 10,
+    "weighted_mean_auroc": 0.6706024748770315,
+    "block_bootstrap": {
+      "mean": 0.6699645282819369,
+      "ci_lower": 0.6425837288235542,
+      "ci_upper": 0.6957855450060262,
+      "width": 0.053201816182471995
+    },
+    "naive_fold_normal": {
+      "mean": 0.6658188361379919,
+      "ci_lower": 0.6371531315131018,
+      "ci_upper": 0.6944845407628819,
+      "width": 0.057331409249780085,
+      "se": 0.01462562825184619
+    },
+    "width_ratio_block_over_naive": 0.9279697966377143,
+    "n_boot": 10000,
+    "ci": 0.95
+  }
+}

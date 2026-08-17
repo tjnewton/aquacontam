@@ -1,0 +1,38 @@
+{
+  "mcl_summary": {
+    "n_systems": 17710,
+    "n_exceeding": 3385,
+    "n_non_exceeding": 14325,
+    "exceedance_rate": 0.19113495200451722,
+    "class_balance": "3385:14325",
+    "mean_max_ratio": 6.430402522287878,
+    "median_max_ratio": 0.0,
+    "p95_max_ratio": 4.377499999999963
+  },
+  "detection": {
+    "metrics": {
+      "auroc": 0.8068508425076028,
+      "auprc": 0.7001519186084504,
+      "f1": 0.628175519630485,
+      "sensitivity": NaN,
+      "specificity": NaN
+    },
+    "n_train": 9087,
+    "n_test": 3780,
+    "positive_rate_train": 0.16584131176405856,
+    "positive_rate_test": 0.2849206349206349
+  },
+  "mcl_exceedance": {
+    "metrics": {
+      "auroc": 0.7186113337449721,
+      "auprc": 0.5149736706439384,
+      "f1": 0.4447031431897555,
+      "sensitivity": NaN,
+      "specificity": NaN
+    },
+    "n_train": 9087,
+    "n_test": 3780,
+    "positive_rate_train": 0.16044899306701882,
+    "positive_rate_test": 0.23306878306878306
+  }
+}

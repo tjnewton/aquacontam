@@ -1,0 +1,19 @@
+# CONCEPT_REGISTRY.tsv — reader-facing dataset-scale concepts with declared authority.
+# Consumed by final_gate.py clauses G9 (non-manuscript surfaces: README.md, .zenodo.json,
+# CHANGELOG.md latest release section) and G10 (manuscript surfaces; requires every row ACTIVE).
+# Columns (tab-separated):
+#   concept	authority_type	authority_path	allowed_renderings	conflicting_renderings	status	notes
+# authority_type: frozen_json | frozen_snapshot | code_census
+# conflicting_renderings: ';'-separated Python regexes — a match ANYWHERE on a scanned
+#   surface fails the clause (these are the KNOWN-BAD aliases; G10 is an alias-conflict
+#   check, not a general NL scanner — see FINAL_FIX_CONTRACT_v2.md).
+# status: ACTIVE (checked) | PENDING_PHASE2 | PENDING_DECIDE.
+# All rows ACTIVE as of the v2-D4..D6 decision batch (paper/DECISIONS.md, 2026-07-03).
+systems_total_ambient_inclusive	frozen_snapshot	paper/frozen_snapshots/dataset_snapshot.json	95,223 "water systems and ambient monitoring locations" (v2-D6 label; NOT bare "public water systems")	\b90,108\b;\b10,746 systems\b;\b95,223 (?:U\.S\. )?public water systems\b	ACTIVE	v2-D6: headline stays 95,223 with the honest ambient-inclusive label; the bare PWS label is itself a conflicting rendering (M7).
+geocoded_count	frozen_snapshot	paper/frozen_snapshots/dataset_snapshot.json	87,450	\b82,466\b	ACTIVE	M7: Fig. 1 legend's stale 82,466 replaced with the gated ds_geocoded marker (Phase 2).
+sdwis_rows	frozen_snapshot	paper/frozen_snapshots/dataset_snapshot.json	916,899 (keep-parse; ds_sdwis-gated); 694,419 only as the explicitly-whitelisted legacy-parse provenance fact in Methods	(?i)computed on (?:an|the) (?:earlier )?694,419	ACTIVE	v2-D4: analyses = keep-parse; the legacy figure may appear only as history, never as a claim about current analyses.
+model_family_count	code_census	src/aquacontam/models/ + README census	20 model families (29 model classes)	\bsixteen model famil;\b15\+? model famil	ACTIVE	v2-D5: recorded census arithmetic (15/23 at PR#25, +3 T2 families, +ICP, +GNNx2) matches README's deliberate 20/29; manuscript and .zenodo.json aligned.
+state_db_count	code_census	src/aquacontam/data/ (state DB loaders)	six	\bfive state databases\b	ACTIVE	m3: legend fixed five->six in Phase 2; raw "mn_mdh" label inside fig1 is Phase 3 m3 figure-code work if it persists post-regen.
+total_samples	frozen_snapshot	paper/frozen_snapshots/dataset_snapshot.json	4,860,171 / "over four million"	\b4,069,411\b	ACTIVE	Scale descriptor verified against the snapshot (the regime-reproduced total); 4,069,411 was the pre-keep/pre-MN total and must not reappear.
+data_source_count	code_census	paper Table 1 + configs/data.yaml source census	fifteen data sources (thirteen contributing, one excluded, one unavailable)	15\+ ?(?:data )?sources;12\+ ?(?:data )?sources	ACTIVE	R5 m12: canonical count is 'fifteen data sources'; .zenodo '15+' and CHANGELOG '12+' reconciled to 'fifteen' in the same commit so no surface carries the +N over-count.
+dataset_deposit_license	code_census	LICENSE (Apache-2.0, code) + Data Availability (CC BY 4.0, compiled data)	compiled data under CC BY 4.0; code Apache-2.0	"license":\s*"MIT"	ACTIVE	R5 M8/m12 + 2026-08 license split: the Zenodo data deposit is CC BY 4.0 (was once mislabeled MIT); code switched MIT to Apache-2.0 pre-release (no release ever shipped under MIT). The conflicting regex targets the .zenodo JSON field specifically, not README's code-license badge, and now guards against MIT regression.

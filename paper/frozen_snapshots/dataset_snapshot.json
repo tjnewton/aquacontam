@@ -1,0 +1,70 @@
+{
+ "_provenance": "Committed snapshot of reader-facing dataset numbers so paper_numbers.py ds_* loaders and prose gating do NOT depend on the git-ignored data/interim/merged_wq.parquet (CI-safe, no environment-dependent skip). Totals and per-source record counts were verified byte-equal to the parquet on 2026-07-01 (see paper/frozen_snapshots/README for the derivation command). Table-1 metadata (pfas_analytes, censoring_pct, oh_epa which is excluded from the merged parquet) mirrors the shipped Table 1 (paper/generate_tables.py::table_dataset_summary). This file lives OUTSIDE results/paper_frozen/ so the frozen archive stays byte-unchanged. NOTE (v2-D4, 2026-07-03): the frozen analysis JSONs ARE computed on this 916,899-row keep-parse (canonical v2 re-freeze from one DAG run; regime asserted equal to these totals). The legacy 694,419-row parse backed pre-2026-06-30 analyses only and is preserved in repository history. The earlier M5b-era note claiming otherwise was stale.",
+ "totals": {
+  "samples": 4860171,
+  "systems": 95223,
+  "geocoded": 87450
+ },
+ "sources": {
+  "ucmr5": {
+   "records": 1928117,
+   "pfas_analytes": 29,
+   "censoring_pct": 97.1
+  },
+  "ucmr3": {
+   "records": 1069174,
+   "pfas_analytes": 6,
+   "censoring_pct": 76.4
+  },
+  "sdwis": {
+   "records": 916899,
+   "pfas_analytes": null,
+   "censoring_pct": 0.3
+  },
+  "mi_mpart": {
+   "records": 5640,
+   "pfas_analytes": 5,
+   "censoring_pct": 0.0
+  },
+  "ca_geotracker": {
+   "records": 324254,
+   "pfas_analytes": 29,
+   "censoring_pct": 83.1
+  },
+  "oh_epa": {
+   "records": 26554,
+   "pfas_analytes": 6,
+   "censoring_pct": 0.0
+  },
+  "wa_doh": {
+   "records": 9251,
+   "pfas_analytes": 14,
+   "censoring_pct": 0.0
+  },
+  "nj_dep": {
+   "records": 248107,
+   "pfas_analytes": 25,
+   "censoring_pct": null
+  },
+  "nc_deq": {
+   "records": 1953,
+   "pfas_analytes": 5,
+   "censoring_pct": null
+  },
+  "wqp": {
+   "records": 35528,
+   "pfas_analytes": 13,
+   "censoring_pct": 38.7
+  },
+  "mo_dnr": {
+   "records": 75971,
+   "pfas_analytes": 29,
+   "censoring_pct": null
+  },
+  "mn_mdh": {
+   "records": 247230,
+   "pfas_analytes": 27,
+   "censoring_pct": null
+  }
+ }
+}

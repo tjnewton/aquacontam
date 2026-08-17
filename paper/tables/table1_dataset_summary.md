@@ -1,0 +1,21 @@
+| Source            | Records   | Analytes      | Period    | Censoring Rate   | Status          |
+|:------------------|:----------|:--------------|:----------|:-----------------|:----------------|
+| UCMR5             | 1,928,117 | 29 PFAS + Li  | 2023      | 97.1%            | Available       |
+| UCMR3             | 1,069,174 | 6 PFAS + 32   | 2013-2015 | 76.4%            | Available       |
+| SDWIS             | 916,899   | Pb/Cu         | 2016-2022 | 0.3%§            | Available       |
+| MI MPART          | 5,640     | 5 PFAS        | 2019-2023 | 0%†              | Available       |
+| CA GeoTracker‖    | 324,254   | 29 PFAS       | 2019-2023 | 83.1%            | Available       |
+| OH EPA            | 26,554    | 6 PFAS        | 2020-2024 | 0%†              | Excluded‡       |
+| WA DOH            | 9,251     | 14 PFAS       | 2023-2024 | 0%†              | Available       |
+| NJ DEP            | 248,107   | 25 PFAS       | 2019-2023 | ~80%             | Available       |
+| NC DEQ            | 1,953     | 5 PFAS        | 2020-2023 | ~80%             | Unavailable     |
+| WQP‖              | 35,528    | 13 PFAS       | 2020-2024 | ~39%             | Available       |
+| MO DNR            | 75,971    | 29 PFAS       | 2020-2023 | ~99%             | Available       |
+| MN MDH            | 247,230   | 27 PFAS       | 2005-2026 | ~92%             | Available       |
+| NJ Private Wells* | ~10K      | PFAS + metals | 2020-2023 | ~75%             | Unavailable     |
+| EJScreen*         | ~220K     | Demographics  | 2023      | N/A              | Available (GDB) |
+*Auxiliary source: provides private-well measurements (NJ Private Wells) or demographic covariates (EJScreen) rather than public-water-system compliance monitoring; not part of the primary benchmark population count.
+†Detection-only reporting: source data includes only detected samples; non-detects are not available.
+§SDWIS reports Lead and Copper Rule 90th-percentile compliance values, which are genuine quantitative measurements that are only rarely left-censored; the 0% censoring reflects this measurement mechanism, not detection-only reporting.
+‡Excluded from analysis: zero unique PWSIDs after deduplication with national sources.
+‖Ambient environmental monitoring (groundwater/surface water), a different population from public-water-system finished water; reserved for external validation, not included in the main benchmark train/validation/test splits.

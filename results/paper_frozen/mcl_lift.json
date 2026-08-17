@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "source": "C14 (R5 M7) top-decile lift for the MCL-exceedance vs detection target, folds mirrored from _run_mcl_exceedance_analysis (same features/split/XGBoost config, seed 42); reproduction gate ties MCL AUROC to mcl_exceedance_analysis.json within 0.002. No new pipeline run.",
+    "seed": 42
+  },
+  "detection": {
+    "auroc": 0.8068508425076028,
+    "top_decile_lift": 3.0640668523676884,
+    "n_test": 3780,
+    "positive_rate_test": 0.2849206349206349
+  },
+  "mcl_exceedance": {
+    "auroc": 0.7186113337449721,
+    "top_decile_lift": 2.6787741203178204,
+    "n_test": 3780,
+    "positive_rate_test": 0.23306878306878306
+  },
+  "auroc_gap": 0.08823950876263065
+}

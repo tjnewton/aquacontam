@@ -1,0 +1,104 @@
+# DERIVATIONS.tsv — machine-checked derivation map for reader-facing derived artifacts.
+# Consumed by final_gate.py clause G8 (input-hash stamps) and G12 (DOCX source-manifest hash).
+# One row per (artifact, input). Columns (tab-separated):
+#   artifact	generator	input	sha256_at_derivation	scope	check
+# scope: repo = input is committed (gate re-hashes it; hermetic on CI)
+#        external = input is local-only data/run output (verified when present locally; skip-with-note on CI)
+# check: G8  = gate fails unless sha256_at_derivation matches the CURRENT hash of the input
+#              (PENDING = not yet stamped -> FAIL; stamped by the Phase 1 canonical re-freeze)
+#        G12 = input is part of the DOCX source manifest; the combined manifest hash is embedded
+#              in the DOCX by convert_to_docx.py and recomputed by the gate (per-input sha = "-")
+#        G4  = already byte-gated by clause G4 (row kept for provenance; no G8 hash check)
+#        PROV = provenance record only (base-pipeline artifact families; one-run-consistency is
+#               established by the Phase 1 single canonical DAG run, not per-input hashes)
+#
+# --- Post-freeze frozen->frozen derivations (the historical escape class; G8-checked) ---
+results/paper_frozen/group_error_calibration.json	paper/compute_group_error_calibration.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/group_error_calibration.json	paper/compute_group_error_calibration.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/inference_strengthening.json	paper/compute_inference_strengthening.py	results/paper_frozen/loro_cv_provenance_free.json	909ea3085cfdfa5fc976cd20643b9f010aab5c4d939b1efccb1ed5b8c6931d8a	repo	G8
+results/paper_frozen/inference_strengthening.json	paper/compute_inference_strengthening.py	results/paper_frozen/loro_equity_analysis.json	f0a98bd012f52c44406f03b120d6b5edca2b0aeb8b7da1e4eb9eefb78bd72211	repo	G8
+results/paper_frozen/inference_strengthening.json	paper/compute_inference_strengthening.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/areal_apportionment.json	paper/compute_areal_apportionment.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/areal_apportionment.json	paper/compute_areal_apportionment.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/areal_apportionment.json	paper/compute_areal_apportionment.py	data/raw/EJSCREEN_2023_BG_with_AS_CNMI_GU_VI.csv	f6fd10cca981ff9eca4d206205724201ccc4cab7630dbed0737b82c04b64eca1	external	G8
+results/paper_frozen/mn_ascertainment.json	paper/compute_mn_ascertainment.py	data/processed/ucmr5.parquet	986e41ffec4fe13fbcdc49b40abcc464cb04dd2de2d0e1d7bb26849309874a0a	external	G8
+results/paper_frozen/mn_ascertainment.json	paper/compute_mn_ascertainment.py	data/processed/ucmr3.parquet	1720bdde734b9d40a6d95397736d297a50489299ee367da3b4b136f5921714c9	external	G8
+results/paper_frozen/mn_ascertainment.json	paper/compute_mn_ascertainment.py	data/processed/mn_mdh.parquet	b8b868a4207accdda13d3734986188e0dac3ac1f5a7e9a2472a5f91232df0017	external	G8
+#
+# --- Generated reader-facing artifacts already byte-gated by G4 (provenance rows) ---
+LEADERBOARD.md	paper/regenerate_leaderboard.py	results/paper_frozen/results.json	-	repo	G4
+paper/tables/	paper/generate_tables.py	results/paper_frozen/	-	repo	G4
+#
+# --- DOCX source manifests (G12: combined manifest hash embedded by convert_to_docx.py) ---
+# NOTE: manifests finalized when convert_to_docx.py gains the embed (Phase 0); rows below are
+# the source files each artifact consumes per convert_to_docx.py.
+paper/manuscript.docx	paper/convert_to_docx.py	paper/skeleton.md	-	repo	G12
+paper/manuscript.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
+paper/extended_data.docx	paper/convert_to_docx.py	paper/extended_data.md	-	repo	G12
+paper/extended_data.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
+paper/supplementary_information.docx	paper/convert_to_docx.py	paper/supplementary_information.md	-	repo	G12
+paper/manuscript_review.docx	paper/convert_to_docx.py	paper/skeleton.md	-	repo	G12
+paper/manuscript_review.docx	paper/convert_to_docx.py	paper/extended_data.md	-	repo	G12
+paper/manuscript_review.docx	paper/convert_to_docx.py	paper/supplementary_information.md	-	repo	G12
+paper/manuscript_review.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
+paper/plain_language_primer.docx	paper/convert_to_docx.py	paper/plain_language_primer.md	-	repo	G12
+#
+# --- Base-pipeline artifact families (PROV: one-run consistency via the Phase 1 canonical DAG) ---
+results/paper_frozen/results.json	scripts/reproduce.py --all (pinned; see FINAL_FIX_CONTRACT_v2.md)	data/ + configs/	-	external	PROV
+results/paper_frozen/results_provenance_free.json	scripts/reproduce.py --all --provenance-free --output-dir results_provenance_free	data/ + configs/	-	external	PROV
+results/paper_frozen/spatial_block_bootstrap.json	scripts/reproduce.py --spatial-block-bootstrap (standalone; NOT in --all)	results run + data/	-	external	PROV
+results/paper_frozen/loro_cv_buffered.json	scripts/reproduce.py --buffered-loro (standalone; NOT in --all)	results run + data/	-	external	PROV
+results/paper_frozen/icp_diagnostics.json	paper/splice_icp_diagnostics.py (adds compute_icp_history.py T1 history captured via the canonical train_and_evaluate path, reproduction-gated to frozen ICP T1 AUROC 0.7311; results block verbatim)	results/icp_history.json	-	external	PROV
+results/paper_frozen/icp_recoverability.json	paper/regen_icp_results.py (from results_icp_probe)	results_icp_probe/	-	external	PROV
+results/paper_frozen/t6_arsenic.json	scripts/reproduce.py --t6-arsenic -> freeze --extra	data/raw/nga_arsenic/	-	external	PROV
+results/paper_frozen/predictions_slim.json	paper/build_predictions_slim.py (F-pred: slims the 2026-06-29 pipeline T1/PFOS national inference; byte-exact reproduction gate)	results/predictions/task=T1/analyte=PFOS/predictions.parquet	-	external	PROV
+results/paper_frozen/checksums.sha256	paper/freeze_results.py (MUST re-run AFTER the direct-to-frozen compute_* writes)	results/paper_frozen/*.json	-	repo	G11
+results/paper_frozen/cutpoint_sensitivity.json	paper/compute_cutpoint_sensitivity.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/cutpoint_sensitivity.json	paper/compute_cutpoint_sensitivity.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/split_prevalence.json	paper/compute_split_prevalence.py	results/paper_frozen/split_comparison.json	fa99b1e08c50dea86b90ca0c7771bb222fdb547c5ef0308cb11baa3468215649	repo	G8
+results/paper_frozen/split_prevalence.json	paper/compute_split_prevalence.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/loro_lift.json	paper/compute_loro_lift.py	results/paper_frozen/loro_cv_provenance_free.json	909ea3085cfdfa5fc976cd20643b9f010aab5c4d939b1efccb1ed5b8c6931d8a	repo	G8
+results/paper_frozen/loro_lift.json	paper/compute_loro_lift.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/spatial_permutation.json	paper/compute_spatial_permutation.py	results/paper_frozen/monitoring_inequity.json	ee65baff02aaed2e1eefba187514ad92a7eba79b3ade14b9f23f23e6aaa70e0d	repo	G8
+results/paper_frozen/spatial_permutation.json	paper/compute_spatial_permutation.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/pf_recoverability.json	paper/compute_pf_recoverability.py	results/paper_frozen/icp_recoverability.json	5a1b2dab305481e939126949e2be306d26055234833ce9e36d1b5fbcca4be036	repo	G8
+results/paper_frozen/pf_recoverability.json	paper/compute_pf_recoverability.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/group_conformal_demographic.json	paper/compute_group_conformal_demographic.py	results/paper_frozen/group_conformal_results.json	37103fdfa3909c66edf40ee25cca70aa7a8d86a960508ce89fa4b4af3dc156ad	repo	G8
+results/paper_frozen/group_conformal_demographic.json	paper/compute_group_conformal_demographic.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+# --- R5 (v3) computes (frozen->frozen; G8-checked) ---
+results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/group_error_calibration.json	b3157fee318e9b9850f853a3c7915d68d63f0efb3c3081d5159964139b7f6931	repo	G8
+results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/inference_strengthening.json	14b5af9845e4c6c1c107be7dd8239f0237ec4807f4cfd2d53964a6d361e21347	repo	G8
+results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/group_conformal_demographic.json	83445d74781647b3ea6a45ee5282c60d417b3c160d10b67c5bde7062aff88bc0	repo	G8
+results/paper_frozen/cluster_ci_calibration.json	paper/compute_cluster_ci.py	results/paper_frozen/loro_cv_provenance_free.json	909ea3085cfdfa5fc976cd20643b9f010aab5c4d939b1efccb1ed5b8c6931d8a	repo	G8
+results/paper_frozen/cluster_ci_calibration.json	paper/compute_cluster_ci.py	results/paper_frozen/loro_equity_analysis.json	f0a98bd012f52c44406f03b120d6b5edca2b0aeb8b7da1e4eb9eefb78bd72211	repo	G8
+results/paper_frozen/cluster_ci_calibration.json	paper/compute_cluster_ci.py	results/paper_frozen/inference_strengthening.json	14b5af9845e4c6c1c107be7dd8239f0237ec4807f4cfd2d53964a6d361e21347	repo	G8
+results/paper_frozen/cluster_ci_calibration.json	paper/compute_cluster_ci.py	results/paper_frozen/spatial_block_bootstrap.json	a2b8d288ef7bc73ae243ec3c8018ae1aff91f1918be8197b9aad5e57c917b134	repo	G8
+results/paper_frozen/mcl_lift.json	paper/compute_mcl_lift.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/mcl_lift.json	paper/compute_mcl_lift.py	results/paper_frozen/mcl_exceedance_analysis.json	ae28d2abfebf1e3ac596c366b5a35ea97c801539ebefd30860f713921631fd4f	repo	G8
+results/paper_frozen/pfna_exceedance_count.json	paper/compute_pfna_count.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/pfna_exceedance_count.json	paper/compute_pfna_count.py	results/paper_frozen/mcl_exceedance_analysis.json	ae28d2abfebf1e3ac596c366b5a35ea97c801539ebefd30860f713921631fd4f	repo	G8
+results/paper_frozen/power_analysis.json	paper/compute_power.py	results/paper_frozen/results.json	438143383db62c8acb463817560dc119c491f963c72eb9690b2149656330451c	repo	G8
+results/paper_frozen/loro_cv_full.json	paper/splice_loro_full.py (merges compute_loro_gnn_tabpfn.py gnn/tabpfn 10-fold; 11 families verbatim)	results/paper_frozen/loro_cv.json	634ed9d5471f6014962c36c0a990232344314aa2a98d7104a7f1eb8c706ebc0c	repo	G8
+results/paper_frozen/loro_cv_full.json	paper/splice_loro_full.py (merges compute_loro_gnn_tabpfn.py gnn/tabpfn 10-fold; 11 families verbatim)	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/headline_harness_stability.json	paper/compute_headline_stability.py	results/paper_frozen/results.json	438143383db62c8acb463817560dc119c491f963c72eb9690b2149656330451c	repo	G8
+results/paper_frozen/headline_harness_stability.json	paper/compute_headline_stability.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/headline_harness_stability.json	paper/compute_headline_stability.py	results/paper_frozen/seed_inflation_check.json	c6c640504ea9f45d66042308bc69990fcb9f426657dbbfc171a44b751528a828	repo	G8
+results/paper_frozen/headline_harness_stability.json	paper/compute_headline_stability.py	results/paper_frozen/split_comparison.json	fa99b1e08c50dea86b90ca0c7771bb222fdb547c5ef0308cb11baa3468215649	repo	G8
+results/paper_frozen/headline_harness_stability.json	paper/compute_headline_stability.py	results/paper_frozen/loro_cv.json	634ed9d5471f6014962c36c0a990232344314aa2a98d7104a7f1eb8c706ebc0c	repo	G8
+results/paper_frozen/misgeocode_sensitivity.json	paper/compute_misgeocode_sensitivity.py	results/paper_frozen/results.json	438143383db62c8acb463817560dc119c491f963c72eb9690b2149656330451c	repo	G8
+results/paper_frozen/misgeocode_sensitivity.json	paper/compute_misgeocode_sensitivity.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/group_ece_debiased.json	paper/compute_debiased_ece.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/group_ece_debiased.json	paper/compute_debiased_ece.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/group_ece_debiased.json	paper/compute_debiased_ece.py	results/paper_frozen/group_error_calibration.json	b3157fee318e9b9850f853a3c7915d68d63f0efb3c3081d5159964139b7f6931	repo	G8
+results/paper_frozen/group_burden_ci.json	paper/compute_burden_ci.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/group_burden_ci.json	paper/compute_burden_ci.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
+results/paper_frozen/common_rl_sensitivity.json	paper/compute_common_rl.py	results/paper_frozen/results.json	438143383db62c8acb463817560dc119c491f963c72eb9690b2149656330451c	repo	G8
+results/paper_frozen/common_rl_sensitivity.json	paper/compute_common_rl.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/coordinate_tail_sensitivity.json	paper/compute_coord_tail.py	results/paper_frozen/coordinate_sensitivity.json	f9a88a4486fa0a161f8b4160d8f19cd284026ff5e1c285f6974fbde685b298dd	repo	G8
+results/paper_frozen/coordinate_tail_sensitivity.json	paper/compute_coord_tail.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/source_adjusted_monitoring.json	paper/compute_source_adjusted_monitoring.py	results/paper_frozen/monitoring_inequity.json	ee65baff02aaed2e1eefba187514ad92a7eba79b3ade14b9f23f23e6aaa70e0d	repo	G8
+results/paper_frozen/source_adjusted_monitoring.json	paper/compute_source_adjusted_monitoring.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/power_analysis.json	paper/compute_loro_power.py	results/paper_frozen/loro_cv.json	634ed9d5471f6014962c36c0a990232344314aa2a98d7104a7f1eb8c706ebc0c	repo	G8
+results/paper_frozen/misgeocode_sensitivity_v2.json	paper/compute_misgeocode_sensitivity_v2.py	results/paper_frozen/results.json	438143383db62c8acb463817560dc119c491f963c72eb9690b2149656330451c	repo	G8
+results/paper_frozen/misgeocode_sensitivity_v2.json	paper/compute_misgeocode_sensitivity_v2.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
+results/paper_frozen/misgeocode_sensitivity_v2.json	paper/compute_misgeocode_sensitivity_v2.py	paper/assets/us_states_cb2023_5m.geojson	b5d6da86372e7e8623353c0d44cf54751f7e8a55b6f4252058bd91e3fea1c607	repo	G8

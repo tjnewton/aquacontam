@@ -1,0 +1,114 @@
+{
+  "mi_mpart": {
+    "metrics": {},
+    "n_systems": 153,
+    "n_overlap_excluded": 0,
+    "epa_region": 5,
+    "detection_rate": 1.0,
+    "note": "single_class"
+  },
+  "ca_geotracker": {
+    "metrics": {
+      "auroc": 0.8132385940442812,
+      "auprc": 0.7066271599920819,
+      "f1": 0.03263403263403263,
+      "accuracy": 0.7079521463757917
+    },
+    "bootstrap_ci": {
+      "auroc": {
+        "point": 0.8132385940442812,
+        "ci_lower": 0.7888403977047099,
+        "ci_upper": 0.8377838823884979,
+        "std": 0.012467155749036106
+      },
+      "auprc": {
+        "point": 0.7066271599920819,
+        "ci_lower": 0.6647813637343679,
+        "ci_upper": 0.7452709157550668,
+        "std": 0.020577664441517346
+      }
+    },
+    "chance_test": {
+      "auroc": 0.8132385940442812,
+      "variance": 0.00016725569901762067,
+      "z_statistic": 24.22059477014642,
+      "p_value": 1.3501010101400904e-129
+    },
+    "n_systems": 1421,
+    "n_overlap_excluded": 0,
+    "epa_region": 9,
+    "detection_rate": 0.29697396199859255
+  },
+  "nj_dep": {
+    "metrics": {
+      "auroc": 0.7891655697883473,
+      "auprc": 0.7915212951414056,
+      "f1": 0.5933831376734259,
+      "accuracy": 0.7091603053435115
+    },
+    "bootstrap_ci": {
+      "auroc": {
+        "point": 0.7891655697883473,
+        "ci_lower": 0.7649332389424934,
+        "ci_upper": 0.8120480374468919,
+        "std": 0.012531299042326562
+      },
+      "auprc": {
+        "point": 0.7915212951414056,
+        "ci_lower": 0.7579339547759909,
+        "ci_upper": 0.8215930994950674,
+        "std": 0.01600008475663293
+      }
+    },
+    "chance_test": {
+      "auroc": 0.7891655697883473,
+      "variance": 0.0001601771960402911,
+      "z_statistic": 22.847897296316905,
+      "p_value": 1.5334549019849282e-115
+    },
+    "n_systems": 1310,
+    "n_overlap_excluded": 0,
+    "epa_region": 2,
+    "detection_rate": 0.4725190839694656
+  },
+  "mo_dnr": {
+    "metrics": {
+      "auroc": 0.8290843557219103,
+      "auprc": 0.28130451704179993,
+      "f1": 0.0,
+      "accuracy": 0.9478476821192053
+    },
+    "bootstrap_ci": {
+      "auroc": {
+        "point": 0.8290843557219103,
+        "ci_lower": 0.7665328761772326,
+        "ci_upper": 0.8849429433494939,
+        "std": 0.029590350783624614
+      },
+      "auprc": {
+        "point": 0.28130451704179993,
+        "ci_lower": 0.19232063887551878,
+        "ci_upper": 0.3907234166121562,
+        "std": 0.051584863944724856
+      }
+    },
+    "chance_test": {
+      "auroc": 0.8290843557219104,
+      "variance": 0.0009079076195338897,
+      "z_statistic": 10.921603518161922,
+      "p_value": 9.087701876122435e-28
+    },
+    "n_systems": 1208,
+    "n_overlap_excluded": 0,
+    "epa_region": 7,
+    "detection_rate": 0.052152317880794705
+  },
+  "wa_doh": {
+    "metrics": {},
+    "n_systems": 256,
+    "n_overlap_excluded": 0,
+    "epa_region": 10,
+    "detection_rate": 1.0,
+    "note": "single_class"
+  }
+}
