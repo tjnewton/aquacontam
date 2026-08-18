@@ -210,7 +210,7 @@ def parse_concept_registry(path: Path | None = None) -> list[ConceptRow]:
         if status not in _VALID_STATUSES:
             raise ValueError(f"CONCEPT_REGISTRY.tsv: bad status {status!r} for {concept!r}")
         # Case-INSENSITIVE: a concept alias must be caught regardless of capitalization
-        # (the panel found "Sixteen model families" in Methods escape a case-sensitive
+        # (a review pass found "Sixteen model families" in Methods escape a case-sensitive
         # "\bsixteen" pattern — a real G10 gap).
         pats = tuple(
             re.compile(pat, re.IGNORECASE) for pat in conflicting.split(";") if pat.strip()
@@ -302,7 +302,7 @@ def parse_claims(path: Path | None = None) -> list[ClaimRow]:
 
 
 # ---------------------------------------------------------------------------
-# Degenerate-cell detector (R5 M2 hardening audit ii)
+# Degenerate-cell detector
 # ---------------------------------------------------------------------------
 
 
@@ -311,7 +311,7 @@ def flag_degenerate_metric_cells(
 ) -> list[str]:
     """Flag metric cells a table generator must render as FAILED, not plausible numbers.
 
-    Two failure modes the R5 referee found on T3 (M2): (a) two or more models emitting a
+    Two T3 failure modes this guards against: (a) two or more models emitting a
     **byte-identical** metric tuple (a silent non-convergence fallback masquerading as a
     real result — e.g. five T3 models all at micro-AUROC 0.753 / AUPRC 0.321), and (b) a
     **NaN** in a reported metric (e.g. macro_auroc NaN for every T3 model). Returns a list

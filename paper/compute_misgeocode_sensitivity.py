@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C-F (#55 item 6): wrong-ZIP mis-geocode flag counts + exclusion sensitivity.
+"""Wrong-ZIP mis-geocode flag counts + exclusion sensitivity.
 
 SUPERSEDED (2026-07-12): the frozen artifact this script wrote
 (``misgeocode_sensitivity.json``) is retained as the bounding-box-rule record, but the
@@ -10,7 +10,7 @@ name ``region_mismatch_mask``) so a re-run still reproduces the v1 artifact inst
 silently clobbering it with polygon-rule counts.
 
 Some systems' plotted coordinates come from an out-of-state mailing/operator
-ZIP centroid, placing them deep inside foreign EPA regions (issue #55 item 6).
+ZIP centroid, placing them deep inside foreign EPA regions.
 The geographic split is prefix-derived and therefore uncontaminated, but the
 mis-located systems carry wrong-place proximity/land-use features. This
 COMPUTE quantifies the exposure:

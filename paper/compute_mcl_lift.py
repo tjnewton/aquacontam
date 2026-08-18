@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C14 (R5 M7): top-decile lift on the regulatorily-actionable MCL-exceedance target.
+"""Top-decile lift on the regulatorily-actionable MCL-exceedance target.
 
 The manuscript's "3.0x top-decile lift" prioritization claim is computed on the DETECTION
 target, but the regulatorily-actionable target is MCL exceedance, which is materially harder

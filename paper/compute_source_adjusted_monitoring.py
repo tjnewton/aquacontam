@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""R7 M1: source-adjusted monitoring-intensity disparity (the pivotal equity claim).
+"""Source-adjusted monitoring-intensity disparity (the pivotal equity claim).
 
 The headline "communities of color are sampled 1.85x more intensively" (frozen
 ``monitoring_inequity.json``; pinned ``clm_mon_ratio`` SIGNIFICANT) is estimated from
@@ -7,7 +7,7 @@ The headline "communities of color are sampled 1.85x more intensively" (frozen
 sampling density differs by ~an order of magnitude (dense state programs vs a single
 federal UCMR cycle). The size-adjusted association controls for population only -- there is
 no data-source term -- so "1.85x" conflates cross-source corpus assembly with agency
-allocation. This pre-specified COMPUTE (R7 standing decision 2026-07-12) re-estimates the
+allocation. This pre-specified compute (standing decision, 2026-07-12) re-estimates the
 disparity three ways and lets the numbers decide the reframe:
 
   (i)  size-adjusted association WITH data-source fixed effects (dominant source per system);

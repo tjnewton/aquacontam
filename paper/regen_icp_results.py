@@ -1,4 +1,4 @@
-"""DEPRECATED (#55, 2026-07): one-off ICP re-train splice, retired from the active path.
+"""DEPRECATED (2026-07): superseded one-off ICP re-train splice, retained for provenance.
 
 Kept for provenance only (referenced by historical ``DERIVATIONS.tsv`` PROV rows).
 ICP training history is now persisted through the canonical pipeline

@@ -1,4 +1,4 @@
-"""Complete the T1 LORO leaderboard for the two graph nets and TabPFN (#55 items 0/1).
+"""Complete the T1 LORO leaderboard for the two graph nets and TabPFN.
 
 The C18 driver (``compute_loro_full.py``) recorded ``gnn_gcn``/``gnn_sage`` as
 "failed" because it never passed the ``coords`` kwarg the GNN models require, and
@@ -36,7 +36,7 @@ from __future__ import annotations
 import os as _os
 import sys as _sys
 
-# Bind CUDA to a stable device before any torch import (see CLAUDE.md GPU note).
+# Bind CUDA to a stable device before any torch import (env-var GPU binding).
 _os.environ.setdefault("CUDA_DEVICE_ORDER", "PCI_BUS_ID")
 
 import argparse

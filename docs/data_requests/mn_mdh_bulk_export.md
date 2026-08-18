@@ -16,7 +16,7 @@ download. The public-facing data is the interactive **PFAS in Minnesota's Public
 Systems** dashboard (`https://www.health.state.mn.us/communities/environment/water/pfasmap.html`),
 which is a lookup tool, not a bulk export. A complete machine-readable export was provided
 on request as a single-sheet Excel workbook — the same manual-export pattern used for the
-NJ DEP source (see `nj_dep_opra_response.md`).
+NJ DEP source (see `nj_dep_bulk_access_solutions.md`).
 
 ## Contents (as received)
 

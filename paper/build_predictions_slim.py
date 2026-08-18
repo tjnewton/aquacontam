@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Build the slim national T1-PFOS risk surface for the frozen archive.
 
-F-pred provenance (#55 plan): the C-D retrain gate was not exercised; instead
+F-pred provenance: the retrain gate was not exercised; instead
 the slim surface is derived from the existing pipeline national inference
 parquets (``results/predictions/``, generated 2026-06-29 by
 ``generate_webapp_predictions``). This script slims the T1/PFOS slice to the

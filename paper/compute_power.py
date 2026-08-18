@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C16 (R5 m3): regenerate power_analysis.json from the frozen benchmark, not stale defaults.
+"""Regenerate power_analysis.json from the frozen benchmark, not stale defaults.
 
 The supplementary statistical-power table was computed from hardcoded AUROCs (0.873/0.857)
 because the loader read a ``delong_results.json`` that never existed and silently fell back.

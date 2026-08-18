@@ -3,7 +3,7 @@ title: "AquaContam: An ML Benchmark for Predicting PFAS and Heavy Metal Contamin
 message: "If you use this software or dataset, please cite it as below."
 type: software
 version: 4.0.0
-date-released: '2026-07-03'
+date-released: '2026-08-18'
 abstract: >-
   AquaContam is a machine learning benchmark for predicting PFAS and heavy metal
   contamination in U.S. public drinking water systems. It integrates EPA monitoring

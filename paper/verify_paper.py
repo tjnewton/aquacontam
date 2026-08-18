@@ -663,7 +663,7 @@ _BIB_ENTRY_RE = re.compile(r"^(\d+)\.\s+\S", re.MULTILINE)
 def check_bibliography_bijection(skeleton_text: str) -> list[str]:
     """Marker <-> bibliography-entry bijection + ascending first-appearance.
 
-    Guards the #55 reference renumber (and any future citation edit) against the
+    Guards the reference renumber (and any future citation edit) against the
     silent-regression class it fixes: a dangling ``^N^`` with no entry, a
     bibliography entry never cited, or numbering that is not ascending by first
     appearance (Nature style). Structural only (no dash/prose sensitivity), so it
@@ -731,9 +731,9 @@ def check_stale_frozen_files(results_dir: Path) -> list[str]:
     """Flag frozen JSONs that still carry pre-leakage-fix T4 (~0.96) values.
 
     ``spatial_block_bootstrap.json`` and ``seed_inflation_check.json`` predate
-    the M1 target-leakage fix; a referee re-deriving a T4 CI from them would
+    the target-leakage fix; a reader re-deriving a T4 CI from them would
     recover the artefact. Advisory WARNINGS (the files are intentionally retained
-    as a provenance record, allowlisted in paper/DECISIONS.md), plus a generic
+    as a provenance record, allowlisted by maintainer decision), plus a generic
     sweep that catches any other file whose T4 metric diverges far from the
     canonical ``results.json`` value.
     """
@@ -774,7 +774,7 @@ def check_stale_frozen_files(results_dir: Path) -> list[str]:
                 warnings.append(
                     f"Stale T4 value in {fname} ({leaf_path.strip('.')}={val:.4f}): "
                     f"pre-leakage-fix artefact vs canonical results.json T4={float(canon):.3f}; "
-                    f"not a current source (see paper/DECISIONS.md)"
+                    f"not a current source (retained provenance record)"
                 )
                 flagged = True
                 break
@@ -956,7 +956,7 @@ def verify_paper(
 
     # DML significant-count and Rosenbaum Gamma=3.0 robustness count vs the
     # frozen JSONs (HARD ERRORS) -- guards the 50-vs-69 and Gamma-inversion bugs
-    # the P3.5 referee panel caught. Check skeleton + supplementary prose.
+    # an earlier review pass caught. Check skeleton + supplementary prose.
     _supp = supplementary_path.read_text(encoding="utf-8") if supplementary_path.exists() else ""
     _prose = text + "\n" + _supp
     errors.extend(check_dml_significant_count(_prose, results_dir))
@@ -967,7 +967,7 @@ def verify_paper(
     errors.extend(check_text_metric_reconciliation(_prose, results_dir))
 
     # Reference marker <-> bibliography-entry bijection + ascending first-appearance
-    # (HARD ERRORS) -- guards the #55 renumber against dangling/orphan/out-of-order
+    # (HARD ERRORS) -- guards the renumber against dangling/orphan/out-of-order
     # regressions. Structural, no prose sensitivity.
     errors.extend(check_bibliography_bijection(text))
 
@@ -1075,9 +1075,9 @@ def verify_paper(
                                     f"actual is {burden_ratio:.2f}"
                                 )
 
-                # National (system-count-weighted) burden ratio check (referee
+                # National (system-count-weighted) burden ratio check (robustness
                 # §8-iii): verify the CANONICAL national ratio appears in a burden
-                # context so a wrong Abstract value is caught. Per referee m5 the two
+                # context so a wrong Abstract value is caught. By design the two
                 # estimators (loro_equity 1.48 vs inference_strengthening m4c 1.50) were
                 # reconciled to the m4c weighted mean (the endorsed estimator with a CI);
                 # it is also gated as pn:ej_burden_natl, so this cross-checks that gate.
@@ -1166,7 +1166,7 @@ def verify_paper(
                 pf_wmean = inf.get("m4a_provenance_free_loro_ci", {}).get("weighted_mean_auroc")
                 if pf_wmean is not None:
                     expected_means.add(f"{float(pf_wmean):.3f}")
-            # R5 M3: Table 2 now cites the full-family LORO leaderboard means (CatBoost 0.790,
+            # Table 2 cites the full-family LORO leaderboard means (CatBoost 0.790,
             # voting 0.784, ...), so every family's leave-one-region-out mean is a computed value.
             full_loro_path = results_dir / "loro_cv_full.json"
             if full_loro_path.exists():

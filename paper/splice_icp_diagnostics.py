@@ -1,4 +1,4 @@
-"""Add the captured ICP training history to icp_diagnostics.json (#55 item 7, additive).
+"""Add the captured ICP training history to icp_diagnostics.json (additive).
 
 Loads the frozen ``icp_diagnostics.json`` (which has only ``results``) and adds a
 ``history`` block from the seeded ICP re-fit (``results/icp_history.json``). Writes

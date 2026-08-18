@@ -1,6 +1,6 @@
 """Strengthening analyses requested in peer review.
 
-Three robustness analyses that answer specific referee objections to the
+Three robustness analyses that address specific objections to the
 monitoring-confounding manuscript:
 
 - :func:`region_block_bootstrap` - re-estimates the LORO headline confidence

@@ -149,7 +149,7 @@ class TestRunLOROClassification:
         assert result.n_folds == 0
 
     def test_no_target_leakage(self, loro_wq_df: pd.DataFrame) -> None:
-        """Regression test for the LORO target-leakage bug (referee report M6).
+        """Regression test for the historical LORO target-leakage bug.
 
         In this fixture ``detected`` is assigned at random and is independent of
         every environmental feature, so a leakage-free model cannot beat chance.

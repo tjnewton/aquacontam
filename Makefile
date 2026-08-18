@@ -26,6 +26,9 @@ paper-tables:
 	PYTHONUTF8=1 $(PYTHON) paper/generate_tables.py --results $(FROZEN) --output paper/tables
 
 paper-verify:
+	@test -f paper/skeleton.md || { \
+		echo "manuscript sources not distributed (see README); skipping paper-verify"; \
+		exit 0; }
 	PYTHONUTF8=1 $(PYTHON) paper/verify_paper.py --results-dir $(FROZEN)
 
 ## Rebuild the slim frozen snapshot (drops large arrays, copies ancillary JSONs,

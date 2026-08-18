@@ -3,7 +3,7 @@
 
 The paper's high/low burden contrast uses an asymmetric 80th-vs-50th-percentile split
 (discarding the middle 30%); the equity module's own default is a symmetric median
-split. This pre-specified COMPUTE (FINAL_FIX_CONTRACT_v2 C4) re-derives every
+split. This pre-specified compute re-derives every
 demographic burden ratio under three cutpoint schemes — (80, 50) as published,
 (50, 50) symmetric median, (75, 25) interquartile — from the same reproduced test-set
 labels and demographics the frozen equity analysis used.

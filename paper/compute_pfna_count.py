@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C17 (R5 m9): quantify the PFNA-only exceeders omitted from the MCL-exceedance union.
+"""Quantify the PFNA-only exceeders omitted from the MCL-exceedance union.
 
 The MCL-exceedance target (``mcl_exceedance_analysis.json``) unions five analytes
 (PFOS/PFOA/PFHxS/HFPO-DA individual MCLs + PFBS via its Hazard-Index HBWC) and, for

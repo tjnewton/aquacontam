@@ -3,8 +3,7 @@
 New Jersey DEP drinking-water chemical-sample results are public records under the
 New Jersey Open Public Records Act (OPRA). The WaterViewer portal
 (`waterviewer.nj.gov`) presents them through an interactive lookup rather than a bulk
-download, so the OPRA request was answered with a pointer to that portal (see
-`nj_dep_opra_response.md`).
+download, so the OPRA request was answered with a pointer to that portal.
 
 ## How the data were collected
 

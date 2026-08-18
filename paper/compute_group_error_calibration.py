@@ -1,6 +1,6 @@
 """Per-group error rates (FPR/FNR) and calibration (ECE) for the T1 model.
 
-Addresses referee M4: the single per-group AUROC pair (0.756 vs 0.842) does not
+Motivation: the single per-group AUROC pair (0.756 vs 0.842) does not
 convey the *deployment-relevant* error asymmetry, and the fairness gap is never
 reconciled with the deployment recommendation. This script quantifies, for the
 T1 PFAS-detection model on the geographically held-out test set (EPA regions

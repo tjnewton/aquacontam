@@ -1,9 +1,12 @@
 #!/usr/bin/env python
-"""The single deterministic exit oracle for the paper fix pass (v2).
+"""The single deterministic exit oracle for the paper's reader-facing consistency (v2).
 
 Runs gate clauses **G0-G14** and prints a pass/fail table plus the failing-clause count
-**F**. This exit code -- never an agent review -- is the definition of "done" for the
-bounded fix pass (see paper/FINAL_FIX_CONTRACT_v3.md, which extends v2/v1).
+**F**. This exit code -- never a review opinion -- is the definition of "done".
+In the distributed benchmark tree (manuscript sources not included), the
+manuscript-consistency clauses report a skip and every benchmark-artifact clause
+enforces in full; partial absence of the manuscript set is treated as damage, not
+distribution, and fails loud.
 
     G0  no sticky red flag                           paper/GATE_RED.flag absent
     G1  paper_numbers.py --check                     markers == frozen (+ completeness)
@@ -111,7 +114,29 @@ def g0_sticky_flag(flag: Path | None = None) -> ClauseResult:
     return ClauseResult("G0 sticky_flag", True, "no sticky red flag")
 
 
+#: Manuscript sources withheld from the distributed benchmark tree. All-or-nothing:
+#: the skip below fires only when EVERY source is absent; partial absence is damage,
+#: not distribution, and the affected clauses then fail loud.
+_MANUSCRIPT_SOURCES = (
+    "skeleton.md",
+    "supplementary_information.md",
+    "extended_data.md",
+    "reporting_summary.md",
+    "plain_language_primer.md",
+)
+
+_MANUSCRIPT_SKIP = "manuscript sources not distributed -- skipped"
+
+
+def _manuscript_absent(root: Path | None = None) -> bool:
+    """True only when every manuscript source is absent (the distributed tree)."""
+    paper = (root or REPO) / "paper"
+    return not any((paper / name).exists() for name in _MANUSCRIPT_SOURCES)
+
+
 def g1_paper_numbers() -> ClauseResult:
+    if _manuscript_absent():
+        return ClauseResult("G1 paper_numbers", True, _MANUSCRIPT_SKIP)
     rc, out = _run([sys.executable, "paper/paper_numbers.py", "--check"])
     last = out.strip().splitlines()[-1] if out.strip() else ""
     return ClauseResult("G1 paper_numbers", rc == 0, last)
@@ -128,6 +153,8 @@ def g2_verify_paper(
     families. ``_result`` injects a (rc, output) pair for hermetic tests.
     """
     aw = allowed_warnings or ALLOWED_WARNINGS
+    if _result is None and _manuscript_absent() and not aw.exists():
+        return ClauseResult("G2 verify_paper", True, _MANUSCRIPT_SKIP)
     rc, out = (
         _result
         if _result is not None
@@ -247,6 +274,18 @@ def g6_archive_unchanged() -> ClauseResult:
 
 
 def g7_verify_ledger() -> ClauseResult:
+    ledger_set = [
+        REPO / "paper" / "revision_ledger.md",
+        REPO / "paper" / "DECISIONS.md",
+        REPO / "paper" / "RESPONSE_BANK.md",
+    ]
+    missing = [p.name for p in ledger_set if not p.exists()]
+    if len(missing) == len(ledger_set):
+        return ClauseResult(
+            "G7 verify_ledger", True, "internal revision ledgers not distributed -- skipped"
+        )
+    if missing:
+        return ClauseResult("G7 verify_ledger", False, f"ledger set incomplete: {missing}")
     ledger = REPO / "paper" / "verify_ledger.py"
     if not ledger.exists():
         return ClauseResult("G7 verify_ledger", False, "verify_ledger.py missing")
@@ -420,6 +459,8 @@ def g12_docx(derivations: Path | None = None, root: Path | None = None) -> Claus
     artifacts = sorted({x.artifact for x in rows if x.check == "G12"})
     if not artifacts:
         return ClauseResult("G12 docx", False, "no G12 rows in DERIVATIONS.tsv (fail-closed)")
+    if _manuscript_absent(r) and not any((r / a).exists() for a in artifacts):
+        return ClauseResult("G12 docx", True, _MANUSCRIPT_SKIP)
     problems: list[str] = []
     for a in artifacts:
         p = r / a
@@ -453,7 +494,7 @@ def g13_claims(
 ) -> ClauseResult:
     """Every pinned load-bearing claim sentence is present in its file, and its evidence holds.
 
-    The claims-layer ratchet (FINAL_FIX_CONTRACT_v3): CLAIMS.tsv pins the abstract/discussion
+    The claims-layer ratchet (v3): CLAIMS.tsv pins the abstract/discussion
     sentences that carry the paper's conclusions. Presence is checked after normalization —
     ``<!--...-->`` markers stripped, whitespace/EOL collapsed — so a legitimate marker re-point
     never trips it, but a reworded conclusion does. SIGNIFICANT / SUGGESTIVE_NS rows additionally
@@ -464,6 +505,9 @@ def g13_claims(
     r = root or REPO
     fz = frozen or (r / FROZEN_REL)
     dec = decisions or (r / "paper" / "DECISIONS.md")
+    claims_path = claims or gate_lib.CLAIMS_TSV
+    if _manuscript_absent(r) and not claims_path.exists():
+        return ClauseResult("G13 claims", True, _MANUSCRIPT_SKIP)
     try:
         rows = gate_lib.parse_claims(claims)
     except (OSError, ValueError) as e:
@@ -490,7 +534,7 @@ def g13_claims(
             continue
         if row.strength in ("SIGNIFICANT", "SUGGESTIVE_NS") and not (fz / row.evidence).exists():
             problems.append(f"{row.id}: {row.strength} evidence missing ({row.evidence})")
-        elif row.strength == "DECIDED" and f"### {row.evidence}" not in dec_text:
+        elif row.strength == "DECIDED" and dec.exists() and f"### {row.evidence}" not in dec_text:
             problems.append(
                 f"{row.id}: DECIDED cites '### {row.evidence}' absent from DECISIONS.md"
             )
@@ -526,7 +570,7 @@ def _has_value(cells: list, target: float, tol: float = 5e-4) -> bool:
 def g14_source_data(root: Path | None = None, frozen: Path | None = None) -> ClauseResult:
     """Per-figure Source Data regenerate from frozen and carry their sentinel values.
 
-    Closes the R6 B1 blind spot: no prior clause regenerated ``paper/source_data/*.xlsx``, so a
+    Closes a historical blind spot: no prior clause regenerated ``paper/source_data/*.xlsx``, so a
     stale generator shipped Source Data that did not match Figs 2 and 4 while the gate stayed
     green. G14 (a) regenerates to a temp dir from the frozen archive (generator nonzero => red);
     (b) requires committed and regenerated FILE SETS to be equal (a lingering Fig5 or a dropped
@@ -633,7 +677,7 @@ CLAUSES: tuple[Callable[[], ClauseResult], ...] = (
     g14_source_data,
 )
 
-#: Stop-hook fast subset: seconds, not minutes (see .claude/hooks/stop-quality-gate.sh).
+#: Stop-hook fast subset: seconds, not minutes (consumed by the repo's local stop hook).
 FAST_CLAUSES: tuple[Callable[[], ClauseResult], ...] = (
     g0_sticky_flag,
     g1_paper_numbers,

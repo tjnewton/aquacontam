@@ -94,7 +94,7 @@ class SDWISSource(DataSource):
             - ``"drop"``: exclude ``SAMPLE_MEASURE <= 0``. Reproduces the
               originally-frozen 694,419-row canonical parse that the published
               numbers were computed on (it excluded these rows). See
-              ``paper/revision_ledger.md`` for the root-cause record.
+              the maintainer's revision record for the root cause.
         """
         if zero_handling not in ("keep", "drop"):
             raise ValueError(f"zero_handling must be 'keep' or 'drop', got {zero_handling!r}")
@@ -150,7 +150,7 @@ class SDWISSource(DataSource):
         # 90th-percentile results (a literal-0 spike, ~24% of lead rows, distinct
         # from the positive continuum). "drop" reproduces the originally-frozen
         # canonical parse (which excluded them); "keep" (default) retains them as
-        # non-detect non-exceedances. See parse() docstring / revision_ledger.
+        # non-detect non-exceedances. See the parse() docstring.
         if zero_handling == "drop":
             n_before = len(samples)
             samples = samples[samples["concentration"] > 0].copy()
@@ -172,7 +172,7 @@ class SDWISSource(DataSource):
         # reporting limit is unknown and lies below the measurement, so leave it
         # NaN — copying the measured concentration would leak the result, because
         # the T4 lead/copper action-level target is derived from these same
-        # concentrations (referee report M1). SDWIS LCR is ~100% non-censored, so
+        # concentrations. SDWIS LCR is ~100% non-censored, so
         # mean_detection_limit is then ~all-NaN for SDWIS systems and is dropped at
         # feature assembly (>50% NaN); UCMR/PFAS detection_limit comes from a real
         # MRL column and is unaffected.

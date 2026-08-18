@@ -176,7 +176,7 @@ def table_dataset_summary(output_dir: Path) -> Path:
     df.to_latex(f"{path}.tex", index=False, caption=caption, label="tab:datasets")
     df.to_markdown(f"{path}.md", index=False)
     # Append footnotes to markdown
-    with open(f"{path}.md", "a") as f:
+    with open(f"{path}.md", "a", encoding="utf-8") as f:
         f.write(
             "\n*Auxiliary source: provides private-well measurements (NJ Private "
             "Wells) or demographic covariates (EJScreen) rather than public-water-"
@@ -236,7 +236,7 @@ def table_benchmark_results(
     if not results:
         df = pd.DataFrame({"Note": ["No results available"]})
     else:
-        # M2/R6-R1-5: T3 emits two groups of byte-identical micro metrics (a silent
+        # T3 emits two groups of byte-identical micro metrics (a silent
         # non-convergence fallback). Flag those cells "non-converged" here too, so this
         # table is consistent with table_benchmark_full and never shows the fallback as
         # a plausible number.
@@ -322,7 +322,7 @@ _LORO_SHORT_TO_RESULTS = {
     "icp": "icp_classifier",
 }
 #: t_{0.975, 9} — the same critical value paper/compute_cluster_ci.py uses for G = 10
-#: EPA-region clusters (df = G - 1 = 9). Kept in sync deliberately (R5 M3/M5).
+#: EPA-region clusters (df = G - 1 = 9). Kept in sync deliberately.
 _T_CRIT_9 = 2.262157162740992
 
 
@@ -349,7 +349,7 @@ def table_benchmark_condensed(
     output_dir: Path,
     results_dir: Path | None = None,
 ) -> Path:
-    """Table 2: LORO-ranked T1 PFAS-detection leaderboard (referee R5 M3).
+    """Table 2: LORO-ranked T1 PFAS-detection leaderboard.
 
     The benchmark's primary ranking is leave-one-region-out (LORO) mean AUROC with a
     t(G-1) cluster-robust 95% CI (the leakage-resistant protocol), sorted descending.
@@ -2668,7 +2668,7 @@ def table_power_analysis(
 
     pwr_path = results_dir / "power_analysis.json"
     # Fail loud on a missing/partial input rather than emitting a placeholder or
-    # zero-filled row (R5 m3 — a silent fallback here is exactly how a wrong power
+    # zero-filled row (a silent fallback here is exactly how a wrong power
     # table shipped; the generator must break, not degrade).
     if not pwr_path.exists():
         raise FileNotFoundError(
@@ -3397,7 +3397,7 @@ def table_supp_group_error_calibration(output_dir: Path, results_dir: Path) -> P
     def _f(v: Any) -> str:
         return "—" if v is None else f"{float(v):.3f}"
 
-    # R5 m2: equal-mass (equal-count) ECE with bootstrap CIs, less bin-occupancy sensitive
+    # Equal-mass (equal-count) ECE with bootstrap CIs, less bin-occupancy sensitive
     # than the equal-width ECE at small subgroup sizes.
     em_src = results_dir / "group_ece_debiased.json"
     ece_mass = json.loads(em_src.read_text()) if em_src.exists() else {}

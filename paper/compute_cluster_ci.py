@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C12 (R5 M5): cluster-calibrated CIs for the two most-cited out-of-region numbers.
+"""Cluster-calibrated CIs for the two most-cited out-of-region numbers.
 
 The transportable-signal AUROC (0.691) and the national detection-burden ratio (1.48) carry
 "region-block-bootstrap" CIs built from only G = 10 EPA-region blocks. R5 (M5) shows that

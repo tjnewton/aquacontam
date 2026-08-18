@@ -14,7 +14,7 @@ Raw data is immutable; all transformations write to `interim/` or `processed/`.
 | MI MPART | ~5K | 7 PFAS | ArcGIS REST | Public |
 | CA GeoTracker | ~15K | PFAS | CSV | Public |
 | MN MDH | ~247K | 27 PFAS | Excel (written request) | Provided on request; redistribution pending confirmation — see `docs/DATA_TERMS.md` |
-| NJ DEP | ~3K | PFNA, PFOA, PFOS | Shapefile | Public |
+| NJ DEP | ~248K | 25 PFAS | Manual CSV export | Public |
 | NC DEQ | ~2K | 5 PFAS (GenX focus) | Excel/CSV | Public |
 | WQP | ~35K | 13 PFAS | REST API | Public |
 | MO DNR | ~76K | 29 PFAS | ArcGIS REST | Public |

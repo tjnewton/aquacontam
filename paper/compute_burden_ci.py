@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C19 (R5 m10): per-group burden-ratio bootstrap CIs + the excluded unknown group.
+"""Per-group burden-ratio bootstrap CIs + the excluded unknown group.
 
 R5 (m10): the equity figure shows significance stars but no CIs/error bars, and the
 "unknown demographics" group (~18% of test systems, AUROC 0.984 — a provenance artifact

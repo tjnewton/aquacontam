@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C10 (R5 M1): significance tests + CIs for every demographic group gap.
+"""Significance tests + CIs for every demographic group gap.
 
 The abstract states the model "underperforms for high-people-of-color systems
 (false-negative rate 0.50 versus 0.44)" with no CI or test. R5 (M1) shows the gap is

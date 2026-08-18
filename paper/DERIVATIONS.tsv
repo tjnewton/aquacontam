@@ -5,12 +5,12 @@
 # scope: repo = input is committed (gate re-hashes it; hermetic on CI)
 #        external = input is local-only data/run output (verified when present locally; skip-with-note on CI)
 # check: G8  = gate fails unless sha256_at_derivation matches the CURRENT hash of the input
-#              (PENDING = not yet stamped -> FAIL; stamped by the Phase 1 canonical re-freeze)
+#              (PENDING = not yet stamped -> FAIL; stamped at the canonical re-freeze)
 #        G12 = input is part of the DOCX source manifest; the combined manifest hash is embedded
 #              in the DOCX by convert_to_docx.py and recomputed by the gate (per-input sha = "-")
 #        G4  = already byte-gated by clause G4 (row kept for provenance; no G8 hash check)
 #        PROV = provenance record only (base-pipeline artifact families; one-run-consistency is
-#               established by the Phase 1 single canonical DAG run, not per-input hashes)
+#               established by the single canonical DAG run, not per-input hashes)
 #
 # --- Post-freeze frozen->frozen derivations (the historical escape class; G8-checked) ---
 results/paper_frozen/group_error_calibration.json	paper/compute_group_error_calibration.py	results/paper_frozen/equity_analysis.json	ca673d71e295a499e839153ef72296a1029dd1e7eadbeb6830924791af209c24	repo	G8
@@ -30,7 +30,7 @@ LEADERBOARD.md	paper/regenerate_leaderboard.py	results/paper_frozen/results.json
 paper/tables/	paper/generate_tables.py	results/paper_frozen/	-	repo	G4
 #
 # --- DOCX source manifests (G12: combined manifest hash embedded by convert_to_docx.py) ---
-# NOTE: manifests finalized when convert_to_docx.py gains the embed (Phase 0); rows below are
+# NOTE: manifests finalized when convert_to_docx.py gained the embed; rows below are
 # the source files each artifact consumes per convert_to_docx.py.
 paper/manuscript.docx	paper/convert_to_docx.py	paper/skeleton.md	-	repo	G12
 paper/manuscript.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
@@ -43,8 +43,8 @@ paper/manuscript_review.docx	paper/convert_to_docx.py	paper/supplementary_inform
 paper/manuscript_review.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
 paper/plain_language_primer.docx	paper/convert_to_docx.py	paper/plain_language_primer.md	-	repo	G12
 #
-# --- Base-pipeline artifact families (PROV: one-run consistency via the Phase 1 canonical DAG) ---
-results/paper_frozen/results.json	scripts/reproduce.py --all (pinned; see FINAL_FIX_CONTRACT_v2.md)	data/ + configs/	-	external	PROV
+# --- Base-pipeline artifact families (PROV: one-run consistency via the canonical DAG run) ---
+results/paper_frozen/results.json	scripts/reproduce.py --all (pinned canonical DAG run)	data/ + configs/	-	external	PROV
 results/paper_frozen/results_provenance_free.json	scripts/reproduce.py --all --provenance-free --output-dir results_provenance_free	data/ + configs/	-	external	PROV
 results/paper_frozen/spatial_block_bootstrap.json	scripts/reproduce.py --spatial-block-bootstrap (standalone; NOT in --all)	results run + data/	-	external	PROV
 results/paper_frozen/loro_cv_buffered.json	scripts/reproduce.py --buffered-loro (standalone; NOT in --all)	results run + data/	-	external	PROV
@@ -65,7 +65,7 @@ results/paper_frozen/pf_recoverability.json	paper/compute_pf_recoverability.py	r
 results/paper_frozen/pf_recoverability.json	paper/compute_pf_recoverability.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
 results/paper_frozen/group_conformal_demographic.json	paper/compute_group_conformal_demographic.py	results/paper_frozen/group_conformal_results.json	37103fdfa3909c66edf40ee25cca70aa7a8d86a960508ce89fa4b4af3dc156ad	repo	G8
 results/paper_frozen/group_conformal_demographic.json	paper/compute_group_conformal_demographic.py	data/interim/merged_wq.parquet	b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b	external	G8
-# --- R5 (v3) computes (frozen->frozen; G8-checked) ---
+# --- Post-freeze computes, second batch (frozen->frozen; G8-checked) ---
 results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/group_error_calibration.json	b3157fee318e9b9850f853a3c7915d68d63f0efb3c3081d5159964139b7f6931	repo	G8
 results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/inference_strengthening.json	14b5af9845e4c6c1c107be7dd8239f0237ec4807f4cfd2d53964a6d361e21347	repo	G8
 results/paper_frozen/group_gap_tests.json	paper/compute_group_gap_tests.py	results/paper_frozen/group_conformal_demographic.json	83445d74781647b3ea6a45ee5282c60d417b3c160d10b67c5bde7062aff88bc0	repo	G8

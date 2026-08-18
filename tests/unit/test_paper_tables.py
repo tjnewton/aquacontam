@@ -330,7 +330,7 @@ class TestProvenanceFreeLookup:
         assert float(t1["AUROC (without)"]) == pytest.approx(0.820)  # PF wins over legacy
 
 
-# R5 m3 (C16): the power table must fail loud on a missing/partial input, never
+# The power table must fail loud on a missing/partial input, never
 # emit a placeholder or zero-filled row (that is how a wrong power table shipped).
 
 

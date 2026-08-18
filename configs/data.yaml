@@ -196,9 +196,10 @@ nj_dep:
   inventory_available: true
   unavailable: false
   unavailable_reason: >-
-    Chemical sample data requires reCAPTCHA bypass (use scripts/scrape_nj_dep.py).
-    Inventory and facilities download automatically. Manual export CSV (87MB,
-    248k records) was scraped 2026-03-16 and is present in data/raw/.
+    Chemical sample data is reCAPTCHA-protected and must be exported manually
+    (use scripts/scrape_nj_dep.py). Inventory and facilities download
+    automatically. Manual export CSV (87MB, 248k records) was collected
+    2026-03-16 and is present in data/raw/.
 
 # ---------------------------------------------------------------------------
 # North Carolina DEQ — PFAS sampling at public water systems

@@ -739,7 +739,7 @@ def fig_equity_analysis(
     """Supplementary asset: equity analysis — burden ratios and demographics.
 
     When ``burden_ci`` (from group_burden_ci.json) is supplied, each burden-ratio bar
-    carries a bootstrap 95% CI error bar (R5 m10), so the figure shows uncertainty, not
+    carries a bootstrap 95% CI error bar, so the figure shows uncertainty, not
     only significance stars.
     """
     _load_style()
@@ -753,7 +753,7 @@ def fig_equity_analysis(
                 for g in equity_df["group"]
             ]
             colors = ["#CC79A7" if br > 1.0 else "#999999" for br in equity_df["burden_ratio"]]
-            # R5 m10: asymmetric bootstrap-CI error bars where a CI is available.
+            # Asymmetric bootstrap-CI error bars where a CI is available.
             xerr = None
             if burden_ci:
                 lo, hi = [], []
@@ -1536,7 +1536,7 @@ def fig_monitoring_inequity(
             p = inequity_data[g].get("size_adjusted_p", float("nan"))  # type: ignore[index]
             p_str = "p<0.001" if p < 0.001 else f"p={p:.3f}"
             # Place the label clear of the upper error-bar cap so the decimal
-            # point is not obscured (referee minor point 1).
+            # point is not obscured.
             cap_top = coefs[xi] + 1.96 * ses[xi]
             ax.annotate(
                 p_str,
@@ -2081,7 +2081,7 @@ def _load_pipeline_data(
     else:
         out["equity"] = None
 
-    # R5 m10: bootstrap CIs per burden ratio for the equity figure's error bars.
+    # Bootstrap CIs per burden ratio for the equity figure's error bars.
     burden_ci_path = results_dir / "group_burden_ci.json"
     if burden_ci_path.exists():
         out["burden_ci"] = json.loads(burden_ci_path.read_text()).get("burden_cis", {})

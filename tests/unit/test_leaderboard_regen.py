@@ -1,4 +1,4 @@
-"""LEADERBOARD.md is a generated artifact regenerated from the frozen archive (referee M6).
+"""LEADERBOARD.md is a generated artifact regenerated from the frozen archive.
 
 These guard the M6 fix: regeneration is deterministic (byte-stable, so the diff-match gate is
 meaningful), the debunked pre-leakage-fix T4 value cannot reappear, and the committed file

@@ -1,4 +1,4 @@
-"""Escape-replay tests for the number audit + gate_lib (FINAL_FIX_CONTRACT_v2, Phase 0).
+"""Escape-replay tests for the number audit + gate_lib.
 
 Each replay reproduces an ACTUAL historical escape at clause level against planted
 fixtures — not an easy synthetic variant. Red-on-defect must hold now; the paired

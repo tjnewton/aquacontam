@@ -1,7 +1,7 @@
-"""Capture the ICP T1 training history for ED Fig. 4a via the CANONICAL path (#55 item 7).
+"""Capture the ICP T1 training history for ED Fig. 4a via the CANONICAL path.
 
 The ICP records per-epoch task/adversary/lambda history during ``fit()``. Since
-the #55 durable fix, ``train_and_evaluate`` retains the fitted ICP per task
+the durable fix, ``train_and_evaluate`` retains the fitted ICP per task
 (``icp_models``) and ``export_icp_diagnostics`` persists its history — so this
 driver runs the ICP on T1 through **exactly that canonical pipeline path** (not a
 bespoke re-fit), capturing the per-epoch history AND the geographic-**test**
@@ -13,7 +13,7 @@ trace of a run that provably reproduces the panel-b metric, at the same
 Reproduction gate: the run's T1 ICP test AUROC must reproduce frozen
 ``results.json`` ICP T1 within ``GATE_TOL``; otherwise STOP and write nothing
 (the caller falls back to a metadata-only correction of the existing frozen
-history — see paper/DECISIONS.md issue55-D-icp).
+history; ratified maintainer decision).
 
 Run::
 

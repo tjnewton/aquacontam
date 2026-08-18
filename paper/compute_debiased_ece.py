@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C15 (R5 m2): debiased (equal-mass) subgroup ECE with bootstrap CIs.
+"""Debiased (equal-mass) subgroup ECE with bootstrap CIs.
 
 R5 (m2): the reported subgroup ECE (0.18 vs 0.06 for people-of-color) uses 10 equal-WIDTH
 bins, which is sample-size-biased (worse for the smaller high-share group) and carries no CI,
@@ -7,7 +7,7 @@ and is internally inconsistent with the pooled ECE (0.038). This COMPUTE reprodu
 T1 equity predictions (retrain xgboost seed 42; replicate the equity prediction/grouping path
 from `_run_equity_analysis`), gates on reproducing the frozen per-group AUROC and equal-width
 ECE, then reports **equal-MASS (equal-count) binned ECE with bootstrap CIs** per group — the
-debiasing the referee asks for. No frozen file is mutated.
+debiasing this analysis requires. No frozen file is mutated.
 
 Reproduction gate: per-group AUROC matches `equity_analysis.json` and equal-width ECE matches
 `group_error_calibration.json` within tolerance, proving the predictions are the published ones.

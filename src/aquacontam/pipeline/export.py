@@ -350,7 +350,7 @@ def generate_paper_assets(output_dir: Path, data_dir: Path) -> None:
         # by generate_figures directly: export_icp_diagnostics persists the ICP's
         # per-epoch history into icp_diagnostics.json (via the icp_models channel
         # from train_and_evaluate), so the base run no longer needs the out-of-band
-        # regen_review_figures.py re-fit. That shell-out is retired (the script is
+        # out-of-band re-fit. That shell-out is retired (the mechanism is
         # deprecated but kept for provenance).
 
         result = runner.invoke(

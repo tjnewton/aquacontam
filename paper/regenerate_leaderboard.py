@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Regenerate LEADERBOARD.md deterministically from the FROZEN archive (referee M6).
+"""Regenerate LEADERBOARD.md deterministically from the FROZEN archive.
 
 The public leaderboard previously derived from a stale ``results/submissions/`` directory
 that shipped the debunked pre-leakage-fix T4 numbers (xgboost lead AUPRC 0.8999, the very
@@ -61,7 +61,7 @@ def _submissions_from_frozen() -> dict[str, dict]:
 
 
 #: t_{0.975, 9} — the same critical value paper/compute_cluster_ci.py and generate_tables.py
-#: use for the G = 10 EPA-region LORO folds (df = 9). Kept in sync deliberately (R5 M3).
+#: use for the G = 10 EPA-region LORO folds (df = 9). Kept in sync deliberately.
 _T_CRIT_9 = 2.262157162740992
 _LORO_SHORT_TO_RESULTS = {
     "xgboost": "xgboost_classifier",
@@ -82,7 +82,7 @@ _LORO_SHORT_TO_RESULTS = {
 
 
 def _t1_loro_section() -> str:
-    """The canonical LORO-ranked T1 detection leaderboard, from the frozen archive (R5 M3).
+    """The canonical LORO-ranked T1 detection leaderboard, from the frozen archive.
 
     Primary ranking = leave-one-region-out mean AUROC with a t(9) cluster-robust CI; the
     fixed geographic-split (West-only) AUROC is shown alongside; non-converged families are
@@ -144,7 +144,7 @@ def _t1_loro_section() -> str:
 
 
 def _submit_protocol() -> str:
-    """The 'Submit a model' protocol — how a third party extends the benchmark (R5 M3)."""
+    """The 'Submit a model' protocol — how a third party extends the benchmark."""
     return "\n".join(
         [
             "## Submit a model",
@@ -172,7 +172,7 @@ def _submit_protocol() -> str:
 def _flag_t3_degenerate(doc: str) -> str:
     """Relabel the T3 rows of non-converged models (byte-identical fallback / CUDA) as
     'non-converged' in the multi-task context tables, so a silent fallback never shows as a
-    plausible number (R5 M2). The degenerate set is detected from the frozen T3 metrics."""
+    plausible number. The degenerate set is detected from the frozen T3 metrics."""
     try:
         from paper.gate_lib import degenerate_metric_models
     except ImportError:  # pragma: no cover
@@ -210,7 +210,7 @@ def render() -> str:
 
     Leads with the canonical LORO-ranked T1 leaderboard (the primary, leakage-resistant
     protocol) and a "Submit a model" protocol, then the multi-task per-task rankings as
-    context with T3 non-convergence flagged (R5 M2/M3). Byte-stable via the pinned timestamp.
+    context with T3 non-convergence flagged. Byte-stable via the pinned timestamp.
     """
     subs = _submissions_from_frozen()
     with tempfile.TemporaryDirectory() as td:

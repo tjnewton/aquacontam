@@ -156,7 +156,7 @@ class TestAucDifference:
         assert r["p_value"] == pytest.approx(1.0)
 
     def test_group_gap_significant(self):
-        # People-of-colour high vs low burden AUROC gap (referee M3b).
+        # People-of-colour high vs low burden AUROC gap.
         r = auc_difference(0.7564, 162, 275, 0.8418, 186, 901)
         assert r["delta"] < 0
         assert r["p_value"] < 0.05

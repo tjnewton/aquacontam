@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""R7 M4a: re-derive the SI S19 LORO power from the REAL fold AUROCs.
+"""Re-derive the SI S19 LORO power from the REAL fold AUROCs.
 
 The frozen ``power_analysis.json`` ``loro_tests`` block is placeholder-derived: every entry
 carries ``mean_auroc = 0.0``, ``std_auroc = 0.01``, ``power_vs_chance = 1.0`` because the

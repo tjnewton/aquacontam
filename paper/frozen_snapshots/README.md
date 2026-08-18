@@ -32,7 +32,7 @@ its record count is reader-facing in Table 1, so it is carried here as metadata.
 
 `sources.sdwis.records = 916,899` is the current parquet count; the frozen analysis JSONs
 were computed on an earlier 694,419-row SDWIS parse. This divergence is an accepted,
-documented provenance record (see `paper/DECISIONS.md` M5b) under the no-re-freeze rule —
+documented provenance record (ratified maintainer decision) under the no-re-freeze rule —
 the snapshot captures the **shipped** Table-1 value.
 
 To re-verify equality at any time, re-run the command above and compare to this file.

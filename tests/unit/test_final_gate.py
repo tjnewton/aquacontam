@@ -1,4 +1,4 @@
-"""Gate-the-gater (S4) + escape-replay clause tests (FINAL_FIX_CONTRACT_v2, Phase 0).
+"""Gate-the-gater + escape-replay clause tests for the deterministic paper gate.
 
 ``final_gate.py`` is the doneness oracle the whole termination argument rests on, so its
 aggregation logic is itself tested: a failing clause MUST raise F>0, and a passing stub
@@ -381,7 +381,7 @@ def test_manifest_hash_is_line_ending_independent(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# G13 claims-layer gate (FINAL_FIX_CONTRACT_v3) — escape-replay.
+# G13 claims-layer gate (v3) — escape-replay.
 # A pinned load-bearing sentence must be present (markers stripped, whitespace
 # collapsed); mutating it goes red, updating row+sentence together goes green.
 # ---------------------------------------------------------------------------
@@ -479,7 +479,7 @@ def test_g13_no_rows_is_red_fail_closed(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# R5 M2 hardening audit (ii): degenerate-cell detector — must flag T3's real
+# Degenerate-cell detector hardening — must flag T3's real
 # pattern (five byte-identical models + NaN macro), pass on genuine numbers.
 # ---------------------------------------------------------------------------
 
@@ -516,7 +516,7 @@ def test_flag_degenerate_passes_on_distinct_numbers():
 
 def test_degenerate_metric_models_returns_offending_set():
     # Rendering-side companion: exactly the byte-identical + NaN models, so the T3
-    # leaderboard relabels them "non-converged" (R5 M2).
+    # leaderboard relabels them "non-converged".
     mm = {
         "deep_tobit": {"micro_auroc": 0.753, "micro_auprc": 0.321},
         "tabpfn": {"micro_auroc": 0.753, "micro_auprc": 0.321},
@@ -531,7 +531,7 @@ def test_degenerate_metric_models_returns_offending_set():
 
 
 # ---------------------------------------------------------------------------
-# G14 source-data escape-replays (R6 B1 blind spot). These exercise the real
+# G14 source-data escape-replays (historical blind spot). These exercise the real
 # generate_source_data.py against the committed frozen archive, so they skip when
 # the paper toolchain (openpyxl/pandas/click) or the frozen archive is absent —
 # matching the test_paper_* convention. The pure sentinel-matching logic is unit

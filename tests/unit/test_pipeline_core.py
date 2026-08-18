@@ -709,7 +709,7 @@ class TestExportIcpDiagnostics:
     def test_history_from_icp_models_channel(self, tmp_path: Path) -> None:
         """ICP per-epoch history is persisted from the icp_models side-channel.
 
-        Regression guard for #55 item 7: fitted_models[T1] holds the tree SHAP
+        Regression guard: fitted_models[T1] holds the tree SHAP
         model (no ICP diagnostics); the ICP's training history must reach
         icp_diagnostics.json via the dedicated icp_models channel from
         train_and_evaluate — not be silently dropped.

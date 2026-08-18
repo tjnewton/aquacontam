@@ -295,7 +295,7 @@ def _ds_source(source: str, field: str) -> float:
     return float(v)
 
 
-# ---- referee-report Phase-2 loaders (all read verified frozen paths) --------------------
+# ---- robustness-analysis loaders (all read verified frozen paths) -----------------------
 def _shap(feature: str) -> float:
     """T1 XGBoost mean |SHAP| for a feature (shap_T1.json)."""
     return float(_json("shap_T1.json")["mean_abs_shap"][feature])
@@ -788,7 +788,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _group_err("pct_people_of_color", "low", "fnr"),
         _fmt2,
     ),
-    # --- R5 M1 group-gap significance test (group_gap_tests.json, C10) ---
+    # --- group-gap significance test (group_gap_tests.json, C10) ---
     "ej_fnr_pval": (
         "POC FNR-gap two-proportion p-value",
         lambda: _json("group_gap_tests.json")["pct_people_of_color"]["fnr_gap_test"]["p_value"],
@@ -818,7 +818,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         ],
         _fmt3,
     ),
-    # --- R5 M4 headline seed stability (headline_harness_stability.json, C11) ---
+    # --- headline seed stability (headline_harness_stability.json, C11) ---
     "hh_mean": (
         "T1 headline 5-seed mean AUROC on its own harness",
         lambda: _json("headline_harness_stability.json")["mean_auroc"],
@@ -847,7 +847,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         ),
         _fmt3,
     ),
-    # --- R5 M6 common-reporting-limit AUPRC + re-censored count (common_rl_sensitivity.json) ---
+    # --- common-reporting-limit AUPRC + re-censored count (common_rl_sensitivity.json) ---
     "crl_base_auprc": (
         "T1 default-xgboost AUPRC, un-recensored baseline (C2/M6a)",
         lambda: _json("common_rl_sensitivity.json")["baseline"]["auprc"],
@@ -863,7 +863,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _json("common_rl_sensitivity.json")["_meta"]["n_pfos_detections_recensored"],
         _commas,
     ),
-    # --- R5 M7 MCL-exceedance vs detection deployment metrics (mcl_lift.json, C14) ---
+    # --- MCL-exceedance vs detection deployment metrics (mcl_lift.json, C14) ---
     "mcl_exc_auroc": (
         "MCL-exceedance target test AUROC (C14)",
         lambda: _json("mcl_lift.json")["mcl_exceedance"]["auroc"],
@@ -889,7 +889,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _json("mcl_exceedance_analysis.json")["mcl_exceedance"]["metrics"]["auprc"],
         _fmt3,
     ),
-    # --- R5 m9 PFNA-only MCL exceeders (pfna_exceedance_count.json, C17) ---
+    # --- PFNA-only MCL exceeders (pfna_exceedance_count.json, C17) ---
     "pfna_only": (
         "PFNA-only MCL exceeders (exceed no other regulated analyte)",
         lambda: _json("pfna_exceedance_count.json")["n_pfna_only_exceeders"],
@@ -905,7 +905,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _json("pfna_exceedance_count.json")["union_exceeders"],
         _commas,
     ),
-    # --- R5 m2 equal-mass subgroup ECE with bootstrap CIs (group_ece_debiased.json, C15) ---
+    # --- equal-mass subgroup ECE with bootstrap CIs (group_ece_debiased.json, C15) ---
     "ece_mass_high": (
         "PoC high-share equal-mass ECE",
         lambda: _json("group_ece_debiased.json")["pct_people_of_color"]["high"]["ece_equal_mass"],
@@ -944,7 +944,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         ][1],
         _fmt3,
     ),
-    # --- R5 m10 excluded unknown-demographics group (group_burden_ci.json, C19) ---
+    # --- excluded unknown-demographics group (group_burden_ci.json, C19) ---
     "unknown_auroc": (
         "Unknown-demographics group T1 AUROC (excluded from equity analysis)",
         lambda: _json("group_burden_ci.json")["unknown_group"]["auroc"],
@@ -960,7 +960,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _json("group_burden_ci.json")["unknown_group"]["fraction_of_test"] * 100,
         _fmt1,
     ),
-    # --- R5 M3 T1 LORO leaderboard means (loro_cv_full.json, C18) ---
+    # --- T1 LORO leaderboard means (loro_cv_full.json, C18) ---
     "loro_t1_catboost": (
         "T1 LORO mean AUROC, CatBoost (LORO leader)",
         lambda: _json("loro_cv_full.json")["T1"]["catboost"]["mean_auroc"],
@@ -1042,7 +1042,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         ),
         _fmt0,
     ),
-    # --- R5 M5 cluster-robust t(9) recalibration (cluster_ci_calibration.json, C12) ---
+    # --- cluster-robust t(9) recalibration (cluster_ci_calibration.json, C12) ---
     "loro_pf_t9_lo": (
         "PF LORO AUROC t(9) CI lower",
         lambda: _json("cluster_ci_calibration.json")["loro_auroc"]["t_gminus1_ci"][0],
@@ -1381,7 +1381,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         lambda: _mon_ineq("pct_less_hs_education", "size_adjusted_coef"),
         _fmt3m,
     ),
-    # --- Source-adjusted monitoring intensity (R7 M1) ---
+    # --- Source-adjusted monitoring intensity ---
     "mon_coef_fe": (
         "POC size-adjusted coef, data-source fixed effects",
         lambda: _src_adj("source_fixed_effects", "size_adjusted_coef"),
@@ -1488,7 +1488,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
     ),
     "misgeo_flagged": (
         "Systems flagged PWSID-prefix vs coordinate EPA-region mismatch "
-        "(state-polygon rule, v2; C-F, #55 item 6)",
+        "(state-polygon rule, v2)",
         lambda: _json("misgeocode_sensitivity_v2.json")["n_flagged_systems"],
         _commas,
     ),

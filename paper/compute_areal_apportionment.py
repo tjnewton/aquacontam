@@ -1,6 +1,6 @@
 """M3: areal-apportionment robustness of environmental-justice burden ratios.
 
-Referee M3: every burden ratio attributes demographics from the *single nearest*
+Motivation: every burden ratio attributed demographics from the *single nearest*
 block-group centroid (``sjoin_nearest``), so one block group stands in for a
 multi-block-group service area -- a textbook ecological-inference / modifiable-
 areal-unit problem that could bias the high/low demographic split in unknown

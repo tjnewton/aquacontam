@@ -65,7 +65,7 @@ Thumbs.db
 .env
 .env.*
 
-# Claude Code local settings
+# Local agent tooling state (not tracked)
 .claude/settings.local.json
 .claude/.session-baseline-sha
 .claude/.stop-block-count

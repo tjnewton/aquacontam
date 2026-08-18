@@ -221,7 +221,7 @@ def summarize_power(results_dir: Path | None = None) -> dict[str, dict[str, floa
     """
     # Placeholders used ONLY in the explicit no-file mode (results_dir=None). When a
     # results_dir is given, _load_delong_params overwrites auroc_a/auroc_b/n_test from the
-    # frozen benchmark and raises if it is absent (R5 m3 — no silent stale fallback).
+    # frozen benchmark and raises if it is absent (no silent stale fallback).
     params: dict[str, float | int] = {
         "auroc_a": 0.864,
         "auroc_b": 0.856,
@@ -264,7 +264,7 @@ def summarize_power(results_dir: Path | None = None) -> dict[str, dict[str, floa
 def _load_delong_params(results_dir: Path, params: dict[str, float | int]) -> None:
     """Load the top-two T1 benchmark AUROCs and test size from the frozen ``results.json``.
 
-    R5 m3 fix: the previous implementation read a ``delong_results.json`` that never existed,
+    Fail-loud fix: the previous implementation read a ``delong_results.json`` that never existed,
     so it silently fell back to stale hardcoded AUROCs (0.873/0.857) that did not match the
     frozen benchmark (0.864/0.856). It now derives the pair directly from the committed
     benchmark and **fails loud** if that source is absent — a missing input is an error, not a
@@ -275,7 +275,7 @@ def _load_delong_params(results_dir: Path, params: dict[str, float | int]) -> No
     if not path.exists():
         raise FileNotFoundError(
             f"power analysis requires the benchmark at {path}; refusing to fall back to "
-            "hardcoded AUROCs (R5 m3 fail-loud)"
+            "hardcoded AUROCs (fail-loud)"
         )
     data = json.loads(path.read_text())
     t1 = sorted(

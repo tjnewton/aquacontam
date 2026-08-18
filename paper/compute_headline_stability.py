@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""C11 (R5 M4): seed stability of the T1 headline AUROC on its OWN harness.
+"""Seed stability of the T1 headline AUROC on its OWN harness.
 
 R5 (M4) shows the robustness analyses (multi_seed_stability, val_reuse_bias, tuning) run on
 a streamlined harness at ~0.79-0.83, whereas the 0.864 headline comes from the benchmark
@@ -13,7 +13,7 @@ Reproduction gate: seed 42 on this harness reproduces the frozen headline 0.8636
 other seeds run — proving this is the harness that produced results.json, not a proxy.
 
 Interpretation map (pre-registered, signed off): 5-seed mean in [0.85, 0.87] ⇒ the headline
-stays 0.864 (seed 42) with "5-seed mean X +/- SD" appended (the referee's own fallback);
+stays 0.864 (seed 42) with "5-seed mean X +/- SD" appended (the pre-agreed fallback);
 mean < 0.85 ⇒ STOP and escalate with the numbers (do not silently reword the flagship).
 """
 

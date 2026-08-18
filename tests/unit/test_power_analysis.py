@@ -135,7 +135,7 @@ class TestSummarizePower:
         assert result["dml_coefficient"]["power"] > 0.50
 
     def test_loads_delong_pair_from_results_json(self, tmp_path: Path) -> None:
-        """R5 m3: the DeLong pair is read from the benchmark results.json (top two T1 AUROCs)."""
+        """The DeLong pair is read from the benchmark results.json (top two T1 AUROCs)."""
         results = [
             {
                 "task": "T1",
@@ -163,6 +163,6 @@ class TestSummarizePower:
         assert result["delong_auroc"]["power"] > 0.99
 
     def test_missing_results_json_fails_loud(self, tmp_path: Path) -> None:
-        """R5 m3: a missing benchmark is an error, not a licence to use hardcoded AUROCs."""
+        """A missing benchmark is an error, not a licence to use hardcoded AUROCs."""
         with pytest.raises(FileNotFoundError):
             summarize_power(results_dir=tmp_path)

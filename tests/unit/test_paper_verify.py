@@ -208,6 +208,10 @@ class TestCheckMetrics:
 
 class TestVerifyPaper:
     def test_minimal_valid_skeleton(self, tmp_path: Path) -> None:
+        # verify_paper() transitively runs check_paper_numbers() against the real
+        # repo's manuscript sources, which are not part of the distributed tree.
+        if not (Path(__file__).resolve().parents[2] / "paper" / "skeleton.md").exists():
+            pytest.skip("manuscript sources not distributed")
         # Create minimal skeleton
         skeleton = tmp_path / "skeleton.md"
         skeleton.write_text("Fig. 1 shows the overview. Table 1 has details.")

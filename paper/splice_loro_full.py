@@ -1,4 +1,4 @@
-"""Splice the completed GNN + TabPFN LORO folds into loro_cv_full.json (#55 items 0/1).
+"""Splice the completed GNN + TabPFN LORO folds into loro_cv_full.json.
 
 VERBATIM-PRESERVING: the 11 already-converged families (xgboost/catboost/voting/icp/...)
 are copied byte-for-byte from the EXISTING frozen ``loro_cv_full.json`` (protecting the

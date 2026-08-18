@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
-- **Sole authorship**: publication metadata finalized as sole-author (Tyler J. Newton) across the manuscript byline, Author Contributions, cover letter, `CITATION.cff`, `.zenodo.json`, `pyproject.toml`, and the README citation. No release or DOI ever carried two-author metadata.
+- **Publication metadata**: finalized author and citation metadata across the manuscript, `CITATION.cff`, `.zenodo.json`, `pyproject.toml`, and the README citation.
 
 ### Fixed
 

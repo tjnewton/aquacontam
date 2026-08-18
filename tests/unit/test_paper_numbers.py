@@ -117,4 +117,6 @@ def test_strip_markers_noop_without_markers() -> None:
 @_needs_data
 def test_live_paper_gate_passes() -> None:
     """Integration: the committed paper prose matches frozen (the wired gate)."""
+    if not (Path(__file__).resolve().parents[2] / "paper" / "skeleton.md").exists():
+        pytest.skip("manuscript sources not distributed")
     assert check_paper_numbers() == []

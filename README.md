@@ -7,8 +7,7 @@
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Code license: Apache-2.0](https://img.shields.io/badge/code%20license-Apache--2.0-green)
 ![Data license: CC BY 4.0](https://img.shields.io/badge/data%20license-CC%20BY%204.0-green)
-![Tests: 2174](https://img.shields.io/badge/tests-2174-brightgreen)
-![Stage: Beta](https://img.shields.io/badge/stage-beta-yellow)
+![CI](https://github.com/tjnewton/aquacontam/actions/workflows/ci.yml/badge.svg)
 
 [Contributing](CONTRIBUTING.md) | [Changelog](CHANGELOG.md) | [Leaderboard](LEADERBOARD.md)
 
@@ -58,7 +57,6 @@ Install additional extras depending on your use case:
 | `dev` | `pip install -e ".[dev]"` | Linting, type checking, pre-commit hooks |
 | `test` | `pip install -e ".[test]"` | Running the test suite |
 | `dl` | `pip install -e ".[dl]"` | MLP + CNN1D deep learning models (PyTorch) |
-| `webapp` | `pip install -e ".[webapp]"` | Interactive risk map (development tree only; the module is not included in the public release) |
 | `paper` | `pip install -e ".[paper]"` | Figures and tables for the paper |
 | `docs` | `pip install -e ".[docs]"` | Building Sphinx documentation |
 | `boost` | `pip install -e ".[boost]"` | LightGBM + CatBoost gradient boosting |
@@ -71,7 +69,6 @@ Combine extras as needed:
 ```bash
 pip install -e ".[dev,test]"        # development
 pip install -e ".[dev,test,dl]"     # development + deep learning
-pip install -e ".[webapp]"          # risk map deps (development tree only)
 ```
 
 ### Verify installation
@@ -121,13 +118,18 @@ python scripts/reproduce.py --all --skip-large --tasks T1 --models xgboost -v
 Two supported paths, by depth:
 
 1. **Minutes-scale verification (no pipeline run):** the committed frozen archive
-   (`results/paper_frozen/`) backs every reported number. Verify internal
-   consistency with:
+   (`results/paper_frozen/`) is the copy of record for the paper's results. Verify
+   the benchmark artifacts against it with:
 
    ```bash
-   PYTHONUTF8=1 python paper/final_gate.py --check          # every gated number, table, stamp, checksum
+   PYTHONUTF8=1 python paper/final_gate.py --check          # tables, leaderboard, stamps, checksums, Source Data
    python paper/regenerate_leaderboard.py --check           # the leaderboard
    ```
+
+   The manuscript sources are not distributed with this repository (see
+   [Repository provenance](#repository-provenance)); the gate's
+   manuscript-consistency clauses report `not distributed -- skipped` here and
+   enforce where the manuscript lives.
 
 2. **Full reproduction:** `scripts/reproduce.py --all` regenerates all results
    from raw data downloads plus the request-based Minnesota staging documented
@@ -232,7 +234,6 @@ AquaContam provides a Click-based CLI accessible via `aquacontam` or `python -m 
 
 | Command | Description | Extra required |
 |---------|-------------|---------------|
-| `aquacontam webapp` | Launch interactive risk map (development tree only) | `[webapp]` |
 | `aquacontam benchmark` | Run benchmark tasks | — |
 | `aquacontam export` | Package dataset for distribution | — |
 | `aquacontam leaderboard validate <path>` | Validate a submission JSON | — |
@@ -401,7 +402,7 @@ pred_sets = conformal.predict_sets(X_test)               # array of {0}, {1}, or
 - **Detection limits**: UCMR5 data is 97.1% censored (non-detect). Non-detect values are preserved with a `censored` boolean column — they are never silently dropped.
 - **PWSID format**: Public Water System IDs are 9-character strings (e.g., `"CA0101001"`). Never cast to int — leading zeros are meaningful.
 - **Large downloads**: NLCD raster is ~1 GB, EJScreen archive is ~6 GB. Use `--skip-large` to skip these during initial testing.
-- **NJ DEP**: Sample data requires reCAPTCHA bypass (use `scripts/scrape_nj_dep.py` for manual export). Inventory and facility coordinates download automatically via the waterviewer.nj.gov REST API. 248,130 PFAS records from 1,313 systems across 25 analytes.
+- **NJ DEP**: Chemical sample pages are reCAPTCHA-protected; export them manually with `scripts/scrape_nj_dep.py` (headed browser; no access circumvention). Inventory and facility coordinates download automatically via the waterviewer.nj.gov REST API. 248,130 PFAS records from 1,313 systems across 25 analytes.
 - **NJ private wells (PWTA)**: Marked `unavailable` — bulk download removed by provider.
 - **MI MPART**: ArcGIS server may return 503 errors intermittently. The loader retries with SSL fallback.
 - **NC DEQ**: Source data is PDF-only; parsed values are included in the processed dataset.
@@ -471,16 +472,19 @@ src/aquacontam/
 ├── inference/      # Prediction utilities
 ├── export/         # Dataset packaging for Zenodo
 ├── leaderboard/    # Submission schema, ranking, formatting
-├── webapp/         # Dash risk map application (development tree only)
 └── __main__.py     # CLI entry point
 scripts/
 ├── reproduce.py    # Full reproducibility pipeline
+paper/
+├── final_gate.py   # Deterministic verification gate (G0-G14)
+├── figures/ tables/ source_data/  # Display items regenerated from the frozen archive
+results/paper_frozen/  # Frozen results archive (copy of record)
 configs/
 ├── data.yaml               # Data source URLs and column maps
 ├── experiment.yaml          # Task parameters, model configs, splits
 └── submission_template.json # Leaderboard submission example
 tests/
-├── unit/           # Fast unit tests (1,509 tests)
+├── unit/           # Fast unit tests (2,000+ tests)
 └── ...
 data/
 ├── raw/            # Immutable downloaded files
@@ -489,6 +493,20 @@ data/
 ```
 
 **Data flow**: `data/raw/` (immutable) → `data/interim/` → `data/processed/`
+
+## Repository provenance
+
+`results/paper_frozen/` is the frozen, checksummed copy of record for the results
+reported in the accompanying paper. The deterministic gate (`paper/final_gate.py`)
+re-derives the benchmark artifacts from it in minutes — generated tables, the
+leaderboard, input-hash stamps on derived artifacts, archive checksums, and the
+per-figure Source Data workbooks — and CI runs the gate on every push.
+`paper/DERIVATIONS.tsv` records the derivation map (artifact ← generator ← inputs).
+The manuscript sources themselves (article text, extended data, supplementary
+information, and their DOCX builds) are not distributed with this repository; they
+accompany the journal submission, and the gate clauses that check them report
+`not distributed -- skipped` here. Figures, tables, and Source Data in `paper/`
+are the paper's display items, regenerated from the frozen archive.
 
 ## Contributing
 
@@ -517,8 +535,7 @@ If you use AquaContam in your research, please cite:
   title   = {AquaContam: machine-learning models of drinking-water contamination learn who is monitored as much as where contamination occurs},
   author  = {Newton, Tyler J.},
   journal = {Nature Water},
-  year    = {2026},
-  note    = {Under review}
+  year    = {2026}
 }
 ```
 
@@ -532,6 +549,6 @@ To cite the software or dataset directly, see [`CITATION.cff`](CITATION.cff).
 | Compiled dataset (Zenodo archive) | CC BY 4.0 where source terms permit | [`LICENSE-DATA`](LICENSE-DATA), [`docs/DATA_TERMS.md`](docs/DATA_TERMS.md) |
 | Per-source raw data | Original agency terms | [`docs/DATA_TERMS.md`](docs/DATA_TERMS.md) |
 | TabPFN v2 checkpoint (not redistributed) | Prior Labs License | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) |
-| Manuscript text and figures | (c) the author; not covered above | — |
+| Paper figures and Source Data (`paper/figures/`, `paper/source_data/`) | (c) the author; not covered above | see [Repository provenance](#repository-provenance) |
 
 Built with PriorLabs-TabPFN.

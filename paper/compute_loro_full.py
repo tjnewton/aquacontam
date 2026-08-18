@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""C18 (R5 M3 + m5): full 20-family Leave-One-Region-Out leaderboard for T1.
+"""Full 20-family Leave-One-Region-Out leaderboard for T1.
 
-The R5 referee flagged that the 20-family benchmark leaderboard rests on a single
+Motivation: the 20-family benchmark leaderboard rested on a single
 fixed West-only geographic split, and that the fixed-split leader (XGBoost) is not
 the LORO leader (CatBoost 0.7896 > XGBoost 0.7825) — yet only the three tree models
 ever receive a cross-split evaluation. This maintainer-authorized COMPUTE (approved
-2026-07-05, decision R5-D3) runs LORO for **every** classifier family on T1 so the
+2026-07-05, ratified maintainer decision) runs LORO for **every** classifier family on T1 so the
 leaderboard can be re-ranked by geographic transfer, and it produces the previously
 absent out-of-region ICP number (m5) because ICP is one of the families.
 
@@ -39,7 +39,7 @@ import sys as _sys
 
 
 def _early_gpu_env_setup() -> None:
-    """Bind CUDA to the requested GPU before any heavy/torch import (see CLAUDE.md)."""
+    """Bind CUDA to the requested GPU before any heavy/torch import (env-var GPU binding)."""
     gpu_id: str | None = None
     argv = _sys.argv
     for i, tok in enumerate(argv):

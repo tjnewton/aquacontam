@@ -15,7 +15,7 @@ There is no Figure 5 in the submitted manuscript (the national risk map is a
 webapp asset). The freshness and figure↔data fidelity of these files is enforced
 by the deterministic gate clause **G14** (`paper/final_gate.py`), which
 regenerates from the frozen archive and asserts per-figure sentinel values — so a
-stale layout (the R6 B1 defect) cannot ship green again.
+stale layout (a historical defect class) cannot ship green again.
 
 Usage::
 
@@ -37,7 +37,7 @@ def _load_json(path: Path) -> dict | list:
     """Load a JSON file, failing loud if it is missing.
 
     Fail-loud (not warn-and-None): a missing input must not silently produce a
-    placeholder sheet — that is exactly how the pre-R6 generator shipped Source
+    placeholder sheet — that is exactly how an earlier generator shipped Source
     Data that did not match the figures. G14 also depends on regeneration
     erroring rather than emitting placeholders.
     """
