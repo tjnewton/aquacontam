@@ -100,11 +100,12 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq libgdal-dev gdal-bin
       - name: Install dependencies
-        # [gate] extra = the gate's toolchain beyond [test]: tabulate (G4 df.to_markdown),
-        # python-docx (G5 fixtures; the G12 clause reads DOCX via stdlib zipfile). jinja2
-        # (G4 df.to_latex) and openpyxl are core deps. Declared in pyproject so a new gate
-        # dep is a pyproject edit, not another workflow edit.
+        # [gate] extra = the gate's toolchain beyond [test]: tabulate (G4 df.to_markdown +
+        # the G5 paper tests), python-docx (DOCX-provenance fixtures in test_final_gate;
+        # the G12 clause itself reads DOCX via stdlib zipfile). jinja2 (G4 df.to_latex) and
+        # openpyxl are core deps. Declared in pyproject so a new gate dep is a pyproject
+        # edit, not another workflow edit.
         run: pip install --prefer-binary -e ".[test,gate]"
-      - name: Full paper gate (calibrated-red aware while paper/EXPECTED_RED.json exists)
+      - name: Full paper gate
         run: python paper/final_gate.py --check
         timeout-minutes: 20

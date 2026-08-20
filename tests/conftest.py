@@ -14,7 +14,6 @@ import os
 # is always created with a deterministic workspace regardless of test order.
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
-import importlib
 from pathlib import Path
 
 import geopandas as gpd
@@ -42,35 +41,6 @@ def _clear_module_caches():
     from aquacontam.geo.distance import clear_tree_cache
 
     clear_tree_cache()
-
-
-# ---------------------------------------------------------------------------
-# Auto-skip paper/webapp tests when optional dependencies are missing.
-# CI installs only [test] extras; this prevents ImportError crashes.
-# ---------------------------------------------------------------------------
-_OPTIONAL_GUARDS: dict[str, list[str]] = {
-    "test_paper_": ["matplotlib", "tabulate"],
-    "test_webapp_": ["dash", "plotly"],
-}
-
-
-def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
-    """Skip test files matching paper/webapp patterns when deps are missing."""
-    skip_reasons: dict[str, str] = {}
-    for prefix, deps in _OPTIONAL_GUARDS.items():
-        missing = [d for d in deps if importlib.util.find_spec(d) is None]
-        if missing:
-            skip_reasons[prefix] = ", ".join(missing)
-
-    if not skip_reasons:
-        return
-
-    for item in items:
-        module_name = Path(item.fspath).stem if hasattr(item, "fspath") else ""
-        for prefix, reason in skip_reasons.items():
-            if module_name.startswith(prefix):
-                item.add_marker(pytest.mark.skip(reason=f"missing optional deps: {reason}"))
-                break
 
 
 @pytest.fixture()

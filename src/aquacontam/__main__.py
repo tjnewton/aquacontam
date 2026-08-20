@@ -2,13 +2,17 @@
 
 Commands::
 
-    python -m aquacontam webapp --port 8050
     python -m aquacontam benchmark --task T1
     python -m aquacontam export --output ./release/
+    python -m aquacontam leaderboard validate submissions/my_model.json
+
+The ``webapp`` subcommand registers only when the optional
+``aquacontam.webapp`` package is present in the installation.
 """
 
 from __future__ import annotations
 
+import importlib.util
 import sys
 
 import click
@@ -22,25 +26,32 @@ def cli() -> None:
     """AquaContam: ML benchmark for water contamination prediction."""
 
 
-@cli.command()
-@click.option("--port", default=8050, type=int, help="Port to serve on.")
-@click.option("--host", default="127.0.0.1", help="Host to bind to.")
-@click.option("--debug", is_flag=True, help="Enable debug mode.")
-@click.option("--predictions-dir", default=None, help="Path to predictions directory.")
-def webapp(port: int, host: str, debug: bool, predictions_dir: str | None) -> None:
-    """Launch the interactive risk map webapp."""
-    try:
-        from aquacontam.webapp import create_app
-    except ModuleNotFoundError as exc:
-        if exc.name is not None and exc.name.startswith("aquacontam.webapp"):
-            raise click.ClickException(
-                "the interactive webapp is not included in this distribution"
-            ) from exc
-        raise
+def _webapp_available() -> bool:
+    """True when the optional webapp package ships in this installation."""
+    return importlib.util.find_spec("aquacontam.webapp") is not None
 
-    app = create_app(predictions_dir=predictions_dir, debug=debug)
-    click.echo(f"Starting AquaContam Risk Map on http://{host}:{port}")
-    app.run(host=host, port=port, debug=debug)
+
+if _webapp_available():
+
+    @cli.command()
+    @click.option("--port", default=8050, type=int, help="Port to serve on.")
+    @click.option("--host", default="127.0.0.1", help="Host to bind to.")
+    @click.option("--debug", is_flag=True, help="Enable debug mode.")
+    @click.option("--predictions-dir", default=None, help="Path to predictions directory.")
+    def webapp(port: int, host: str, debug: bool, predictions_dir: str | None) -> None:
+        """Launch the interactive risk map webapp."""
+        try:
+            from aquacontam.webapp import create_app
+        except ModuleNotFoundError as exc:
+            if exc.name is not None and exc.name.startswith("aquacontam.webapp"):
+                raise click.ClickException(
+                    "the interactive webapp is not included in this distribution"
+                ) from exc
+            raise
+
+        app = create_app(predictions_dir=predictions_dir, debug=debug)
+        click.echo(f"Starting AquaContam Risk Map on http://{host}:{port}")
+        app.run(host=host, port=port, debug=debug)
 
 
 @cli.command()
@@ -138,7 +149,7 @@ def leaderboard_publish(directory: str, output: str) -> None:
 
 def main() -> int:
     """Entry point for the CLI."""
-    cli(standalone_mode=False)
+    cli()
     return 0
 
 

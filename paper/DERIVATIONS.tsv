@@ -32,6 +32,10 @@ paper/tables/	paper/generate_tables.py	results/paper_frozen/	-	repo	G4
 # --- DOCX source manifests (G12: combined manifest hash embedded by convert_to_docx.py) ---
 # NOTE: manifests finalized when convert_to_docx.py gained the embed; rows below are
 # the source files each artifact consumes per convert_to_docx.py.
+# NOTE: the G12 artifacts/inputs below (manuscript DOCX + sources) are not distributed
+# with the benchmark tree; G12 reports "not distributed -- skipped" there and enforces
+# where the manuscript lives. Rows retained as the machine-readable record of that
+# private enforcement.
 paper/manuscript.docx	paper/convert_to_docx.py	paper/skeleton.md	-	repo	G12
 paper/manuscript.docx	paper/convert_to_docx.py	paper/figures/	-	repo	G12
 paper/extended_data.docx	paper/convert_to_docx.py	paper/extended_data.md	-	repo	G12

@@ -22,5 +22,5 @@ dependencies:
   - numpy<2
   - pip
   - pip:
-      - -e ".[dev,test,dl,boost,interpret,hpo,paper,webapp,foundation]"
+      - -e ".[dev,test,dl,boost,interpret,hpo,paper,foundation]"
       - torch-geometric>=2.4

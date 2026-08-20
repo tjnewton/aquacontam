@@ -209,11 +209,10 @@ The per-task tables below are fixed-split reference results across all seven tas
 If you use this benchmark, please cite:
 
 ```bibtex
-@article{aquacontam2026,
+@article{newton2026aquacontam,
   title={AquaContam: machine-learning models of drinking-water contamination learn who is monitored as much as where contamination occurs},
   author={Newton, Tyler J.},
   journal={Nature Water},
-  year={2026},
-  note={Under review}
+  year={2026}
 }
 ```

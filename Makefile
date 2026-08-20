@@ -13,7 +13,7 @@ PF_SOURCE ?= results_provenance_free
 help:
 	@echo "paper        - regenerate tables from the frozen snapshot and verify consistency"
 	@echo "paper-tables - regenerate paper/tables/ from \$$FROZEN ($(FROZEN))"
-	@echo "paper-verify - run verify_paper.py against \$$FROZEN (hard-fails on Table 2 drift)"
+	@echo "paper-verify - run verify_paper.py against \$$FROZEN (hard-fails on table drift)"
 	@echo "paper-freeze - rebuild the frozen snapshot from \$$SOURCE ($(SOURCE)),"
 	@echo "               folding in the env-only run from \$$PF_SOURCE ($(PF_SOURCE))"
 

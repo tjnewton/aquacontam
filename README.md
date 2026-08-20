@@ -18,13 +18,13 @@
 
 ## Motivation
 
-172 million Americans drink PFAS-contaminated water, yet **no ML-ready integrated dataset exists** for contamination prediction. Researchers must manually assemble data from 10+ fragmented federal and state sources. AquaContam closes this gap by providing:
+172 million Americans drink PFAS-contaminated water, yet **no ML-ready integrated dataset exists** for contamination prediction. Researchers must manually assemble data from fifteen fragmented federal and state sources. AquaContam closes this gap by providing:
 
-- An integrated, standardized dataset combining UCMR5 (~1.9M samples, 29 PFAS), UCMR3 (~1.1M samples, 38 contaminants), WQP, 8 state databases, TRI/DoD PFAS sites, heavy metals, and geospatial features
+- An integrated, standardized dataset combining UCMR5 (~1.9M samples, 29 PFAS), UCMR3 (~1.1M samples, 38 contaminants), WQP, six state databases, TRI/DoD PFAS sites, heavy metals, and geospatial features
 - 7 benchmark tasks spanning detection, regression, multi-contaminant profiling, transfer learning, and temporal prediction
 - 20 baseline model families spanning classical ML, deep learning, gradient boosting, survival analysis, foundation models, and ensembles
 - Environmental justice analysis via EJScreen demographic overlays
-- A deterministic paper gate that re-derives every reported number from a frozen archive in minutes
+- A deterministic gate that re-derives the benchmark's tables, leaderboard, input-hash stamps, checksums, and Source Data from a frozen archive in minutes
 
 ## Installation
 
@@ -44,8 +44,8 @@ cd aquacontam
 conda env create -f environment.yml
 conda activate aquacontam
 
-# Install the package (base install)
-pip install -e "."
+# (environment.yml already installed the package with its extras via pip;
+# re-run `pip install -e .` only after changing pyproject.toml)
 ```
 
 ### Extras
@@ -58,7 +58,7 @@ Install additional extras depending on your use case:
 | `test` | `pip install -e ".[test]"` | Running the test suite |
 | `dl` | `pip install -e ".[dl]"` | MLP + CNN1D deep learning models (PyTorch) |
 | `paper` | `pip install -e ".[paper]"` | Figures and tables for the paper |
-| `docs` | `pip install -e ".[docs]"` | Building Sphinx documentation |
+| `gate` | `pip install -e ".[gate]"` | Running the verification gate (`final_gate.py --check`) |
 | `boost` | `pip install -e ".[boost]"` | LightGBM + CatBoost gradient boosting |
 | `hpo` | `pip install -e ".[hpo]"` | Optuna hyperparameter optimization |
 | `interpret` | `pip install -e ".[interpret]"` | SHAP explanations + survival models (Tobit, AFT) |
@@ -133,8 +133,8 @@ Two supported paths, by depth:
 
 2. **Full reproduction:** `scripts/reproduce.py --all` regenerates all results
    from raw data downloads plus the request-based Minnesota staging documented
-   in the paper's Data Availability statement (the MDH workbook is obtained on
-   written request and verified against `data/checksums.sha256`; without it,
+   in `docs/data_requests/mn_mdh_bulk_export.md` (the MDH workbook is obtained
+   on written request and verified against `data/checksums.sha256`; without it,
    `--strict` fails rather than silently diverging). Multi-day, GPU-dependent.
 
 ### Using the benchmark (external users)
@@ -150,8 +150,9 @@ from aquacontam.models import XGBoostClassifier  # any aquacontam.models.base.Ba
 from aquacontam.benchmark.registry import run_task
 import aquacontam.benchmark.tasks  # registers T1–T7
 
-# 1. Get the dataset: download the curated AquaContam release from Zenodo (DOI in
-#    the paper's Data Availability), or generate it with `reproduce.py --all`.
+# 1. Get the dataset: download the curated AquaContam release from Zenodo (the DOI
+#    is recorded in CITATION.cff and LICENSE-DATA once the archive is deposited),
+#    or generate it with `reproduce.py --all`.
 ds = Path("aquacontam-dataset")
 
 # 2. Sample-level water-quality records. run_task re-applies the fixed geographic
@@ -246,13 +247,13 @@ All tasks use geographic stratification by EPA region for train/val/test splits,
 
 | Task | Type | Description | Default analytes | Primary metric |
 |------|------|-------------|------------------|----------------|
-| T1 | Classification | Binary PFAS detection | PFOS, PFOA, PFBS, PFHxS, HFPO-DA | AUROC |
+| T1 | Classification | Binary PFAS detection | PFOS, PFOA, PFBS, PFHxS, HFPO-DA | AUPRC |
 | T2 | Regression | PFAS concentration prediction | PFOS, PFOA, PFHxS | RMSE |
-| T3 | Multilabel classification | Multi-PFAS profile prediction | PFOS, PFOA, PFBS, PFHxS, HFPO-DA | Macro AUROC |
-| T4 | Classification | Heavy metal prediction | lead, copper | AUROC |
-| T5 | Classification | Cross-contaminant transfer learning | lead ↔ PFOS | AUROC |
-| T6 | Classification | Private well risk scoring | PFOS, PFOA, lead | AUROC |
-| T7 | Classification | Temporal prediction (UCMR3 → UCMR5) | PFOS, PFOA, PFBS, PFHxS | AUROC |
+| T3 | Multilabel classification | Multi-PFAS profile prediction | PFOS, PFOA, PFBS, PFHxS, HFPO-DA | Macro AUPRC |
+| T4 | Classification | Heavy metal prediction | lead, copper | AUPRC |
+| T5 | Classification | Cross-contaminant transfer learning | lead ↔ PFOS | AUPRC |
+| T6 | Classification | Arsenic transfer probe (public-supply → domestic wells) | arsenic | AUPRC |
+| T7 | Classification | Temporal prediction (UCMR3 → UCMR5) | PFOS, PFOA, PFBS, PFHxS | AUPRC |
 
 **Metrics by task type:**
 
@@ -377,32 +378,44 @@ pred_sets = conformal.predict_sets(X_test)               # array of {0}, {1}, or
 
 ## Data Sources
 
-| Dataset | Records | Contaminants | Coverage | Format |
-|---------|---------|-------------|----------|--------|
+The benchmark integrates fifteen water-quality data sources:
+
+| Dataset | Records | Contaminants | Coverage | Format / status |
+|---------|---------|-------------|----------|-----------------|
 | UCMR5 | ~1.9M samples | 29 PFAS + lithium | National (systems >= 3,300 pop) | Text files |
 | UCMR3 | ~1.1M samples | 38 contaminants (6 PFAS) | National (systems >= 10k pop) | Text files |
-| Michigan MPART | All state PWS | Comprehensive PFAS | Michigan | GIS download |
-| California GeoTracker | All state PWS | Comprehensive PFAS | California | CSV/GeoJSON |
-| New Jersey DEP | 1,313 systems | 25 PFAS | New Jersey | Manual export + API |
-| North Carolina DEQ | 800+ systems | GenX focus | North Carolina | Data tables |
 | SDWIS | 160k systems | Lead, copper | National | ECHO downloads |
-| EPA FRS | 40,828 sites | Facility locations | National | CSV/GeoJSON |
 | WQP | ~35K records | 13 PFAS | National (ambient monitoring) | REST API |
+| Michigan MPART | ~5.6K records | 5 PFAS | Michigan | ArcGIS REST |
+| California GeoTracker | ~324K records | 29 PFAS | California | CSV download |
+| Minnesota MDH | ~247K records | 27 PFAS | Minnesota | Excel on written request (route: `docs/data_requests/mn_mdh_bulk_export.md`) |
 | Missouri DNR | ~76K records | 29 PFAS | Missouri | ArcGIS REST |
-| Ohio EPA | Varies | PFAS | Ohio | ArcGIS REST |
-| Washington DOH | Varies | PFAS | Washington | ArcGIS REST |
+| New Jersey DEP | 1,313 systems | 25 PFAS | New Jersey | Manual export + API |
+| North Carolina DEQ | ~2K records | 5 PFAS (GenX focus) | North Carolina | PDF-parsed tables |
+| Ohio EPA | 26,554 records | 6 PFAS | Ohio | ArcGIS REST; excluded from the merged dataset (PWSID overlap with SDWIS) |
+| Washington DOH | ~9.3K records | 14 PFAS | Washington | ArcGIS REST |
+| NJ Private Wells (PWTA) | — | PFAS, metals | New Jersey | Unavailable (provider removed bulk download) |
+| Texas TCEQ | — | PFAS | Texas | Unavailable (manual request only; TX partially covered via WQP) |
+| Maine CDC | — | PFAS | Maine | Unavailable |
+
+Auxiliary and task-specific sources:
+
+| Dataset | Records | Content | Coverage | Format |
+|---------|---------|---------|----------|--------|
+| EPA FRS | 40,828 sites | Facility locations | National | CSV/GeoJSON |
 | TRI PFAS | ~2.5K facilities | PFAS releases | National | CSV download |
 | DoD PFAS | ~700 sites | Military PFAS sites | National | CSV download |
 | EJScreen | 220k+ block groups | Demographic + EJ indices | National | Zenodo archive |
 | NLCD | Wall-to-wall 30m | Land use/land cover | National | Raster (GeoTIFF) |
 | USGS aquifers | National | Hydrogeology | National | Shapefile/GDB |
+| USGS NGA arsenic (T6 target) | Domestic wells | Arsenic | National | CSV (DOI 10.5066/P9JMUAPY) |
 
 ### Data caveats
 
 - **Detection limits**: UCMR5 data is 97.1% censored (non-detect). Non-detect values are preserved with a `censored` boolean column — they are never silently dropped.
 - **PWSID format**: Public Water System IDs are 9-character strings (e.g., `"CA0101001"`). Never cast to int — leading zeros are meaningful.
 - **Large downloads**: NLCD raster is ~1 GB, EJScreen archive is ~6 GB. Use `--skip-large` to skip these during initial testing.
-- **NJ DEP**: Chemical sample pages are reCAPTCHA-protected; export them manually with `scripts/scrape_nj_dep.py` (headed browser; no access circumvention). Inventory and facility coordinates download automatically via the waterviewer.nj.gov REST API. 248,130 PFAS records from 1,313 systems across 25 analytes.
+- **NJ DEP**: Chemical sample pages are reCAPTCHA-protected; export them manually with `scripts/scrape_nj_dep.py` (headed browser; no access circumvention). Inventory and facility coordinates download automatically via the waterviewer.nj.gov REST API. 248,107 PFAS records from 1,313 systems across 25 analytes.
 - **NJ private wells (PWTA)**: Marked `unavailable` — bulk download removed by provider.
 - **MI MPART**: ArcGIS server may return 503 errors intermittently. The loader retries with SSL fallback.
 - **NC DEQ**: Source data is PDF-only; parsed values are included in the processed dataset.
@@ -446,10 +459,10 @@ Submit benchmark results by creating a JSON file following the submission schema
 aquacontam leaderboard validate my_submission.json
 
 # Rank all submissions in a directory
-aquacontam leaderboard rank results/submissions/
+aquacontam leaderboard rank submissions/
 
 # Write leaderboard to file
-aquacontam leaderboard publish results/submissions/ -o LEADERBOARD.md
+aquacontam leaderboard publish submissions/ -o LEADERBOARD.md
 ```
 
 See `configs/submission_template.json` for a complete example.
@@ -472,12 +485,14 @@ src/aquacontam/
 ├── inference/      # Prediction utilities
 ├── export/         # Dataset packaging for Zenodo
 ├── leaderboard/    # Submission schema, ranking, formatting
+├── pipeline/       # Reproducibility pipeline stages (download, preprocess, features,
+│                   #   assembly, training, analysis)
 └── __main__.py     # CLI entry point
 scripts/
 ├── reproduce.py    # Full reproducibility pipeline
 paper/
 ├── final_gate.py   # Deterministic verification gate (G0-G14)
-├── figures/ tables/ source_data/  # Display items regenerated from the frozen archive
+├── tables/ source_data/  # Display items regenerated from the frozen archive (gate-verified: G4, G14)
 results/paper_frozen/  # Frozen results archive (copy of record)
 configs/
 ├── data.yaml               # Data source URLs and column maps
@@ -500,13 +515,17 @@ data/
 reported in the accompanying paper. The deterministic gate (`paper/final_gate.py`)
 re-derives the benchmark artifacts from it in minutes — generated tables, the
 leaderboard, input-hash stamps on derived artifacts, archive checksums, and the
-per-figure Source Data workbooks — and CI runs the gate on every push.
+per-figure Source Data workbooks — and CI runs the gate on every push and pull
+request to main.
 `paper/DERIVATIONS.tsv` records the derivation map (artifact ← generator ← inputs).
 The manuscript sources themselves (article text, extended data, supplementary
 information, and their DOCX builds) are not distributed with this repository; they
 accompany the journal submission, and the gate clauses that check them report
-`not distributed -- skipped` here. Figures, tables, and Source Data in `paper/`
-are the paper's display items, regenerated from the frozen archive.
+`not distributed -- skipped` here. Tables and Source Data in `paper/` are the
+paper's display items, regenerated from the frozen archive and verified by the
+gate (G4, G14); the article's figures are produced by `paper/generate_figures.py`
+from the frozen archive plus the pipeline's interim data, and accompany the
+journal article.
 
 ## Contributing
 
@@ -549,6 +568,6 @@ To cite the software or dataset directly, see [`CITATION.cff`](CITATION.cff).
 | Compiled dataset (Zenodo archive) | CC BY 4.0 where source terms permit | [`LICENSE-DATA`](LICENSE-DATA), [`docs/DATA_TERMS.md`](docs/DATA_TERMS.md) |
 | Per-source raw data | Original agency terms | [`docs/DATA_TERMS.md`](docs/DATA_TERMS.md) |
 | TabPFN v2 checkpoint (not redistributed) | Prior Labs License | [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) |
-| Paper figures and Source Data (`paper/figures/`, `paper/source_data/`) | (c) the author; not covered above | see [Repository provenance](#repository-provenance) |
+| Paper Source Data (`paper/source_data/`) | (c) the author; not covered above | see [Repository provenance](#repository-provenance) |
 
 Built with PriorLabs-TabPFN.

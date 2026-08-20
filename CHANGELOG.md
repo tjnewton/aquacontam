@@ -4,35 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
-
-### Changed
-
-- **Publication metadata**: finalized author and citation metadata across the manuscript, `CITATION.cff`, `.zenodo.json`, `pyproject.toml`, and the README citation.
-
-### Fixed
-
-- **CI typecheck (pandas-stubs 3.0.5.260730 regression)**: that release resolves `Series.astype(str)` to an overload returning `Series[bool]`, so every downstream `.str` accessor became `SeriesStringMethods[bool]` — 23 `[misc]` errors across 9 data loaders, with no change to our source. Excluded the single broken release (`!=3.0.5.260730`) rather than adding 23 casts for a third-party stub bug; `astype("string")` still yields `Series[str]` in the same release, which is what identifies it as a stub defect.
-- **Table 1 accuracy**: MI MPART analyte count (7→5 PFAS), OH EPA record count (1,184→26,554), specific analyte counts added for CA GeoTracker (34), WA DOH (14), MO DNR (29), OH EPA (6)
-- **Monitoring AUPRC significance**: T1 monitoring ablation now correctly reported as statistically significant (Δ=−0.020, p_FDR=0.021) instead of non-significant
-- **Table 15b reference**: Added "Supplementary" prefix to resolve verify_paper.py display item count error
-- **System count**: Updated "160,000" → "150,000" public water systems (conservative EPA estimate)
-- **NJ DEP supplementary metadata**: Updated analyte description from "PFNA, PFOA, PFOS" to "25 PFAS" with correct API source
-- **Mypy type checking**: Fixed all 40 mypy errors across 15 files; CI typecheck job now blocks on failure
-- **Exception handling**: Narrowed 21 bare `except Exception:` handlers to specific exception types across 16 source files
-- **Deprecated `retrying` dependency**: Replaced custom retry loops with `tenacity` in ArcGIS data loader
-
-### Added
-
-- **Validation reuse bias interpretation**: Discussion paragraph on negligible val-reuse effect (0.8pp AUROC) vs geographic heterogeneity (14.5pp gap)
-- **CI pipeline test job**: New `test-pipeline` job runs 3 previously-skipped test files (pipeline analysis, pipeline core, reproduce stages)
-- **Checksum validation**: Downloaded data files verified against `data/checksums.sha256` at end of pipeline download stage
-- **Model weight integrity**: SHA-256 hash computed on export and verified before `joblib.load()` on import; `verify_model_integrity()` function for batch checking
-- **Detection limit sensitivity**: `detection_limit_sensitivity()` function in `analysis/sensitivity.py`; `DEFAULT_DL_FILLNA` constant extracted in `benchmark/tasks.py`
-- **`--with-uncertainty` CLI flag**: Enables LORO CV and bootstrap CIs together; `--all` now includes LORO by default
-- **Substitution timing documentation**: Module docstrings in `detection_limits.py` and `preprocess.py` clarify binary detection target design choice
-
-## [4.0.0] - 2026-07-03
+## [4.0.0] - 2026-08-20
 
 ### Changed
 
@@ -41,10 +13,43 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   keep-parse: 916,899 lead/copper records with zero-measure rows retained as non-detects)
 - **Canonical v2 re-freeze**: the entire frozen paper archive regenerated from ONE pinned
   DAG run (base + provenance-free passes + standalone stages + post-freeze generators),
-  with input-hash derivation stamps and pre-registered claim bands (all hold)
-- **Deterministic paper gate G0-G12**: derivation-staleness (G8), embedded-prose audit
+  with input-hash derivation stamps and pre-registered acceptance checks (all hold)
+- **Deterministic paper gate G0-G14**: derivation-staleness (G8), embedded-prose audit
   coverage, concept-consistency registry, frozen checksums, DOCX source-manifest
-  provenance embeds (G12); staged calibrated-red CI
+  provenance embeds (G12)
+- **Publication metadata**: finalized author and citation metadata across `CITATION.cff`,
+  `.zenodo.json`, `pyproject.toml`, and the README citation.
+- **Benchmark-focused distribution**: paper figures and Sphinx documentation sources are
+  not distributed with the benchmark repository (figures are regenerable with
+  `paper/generate_figures.py`; tables, the leaderboard, and per-figure Source Data remain
+  gate-verified). The `webapp` CLI subcommand now registers only when the optional webapp
+  package is present.
+
+### Fixed
+
+- **CI typecheck (pandas-stubs 3.0.5.260730 regression)**: that release resolves `Series.astype(str)` to an overload returning `Series[bool]`, so every downstream `.str` accessor became `SeriesStringMethods[bool]` — 23 `[misc]` errors across 9 data loaders, with no change to our source. Excluded the single broken release (`!=3.0.5.260730`) rather than adding 23 casts for a third-party stub bug; `astype("string")` still yields `Series[str]` in the same release, which is what identifies it as a stub defect.
+- **Source-census accuracy**: MI MPART analyte count (7→5 PFAS), OH EPA record count (1,184→26,554), specific analyte counts added for CA GeoTracker (29), WA DOH (14), MO DNR (29), OH EPA (6)
+- **Monitoring AUPRC significance**: T1 monitoring ablation now correctly reported as statistically significant (Δ=−0.020, p_FDR=0.021) instead of non-significant
+- **Display-item cross-references**: supplementary table references normalized
+- **System count**: Updated "160,000" → "150,000" public water systems (conservative EPA estimate)
+- **NJ DEP source metadata**: Updated analyte description from "PFNA, PFOA, PFOS" to "25 PFAS" with correct API source
+- **Mypy type checking**: Fixed all 40 mypy errors across 15 files; CI typecheck job now blocks on failure
+- **Exception handling**: Narrowed 21 bare `except Exception:` handlers to specific exception types across 16 source files
+- **Deprecated `retrying` dependency**: Replaced custom retry loops with `tenacity` in ArcGIS data loader
+- **Benchmark task table**: primary metric corrected to AUPRC (T1, T4-T7) / macro-AUPRC (T3), matching the task registry and submission schema; T6 described as the arsenic transfer probe
+- **Leaderboard citation**: BibTeX key unified with the README (`newton2026aquacontam`); stale status note removed
+- **Paper test wiring**: data-consistency tests repointed at the frozen archive (`results/paper_frozen/`), reviving 15 dormant assertions; per-module dependency guards replace the blanket conftest skip, so the paper tests run in CI
+
+### Added
+
+- **Analysis note**: negligible val-reuse effect (0.8pp AUROC) vs geographic heterogeneity (14.5pp gap)
+- **CI pipeline test job**: New `test-pipeline` job runs 3 previously-skipped test files (pipeline analysis, pipeline core, reproduce stages)
+- **Checksum validation**: Downloaded data files verified against `data/checksums.sha256` at end of pipeline download stage
+- **Model weight integrity**: SHA-256 hash computed on export and verified before `joblib.load()` on import; `verify_model_integrity()` function for batch checking
+- **Detection limit sensitivity**: `detection_limit_sensitivity()` function in `analysis/sensitivity.py`; `DEFAULT_DL_FILLNA` constant extracted in `benchmark/tasks.py`
+- **`--with-uncertainty` CLI flag**: Enables LORO CV and bootstrap CIs together; `--all` now includes LORO by default
+- **Substitution timing documentation**: Module docstrings in `detection_limits.py` and `preprocess.py` clarify binary detection target design choice
+- **`SECURITY.md`**: vulnerability-disclosure policy (GitHub Security Advisories)
 
 ## [3.0.0] - 2026-03-03
 

@@ -65,13 +65,6 @@ Thumbs.db
 .env
 .env.*
 
-# Local agent tooling state (not tracked)
-.claude/settings.local.json
-.claude/.session-baseline-sha
-.claude/.stop-block-count
-.claude/scheduled_tasks.lock
-.claude/*.bak
-
 # Sphinx docs build
 docs/_build/
 

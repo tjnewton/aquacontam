@@ -41,6 +41,9 @@ pytest tests/unit/ -x --tb=short -q
 
 # Run with coverage
 pytest tests/ --cov=aquacontam
+
+# Integration tests (live-download probes; network required; excluded from CI)
+pytest tests/integration/ -m slow
 ```
 
 ### Commit Messages

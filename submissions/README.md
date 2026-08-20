@@ -66,7 +66,7 @@ Each submission is a JSON file named `<model_name>.json`:
 
 ## Validation
 
-Submissions are automatically validated on PR:
+Validate your submission locally before opening the PR:
 
 ```bash
 python -m aquacontam leaderboard validate submissions/my_model.json
@@ -74,7 +74,9 @@ python -m aquacontam leaderboard validate submissions/my_model.json
 
 ## Ranking
 
-The leaderboard is regenerated on every push to `main`:
+Maintainers regenerate the leaderboard with the commands below; CI's gate
+byte-verifies the committed `LEADERBOARD.md` against the frozen archive
+(clause G4) on every push and pull request to `main`:
 
 ```bash
 python -m aquacontam leaderboard rank submissions/

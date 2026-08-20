@@ -1,12 +1,9 @@
-"""Tests verifying paper numerical claims match pipeline result files.
+"""Tests verifying paper numerical claims match the frozen result files.
 
-These tests catch silent divergence between the paper manuscript and
-pipeline outputs — the class of bugs identified in the AUDIT_REPORT.md.
-Each test reads a results JSON file and asserts that the value matches
-what the paper claims (within tolerance).
-
-Tests are skipped when result files are not present (e.g. in CI where
-only ``[test]`` extras are installed and no pipeline run has occurred).
+These tests catch silent divergence between reported values and pipeline
+outputs. Each test reads a JSON file from the frozen archive
+(``results/paper_frozen/``, the committed copy of record) and asserts that
+the value matches what is claimed (within tolerance).
 """
 
 from __future__ import annotations
@@ -18,7 +15,8 @@ import pytest
 
 pytest.importorskip("tabulate")
 
-RESULTS_DIR = Path("results")
+REPO = Path(__file__).resolve().parents[2]
+RESULTS_DIR = REPO / "results" / "paper_frozen"
 
 
 def _load_json(name: str) -> dict | list:

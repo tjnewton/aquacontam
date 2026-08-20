@@ -185,6 +185,8 @@ def g2_verify_paper(
 
 
 def g3_number_audit() -> ClauseResult:
+    if _manuscript_absent():
+        return ClauseResult("G3 number_audit", True, _MANUSCRIPT_SKIP)
     rc, out = _run([sys.executable, "paper/number_audit.py", "--check"])
     last = next((ln for ln in out.splitlines() if "number audit" in ln), "")
     return ClauseResult("G3 number_audit", rc == 0, last.strip())

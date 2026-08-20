@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import builtins
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -10,8 +11,10 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from aquacontam.__main__ import cli
+from aquacontam.__main__ import cli, main
 from aquacontam._constants import SUBMISSION_SCHEMA_VERSION
+
+_HAS_WEBAPP = importlib.util.find_spec("aquacontam.webapp") is not None
 
 
 @pytest.fixture()
@@ -34,19 +37,29 @@ class TestCLIBasic:
 
 
 class TestWebappCommand:
-    """Tests for the webapp subcommand."""
+    """Tests for the optional webapp subcommand (registered only when present)."""
 
-    def test_webapp_help(self, runner: CliRunner) -> None:
+    def test_registration_probe_matches_spec(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """_webapp_available() mirrors find_spec; falsy spec means no registration."""
+        from aquacontam import __main__ as main_mod
+
+        assert main_mod._webapp_available() is _HAS_WEBAPP
+        monkeypatch.setattr(importlib.util, "find_spec", lambda name: None)
+        assert main_mod._webapp_available() is False
+
+    @pytest.mark.skipif(not _HAS_WEBAPP, reason="webapp module not distributed in this tree")
+    def test_webapp_help_when_present(self, runner: CliRunner) -> None:
         result = runner.invoke(cli, ["webapp", "--help"])
         assert result.exit_code == 0
         assert "--port" in result.output
         assert "--host" in result.output
         assert "--debug" in result.output
 
+    @pytest.mark.skipif(not _HAS_WEBAPP, reason="webapp module not distributed in this tree")
     def test_webapp_missing_module_degrades_gracefully(
         self, runner: CliRunner, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Public-release path: an absent webapp module yields a clean message."""
+        """A registered command whose module breaks at call time yields a clean message."""
         real_import = builtins.__import__
 
         def _blocked(name: str, *args: object, **kwargs: object) -> object:
@@ -59,6 +72,24 @@ class TestWebappCommand:
         result = runner.invoke(cli, ["webapp"])
         assert result.exit_code != 0
         assert "not included in this distribution" in result.output
+
+    @pytest.mark.skipif(_HAS_WEBAPP, reason="webapp module present in this tree")
+    def test_webapp_hidden_when_absent(self, runner: CliRunner) -> None:
+        """Public-release path: the command is not registered at all."""
+        result = runner.invoke(cli, ["webapp"])
+        assert result.exit_code == 2
+        assert "No such command" in result.output
+        help_result = runner.invoke(cli, ["--help"])
+        assert help_result.exit_code == 0
+        assert "webapp" not in help_result.output
+
+
+def test_main_entry_point_exits_cleanly(monkeypatch: pytest.MonkeyPatch) -> None:
+    """main() runs the CLI in standalone mode and exits 0 on success."""
+    monkeypatch.setattr(sys, "argv", ["aquacontam", "--version"])
+    with pytest.raises(SystemExit) as excinfo:
+        main()
+    assert excinfo.value.code == 0
 
 
 class TestBenchmarkCommand:

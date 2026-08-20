@@ -3,7 +3,7 @@
 
 Usage::
 
-    python paper/generate_figures.py --results results/ --output paper/figures/
+    python paper/generate_figures.py --results results/paper_frozen --output paper/figures/
 """
 
 from __future__ import annotations

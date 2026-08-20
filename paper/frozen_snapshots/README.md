@@ -30,9 +30,9 @@ PY
 `oh_epa` (26,554) is excluded from the merged parquet (zero unique PWSIDs after dedup) but
 its record count is reader-facing in Table 1, so it is carried here as metadata.
 
-`sources.sdwis.records = 916,899` is the current parquet count; the frozen analysis JSONs
-were computed on an earlier 694,419-row SDWIS parse. This divergence is an accepted,
-documented provenance record (ratified maintainer decision) under the no-re-freeze rule —
-the snapshot captures the **shipped** Table-1 value.
+`sources.sdwis.records = 916,899` is the keep-parse count, and the frozen analysis JSONs
+are computed on this same 916,899-row keep-parse (the canonical re-freeze regenerated the
+entire archive from one pinned DAG run). The earlier 694,419-row legacy-parse figure is
+historical provenance only and describes no current analysis.
 
 To re-verify equality at any time, re-run the command above and compare to this file.

@@ -18,12 +18,14 @@ repos:
         args: ["--fix"]
       - id: ruff-format
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.0
+  # mypy runs from the project environment (same interpreter, deps, and version as the
+  # CI typecheck job). A mirrors-mypy isolated env cannot resolve the project's imports
+  # without duplicating the whole dependency tree.
+  - repo: local
     hooks:
       - id: mypy
-        additional_dependencies:
-          - numpy>=1.24
-          - pandas-stubs
-        args: ["--config-file=pyproject.toml"]
+        name: mypy (project env)
+        entry: mypy src/aquacontam/
+        language: system
+        types: [python]
         pass_filenames: false
