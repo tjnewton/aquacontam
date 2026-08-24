@@ -14,7 +14,7 @@ url: "https://github.com/tjnewton/aquacontam"
 authors:
   - family-names: Newton
     given-names: Tyler J.
-    orcid: "https://orcid.org/0000-0002-4304-0103"
+    orcid: "https://orcid.org/0000-0002-1560-6553"
 license: Apache-2.0
 repository-code: "https://github.com/tjnewton/aquacontam"
 keywords:
@@ -32,7 +32,7 @@ preferred-citation:
   authors:
     - family-names: Newton
       given-names: Tyler J.
-      orcid: "https://orcid.org/0000-0002-4304-0103"
+      orcid: "https://orcid.org/0000-0002-1560-6553"
   year: 2026
   journal: "Nature Water"
   url: "https://github.com/tjnewton/aquacontam"
