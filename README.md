@@ -150,9 +150,8 @@ from aquacontam.models import XGBoostClassifier  # any aquacontam.models.base.Ba
 from aquacontam.benchmark.registry import run_task
 import aquacontam.benchmark.tasks  # registers T1–T7
 
-# 1. Get the dataset: download the curated AquaContam release from Zenodo (the DOI
-#    is recorded in CITATION.cff and LICENSE-DATA once the archive is deposited),
-#    or generate it with `reproduce.py --all`.
+# 1. Get the dataset: download the curated AquaContam release from Zenodo
+#    (DOI: 10.5281/zenodo.22073200), or generate it with `reproduce.py --all`.
 ds = Path("aquacontam-dataset")
 
 # 2. Sample-level water-quality records. run_task re-applies the fixed geographic
@@ -558,7 +557,9 @@ If you use AquaContam in your research, please cite:
 }
 ```
 
-To cite the software or dataset directly, see [`CITATION.cff`](CITATION.cff).
+To cite the software or dataset directly, see [`CITATION.cff`](CITATION.cff). The
+dataset and code snapshot are archived at
+[10.5281/zenodo.22073200](https://doi.org/10.5281/zenodo.22073200).
 
 ## License
 

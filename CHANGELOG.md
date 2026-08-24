@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **`--with-uncertainty` CLI flag**: Enables LORO CV and bootstrap CIs together; `--all` now includes LORO by default
 - **Substitution timing documentation**: Module docstrings in `detection_limits.py` and `preprocess.py` clarify binary detection target design choice
 - **`SECURITY.md`**: vulnerability-disclosure policy (GitHub Security Advisories)
+- **Zenodo archive**: dataset and code snapshot deposited at [10.5281/zenodo.22073200](https://doi.org/10.5281/zenodo.22073200)
 
 ## [3.0.0] - 2026-03-03
 
