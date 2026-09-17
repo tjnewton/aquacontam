@@ -70,7 +70,9 @@ dev = [
     # 23 such errors across 9 data loaders; clean on 3.0.3.260530 and expected to
     # be clean again once upstream fixes the overload, which the `!=` (rather than
     # a `<` cap) deliberately leaves room for. Re-test and drop the exclusion then.
-    "pandas-stubs>=2.0,<4,!=3.0.5.260730",
+    # 3.0.5.260914 (2026-09-14) repeats the identical bug under this project's numpy<2
+    # pin, so it is excluded the same way; the constraint still resolves to 3.0.3.260530.
+    "pandas-stubs>=2.0,<4,!=3.0.5.260730,!=3.0.5.260914",
     "types-requests>=2.31",
     "types-tqdm>=4.66",
 ]

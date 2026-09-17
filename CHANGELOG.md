@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   BibTeX, and the export dataset card now cite the EarthArXiv preprint of the accompanying
   paper (doi:10.31223/X51V3G) until the peer-reviewed article is published
 
+### Fixed
+
+- **CI typecheck (pandas-stubs 3.0.5.260914 regression)**: the 2026-09-14 release repeats the 3.0.5.260730 overload bug under the project's numpy<2 pin (`Series.astype(str)` resolves to `Series[bool]`; the same 23 `[misc]` errors across 9 data loaders, with no change to our source). Excluded that release as well (`!=3.0.5.260914`); the constraint still resolves to 3.0.3.260530.
+
 ## [4.0.0] - 2026-08-20
 
 ### Changed
