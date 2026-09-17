@@ -135,7 +135,8 @@ def generate_dataset_card(
         "citation": (
             "Newton, T. J. (2026). AquaContam: machine-learning models of "
             "drinking-water contamination learn who is monitored as much as "
-            "where contamination occurs. Nature Water."
+            "where contamination occurs. EarthArXiv preprint. "
+            "https://doi.org/10.31223/X51V3G"
         ),
         "homepage": "https://github.com/tjnewton/aquacontam",
         "tasks": {

@@ -34,5 +34,7 @@ preferred-citation:
       given-names: Tyler J.
       orcid: "https://orcid.org/0000-0002-1560-6553"
   year: 2026
-  journal: "Nature Water"
-  url: "https://github.com/tjnewton/aquacontam"
+  journal: "EarthArXiv"
+  status: preprint
+  doi: 10.31223/X51V3G
+  url: "https://doi.org/10.31223/X51V3G"

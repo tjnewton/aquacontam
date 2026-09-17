@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+### Changed
+
+- **Citation metadata**: the preferred citation in `CITATION.cff`, the README and leaderboard
+  BibTeX, and the export dataset card now cite the EarthArXiv preprint of the accompanying
+  paper (doi:10.31223/X51V3G) until the peer-reviewed article is published
+
 ## [4.0.0] - 2026-08-20
 
 ### Changed
