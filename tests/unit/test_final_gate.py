@@ -19,6 +19,7 @@ from paper.final_gate import (
     REPO,
     ClauseResult,
     _evaluate,
+    _fig4_design_sentinels,
     _has_value,
     f_count,
     g0_sticky_flag,
@@ -615,3 +616,17 @@ def test_g14_has_value_sentinel_logic():
     assert _has_value([0.1, 1.847053, "x"], 1.847, 1e-3) is True
     assert _has_value([0.1, 0.5, None], 1.847, 1e-3) is False
     assert _has_value(["only", "strings"], 0.744) is False
+
+
+def test_g14_fig4_design_sentinels_come_from_frozen():
+    # Fig 4c sentinels are read from the frozen JSON, not the generator: a sheet that carries
+    # only panels a-b fails them; one that carries the panel-c values passes.
+    md = {
+        "e1_design_restricted": {"test": {"rows": {"ndr_pooled": {"burden_ratio": 2.7108}}}},
+        "e4_ca_census_vs_targeted": {"primary": {"census": {"burden_ratio": 2.0764}}},
+    }
+    sentinels = _fig4_design_sentinels(md)
+    assert [t for _, t in sentinels] == [2.7108, 2.0764]
+    panels_ab_only = [1.847053, 0.06, "Monitoring inequity"]
+    assert not any(_has_value(panels_ab_only, t) for _, t in sentinels)
+    assert all(_has_value(["c Design decomposition", 2.71080001, 2.0764], t) for _, t in sentinels)

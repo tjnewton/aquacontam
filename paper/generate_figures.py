@@ -1475,22 +1475,105 @@ _INEQUITY_GROUP_LABELS = {
 }
 
 
+#: Fig. 4c marker style per design row key: (color, marker). Okabe-Ito; the federal
+#: census and its California UCMR5 row share blue, state programs share vermillion.
+_DESIGN_STYLE: dict[str, tuple[str, str]] = {
+    "pooled": ("#000000", "D"),
+    "ndr_pooled": ("#CC79A7", "o"),
+    "federal": ("#0072B2", "o"),
+    "census": ("#0072B2", "s"),
+    "state": ("#D55E00", "o"),
+    "state_ca": ("#D55E00", "o"),
+    "targeted_design": ("#D55E00", "s"),
+}
+
+
+def _design_forest_rows(design_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """The Fig. 4c rows, from the same builder the Fig. 4 Source Data uses."""
+    try:
+        from paper.generate_source_data import design_forest_rows
+    except ImportError:  # direct script execution: paper/ is sys.path[0]
+        from generate_source_data import (  # type: ignore[no-redef, import-not-found]
+            design_forest_rows,
+        )
+    return design_forest_rows(design_data)
+
+
+def _plot_design_forest(label_ax: Any, ax: Any, design_data: dict[str, Any]) -> None:
+    """Fig. 4c: burden ratio by monitoring design (log axis, 95% CIs).
+
+    ``label_ax`` is a text-only column (bold scope headers, left-aligned design
+    labels); ``ax`` holds the estimates, with a value column on its right. The two
+    share y, so the top row of the figure keeps its full width.
+    """
+    from matplotlib.ticker import FixedLocator, FuncFormatter, NullFormatter
+
+    rows = _design_forest_rows(design_data)
+    y = 0.0
+    for scope in dict.fromkeys(r["Scope"] for r in rows):
+        label_ax.text(0.0, y, scope, ha="left", va="center", fontsize=6.5, fontweight="bold")
+        y -= 1.0
+        for r in (r for r in rows if r["Scope"] == scope):
+            color, marker = _DESIGN_STYLE[r["Design_Key"]]
+            br, lo, hi = r["Burden_Ratio"], r["CI_Lower"], r["CI_Upper"]
+            label_ax.text(0.04, y, r["Design"], ha="left", va="center", fontsize=6.5)
+            ax.errorbar(
+                br,
+                y,
+                xerr=[[br - lo], [hi - br]],
+                fmt=marker,
+                color=color,
+                markersize=3.5,
+                capsize=2,
+                elinewidth=0.9,
+            )
+            ax.text(
+                1.01,
+                y,
+                f"{br:.2f} ({lo:.2f}–{hi:.2f})",  # noqa: RUF001
+                transform=ax.get_yaxis_transform(),
+                ha="left",
+                va="center",
+                fontsize=6,
+            )
+            y -= 1.0
+        y -= 0.4
+    label_ax.set_xlim(0.0, 1.0)
+    label_ax.axis("off")
+    ax.axvline(1.0, color="gray", linewidth=0.5, linestyle="--")
+    ax.set_xscale("log")
+    ax.set_xlim(0.9, 5.0)
+    ax.xaxis.set_major_locator(FixedLocator([1, 1.5, 2, 3, 4, 5]))
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _pos: f"{v:g}"))
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    ax.set_ylim(y + 0.6, 0.6)
+    ax.tick_params(axis="y", left=False, labelleft=False)
+    ax.spines["left"].set_visible(False)
+    ax.set_xlabel("People-of-color detection-burden ratio (log scale; 95% CI)")
+
+
 def fig_monitoring_inequity(
     inequity_data: dict[str, Any] | None,
     output_dir: Path,
+    design_data: dict[str, Any] | None = None,
 ) -> Path:
-    """Main figure: monitoring effort is inequitably distributed.
+    """Main figure: monitoring effort is inequitably distributed, and so are its estimates.
 
-    Consumes ``monitoring_inequity.json``. Panel (a): mean samples per system
-    in high- vs low-share systems per demographic dimension, annotated with the
-    monitoring-intensity ratio (an infinite ratio -- no low-share systems --
-    is annotated rather than plotted). Panel (b): population-size-adjusted
-    regression coefficients with 95% CIs.
+    Consumes ``monitoring_inequity.json`` (a, b) and ``monitoring_design.json`` (c).
+    Panel (a): mean samples per system in high- vs low-share systems per
+    demographic dimension, annotated with the monitoring-intensity ratio (an
+    infinite ratio -- no low-share systems -- is annotated rather than plotted).
+    Panel (b): population-size-adjusted regression coefficients with 95% CIs.
+    Panel (c): the people-of-color detection-burden ratio recomputed from each
+    monitoring design's records (nation, test regions, region 9) and the
+    California census-vs-targeted primary comparison, with 95% CIs.
     """
     import math
 
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.5))
+    fig = plt.figure(figsize=(7.087, 7.0))
+    grid = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.1])
+    axes = [fig.add_subplot(grid[0, 0]), fig.add_subplot(grid[0, 1])]
 
     groups = [g for g in _INEQUITY_GROUP_LABELS if g in (inequity_data or {})]
 
@@ -1535,25 +1618,36 @@ def fig_monitoring_inequity(
         for xi, g in enumerate(groups):
             p = inequity_data[g].get("size_adjusted_p", float("nan"))  # type: ignore[index]
             p_str = "p<0.001" if p < 0.001 else f"p={p:.3f}"
-            # Place the label clear of the upper error-bar cap so the decimal
-            # point is not obscured.
-            cap_top = coefs[xi] + 1.96 * ses[xi]
+            # Place the label beyond the error-bar cap on the side away from zero, so
+            # neither the cap nor the zero line obscures it.
+            above = coefs[xi] >= 0
+            cap = coefs[xi] + (1.96 if above else -1.96) * ses[xi]
             ax.annotate(
                 p_str,
-                (xi, cap_top),
+                (xi, cap),
                 textcoords="offset points",
-                xytext=(0, 5),
+                xytext=(0, 5 if above else -5),
                 ha="center",
-                va="bottom",
+                va="bottom" if above else "top",
                 fontsize=6,
             )
-        ax.margins(y=0.18)
+        ax.margins(x=0.12, y=0.18)
         ax.set_xticks(x)
         ax.set_xticklabels([_INEQUITY_GROUP_LABELS[g] for g in groups], fontsize=6, rotation=20)
         ax.set_ylabel("Size-adjusted coefficient\n(log samples per 1-SD)")
     else:
         _placeholder(ax, "No data", figure="fig4_monitoring_inequity")
     ax.set_title("b  Population-size-adjusted association", loc="left")
+
+    bottom = grid[1, :].subgridspec(1, 2, width_ratios=[1.25, 2.0], wspace=0.02)
+    label_ax = fig.add_subplot(bottom[0, 0])
+    ax = fig.add_subplot(bottom[0, 1], sharey=label_ax)
+    if design_data:
+        _plot_design_forest(label_ax, ax, design_data)
+    else:
+        label_ax.axis("off")
+        _placeholder(ax, "No data", figure="fig4_monitoring_inequity")
+    label_ax.set_title("c  Burden ratio by monitoring design", loc="left")
 
     fig.tight_layout()
     path = output_dir / "fig4_monitoring_inequity.pdf"
@@ -2152,6 +2246,9 @@ def _load_pipeline_data(
     out["inequity_data"] = (
         json.loads(inequity_path.read_text()) if inequity_path.exists() else None
     )
+    # Monitoring design and the disparity estimates (Fig 4c; EST-D2)
+    design_path = results_dir / "monitoring_design.json"
+    out["design_data"] = json.loads(design_path.read_text()) if design_path.exists() else None
 
     # Two-confound decomposition inputs
     det_path = results_dir / "detection_only_ablation.json"
@@ -2197,51 +2294,78 @@ def _load_pipeline_data(
         "MissingFigureDataError. Never use for canonical (frozen) regeneration."
     ),
 )
+@click.option(
+    "--only",
+    default=None,
+    help=(
+        "Comma-separated figure function names to regenerate (e.g. "
+        "fig_monitoring_inequity); default all. Unknown names are an error."
+    ),
+)
 def main(
     results: str,
     output: str,
     data_dir: str,
     provenance_free_results: str,
     allow_placeholders: bool,
+    only: str | None,
 ) -> None:
-    """Generate all paper figures."""
+    """Generate all paper figures (or the ``--only`` subset)."""
     global ALLOW_PLACEHOLDERS
     ALLOW_PLACEHOLDERS = allow_placeholders
     output_dir = Path(output)
     output_dir.mkdir(parents=True, exist_ok=True)
+    wanted = {name.strip() for name in only.split(",") if name.strip()} if only else None
 
     data = _load_pipeline_data(Path(results), Path(data_dir), pf_dir=Path(provenance_free_results))
 
-    click.echo(f"Generating {len(ALL_FIGURE_FUNCTIONS)} figures to {output_dir}")
+    n_figs = len(wanted) if wanted else len(ALL_FIGURE_FUNCTIONS)
+    click.echo(f"Generating {n_figs} figures to {output_dir}")
 
-    paths = []
-    paths.append(fig_dataset_overview(data["wq_df"], output_dir))
-    paths.append(fig_data_distribution(data["wq_df"], output_dir))
-    paths.append(fig_benchmark_results(data["results"], output_dir))
-    paths.append(fig_feature_importance(data["importance"], output_dir))
-    paths.append(fig_shap_summary(data.get("shap_data"), data.get("shap_pf_data"), output_dir))
-    paths.append(
-        fig_confound_decomposition(
-            data.get("split_data"),
-            data.get("detection_ablation"),
-            data.get("feature_ablation"),
-            output_dir,
-        )
+    paths: list[Path] = []
+    ran: set[str] = set()
+
+    def _run(fn: Any, *args: Any, **kwargs: Any) -> None:
+        if wanted is None or fn.__name__ in wanted:
+            paths.append(fn(*args, **kwargs))
+            ran.add(fn.__name__)
+
+    _run(fig_dataset_overview, data["wq_df"], output_dir)
+    _run(fig_data_distribution, data["wq_df"], output_dir)
+    _run(fig_benchmark_results, data["results"], output_dir)
+    _run(fig_feature_importance, data["importance"], output_dir)
+    _run(fig_shap_summary, data.get("shap_data"), data.get("shap_pf_data"), output_dir)
+    _run(
+        fig_confound_decomposition,
+        data.get("split_data"),
+        data.get("detection_ablation"),
+        data.get("feature_ablation"),
+        output_dir,
     )
-    paths.append(fig_monitoring_inequity(data.get("inequity_data"), output_dir))
-    paths.append(fig_national_risk_map(data["predictions"], output_dir))
-    paths.append(fig_equity_analysis(data["equity"], output_dir, burden_ci=data.get("burden_ci")))
-    paths.append(fig_transfer_learning(data["t5_results"], output_dir))
-    paths.append(fig_temporal_prediction(data["t7_results"], output_dir))
-    paths.append(fig_ext_correlation_matrix(data.get("feature_df"), output_dir))
-    paths.append(fig_ext_per_analyte_roc(data["results"], output_dir))
-    paths.append(fig_ext_geographic_splits(data["wq_df"], output_dir))
-    paths.append(fig_ext_roc_pr_curves(data["results"], output_dir))
-    paths.append(fig_reliability_diagram(data.get("calibration_data"), output_dir))
-    paths.append(fig_split_comparison(data.get("split_data"), output_dir))
-    paths.append(fig_causal_comparison(data.get("causal_data"), output_dir))
-    paths.append(fig_group_conformal(data.get("conformal_data"), output_dir))
-    paths.append(fig_icp_analysis(data.get("icp_data"), output_dir))
+    _run(
+        fig_monitoring_inequity,
+        data.get("inequity_data"),
+        output_dir,
+        design_data=data.get("design_data"),
+    )
+    _run(fig_national_risk_map, data["predictions"], output_dir)
+    _run(fig_equity_analysis, data["equity"], output_dir, burden_ci=data.get("burden_ci"))
+    _run(fig_transfer_learning, data["t5_results"], output_dir)
+    _run(fig_temporal_prediction, data["t7_results"], output_dir)
+    _run(fig_ext_correlation_matrix, data.get("feature_df"), output_dir)
+    _run(fig_ext_per_analyte_roc, data["results"], output_dir)
+    _run(fig_ext_geographic_splits, data["wq_df"], output_dir)
+    _run(fig_ext_roc_pr_curves, data["results"], output_dir)
+    _run(fig_reliability_diagram, data.get("calibration_data"), output_dir)
+    _run(fig_split_comparison, data.get("split_data"), output_dir)
+    _run(fig_causal_comparison, data.get("causal_data"), output_dir)
+    _run(fig_group_conformal, data.get("conformal_data"), output_dir)
+    _run(fig_icp_analysis, data.get("icp_data"), output_dir)
+
+    if wanted and wanted - ran:
+        raise click.BadParameter(
+            f"unknown figure name(s): {sorted(wanted - ran)}", param_hint="--only"
+        )
 
     for p in paths:
         click.echo(f"  {p}")

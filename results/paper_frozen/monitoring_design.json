@@ -1,0 +1,2428 @@
+{
+  "_meta": {
+    "decision": "EST-D2 (paper/DECISIONS.md), pre-registered 2026-09-24 before first run",
+    "disclosure": "Exploratory pilots (2026-09-16 session scratch; 2026-09-24 read-only feasibility checks) preceded this specification. All 36 grid cells and all sensitivities are reported.",
+    "addendum": "Descriptive outputs (E2 per-stratum rates, E3 exposure counts, E4 per-design CIs from the existing joint draws) were added after the first run and before freezing. No estimand, CI, cut-off or prose-rule input changed (EST-D2 addendum).",
+    "n_boot": 5000,
+    "seed": 42,
+    "cutoff_percentiles": {
+      "high": 80,
+      "low": 50
+    },
+    "min_region_systems": 30,
+    "stability": {
+      "min_detections": 10,
+      "min_high": 30
+    },
+    "targeted_window": [
+      "2019-01-01",
+      "2022-12-31"
+    ],
+    "geotracker_aligned_window": [
+      "2023-01-01",
+      "2025-12-31"
+    ],
+    "size_cutoff_population_served": 3300,
+    "n_specs": 36,
+    "design_groups": {
+      "federal": [
+        "ucmr3",
+        "ucmr5"
+      ],
+      "state_ndr": [
+        "ca_geotracker",
+        "mn_mdh",
+        "nj_dep",
+        "mo_dnr"
+      ],
+      "detection_only": [
+        "mi_mpart",
+        "wa_doh"
+      ],
+      "ambient": [
+        "wqp"
+      ]
+    },
+    "inputs_sha256": {
+      "data/interim/merged_wq.parquet": "b739fea6bbde1eef8bcc78ca34d7a99cbdcae387795539271a1d9f6d7e7b3e7b",
+      "data/interim/features/demographics.parquet": "e0f2dd4b8fa7f2880fe3e972b7b4123894f7c3deeb9bcae7a0a3518cee3d67e7",
+      "data/interim/features/system_characteristics.parquet": "abfe75972e6d79b73910af477bfaa6afc27871e9b5157ea61e01fb0c1dbe5177"
+    }
+  },
+  "reproduction_gate": {
+    "test": {
+      "burden_ratio": 1.878035356537437,
+      "n_high": 618,
+      "n_low": 1544,
+      "detections_high": 221,
+      "detections_low": 294,
+      "n_systems": 3780,
+      "n_with_demographics": 3088
+    },
+    "per_region": {
+      "1": {
+        "burden_ratio": 1.3202087286527515,
+        "n_high": 102,
+        "n_low": 253,
+        "detections_high": 33,
+        "detections_low": 62,
+        "n_systems": 526,
+        "n_with_demographics": 506
+      },
+      "2": {
+        "burden_ratio": 1.1264217788551183,
+        "n_high": 346,
+        "n_low": 863,
+        "detections_high": 154,
+        "detections_low": 341,
+        "n_systems": 1863,
+        "n_with_demographics": 1727
+      },
+      "3": {
+        "burden_ratio": 1.1928297055057617,
+        "n_high": 165,
+        "n_low": 411,
+        "detections_high": 34,
+        "detections_low": 71,
+        "n_systems": 870,
+        "n_with_demographics": 822
+      },
+      "4": {
+        "burden_ratio": 1.3805196431802051,
+        "n_high": 397,
+        "n_low": 992,
+        "detections_high": 100,
+        "detections_low": 181,
+        "n_systems": 2262,
+        "n_with_demographics": 1985
+      },
+      "5": {
+        "burden_ratio": 1.0460405884134698,
+        "n_high": 649,
+        "n_low": 1621,
+        "detections_high": 98,
+        "detections_low": 234,
+        "n_systems": 3482,
+        "n_with_demographics": 3243
+      },
+      "6": {
+        "burden_ratio": 1.631274131274131,
+        "n_high": 350,
+        "n_low": 845,
+        "detections_high": 25,
+        "detections_low": 37,
+        "n_systems": 1947,
+        "n_with_demographics": 1690
+      },
+      "7": {
+        "burden_ratio": 2.5724721706864564,
+        "n_high": 308,
+        "n_low": 765,
+        "detections_high": 29,
+        "detections_low": 28,
+        "n_systems": 1551,
+        "n_with_demographics": 1533
+      },
+      "8": {
+        "burden_ratio": 2.477272727272727,
+        "n_high": 88,
+        "n_low": 218,
+        "detections_high": 11,
+        "detections_low": 11,
+        "n_systems": 538,
+        "n_with_demographics": 437
+      },
+      "9": {
+        "burden_ratio": 1.3372621547913859,
+        "n_high": 437,
+        "n_low": 1080,
+        "detections_high": 158,
+        "detections_low": 292,
+        "n_systems": 2410,
+        "n_with_demographics": 2179
+      },
+      "10": {
+        "burden_ratio": 2.1832770270270268,
+        "n_high": 96,
+        "n_low": 235,
+        "detections_high": 33,
+        "detections_low": 37,
+        "n_systems": 832,
+        "n_with_demographics": 472
+      }
+    },
+    "national_weighted_mean": 1.4823303389183498,
+    "test_geotracker_systems": 1421,
+    "label_union_mismatches": 0,
+    "systems_without_design_label": 0,
+    "failures": [],
+    "passed": true
+  },
+  "e1_design_restricted": {
+    "test": {
+      "cutoffs": {
+        "high": 0.7279659744000002,
+        "low": 0.336816732
+      },
+      "rows": {
+        "pooled": {
+          "burden_ratio": 1.878035356537437,
+          "n_high": 618,
+          "n_low": 1544,
+          "detections_high": 221,
+          "detections_low": 294,
+          "n_systems": 3780,
+          "n_with_demographics": 3088,
+          "ci_lower": 1.6209248243158374,
+          "ci_upper": 2.1821450284211688,
+          "ci_source": "published",
+          "stable": true
+        },
+        "ndr_pooled": {
+          "burden_ratio": 2.710712457536414,
+          "n_high": 551,
+          "n_low": 1309,
+          "detections_high": 178,
+          "detections_low": 156,
+          "n_systems": 3075,
+          "n_with_demographics": 2656,
+          "ci_lower": 2.2602959611114417,
+          "ci_upper": 3.274712355198365,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        },
+        "federal": {
+          "burden_ratio": 3.4618291761148905,
+          "n_high": 336,
+          "n_low": 916,
+          "detections_high": 80,
+          "detections_low": 63,
+          "n_systems": 2066,
+          "n_with_demographics": 1708,
+          "ci_lower": 2.559809027856978,
+          "ci_upper": 4.723253452295551,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        },
+        "state_ca": {
+          "burden_ratio": 1.7697543792840824,
+          "n_high": 404,
+          "n_low": 459,
+          "detections_high": 162,
+          "detections_low": 104,
+          "n_systems": 1421,
+          "n_with_demographics": 1358,
+          "ci_lower": 1.4463044911937646,
+          "ci_upper": 2.196571787309112,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        }
+      }
+    },
+    "region9": {
+      "cutoffs": {
+        "high": 0.815997173,
+        "low": 0.445818902
+      },
+      "rows": {
+        "pooled": {
+          "burden_ratio": 1.3372621547913859,
+          "n_high": 437,
+          "n_low": 1080,
+          "detections_high": 158,
+          "detections_low": 292,
+          "n_systems": 2410,
+          "n_with_demographics": 2179,
+          "ci_lower": 1.1366451200185506,
+          "ci_upper": 1.5564831506070909,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        },
+        "ndr_pooled": {
+          "burden_ratio": 1.6717988528054515,
+          "n_high": 393,
+          "n_low": 881,
+          "detections_high": 132,
+          "detections_low": 177,
+          "n_systems": 2075,
+          "n_with_demographics": 1856,
+          "ci_lower": 1.3739726924584241,
+          "ci_upper": 2.03847058821086,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        },
+        "federal": {
+          "burden_ratio": 2.0269286137691593,
+          "n_high": 241,
+          "n_low": 374,
+          "detections_high": 64,
+          "detections_low": 49,
+          "n_systems": 1066,
+          "n_with_demographics": 908,
+          "ci_lower": 1.4520222799251954,
+          "ci_upper": 2.8558539464172763,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        },
+        "state_ca": {
+          "burden_ratio": 1.6342879256965945,
+          "n_high": 304,
+          "n_low": 618,
+          "detections_high": 123,
+          "detections_low": 153,
+          "n_systems": 1421,
+          "n_with_demographics": 1358,
+          "ci_lower": 1.3566203162729067,
+          "ci_upper": 1.9917252948465318,
+          "ci_source": "system bootstrap (n_boot=5000, seed=42)",
+          "stable": true
+        }
+      }
+    },
+    "national": {
+      "rows": {
+        "pooled": {
+          "burden_ratio": 1.4823303389183498,
+          "regions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "ci_lower": 1.2378978823616194,
+          "ci_upper": 1.8769539968987232,
+          "ci_source": "published (inference_strengthening region-block bootstrap)"
+        },
+        "ndr_pooled": {
+          "burden_ratio": 1.4981849822610418,
+          "regions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "ci_lower": 1.3116143900289012,
+          "ci_upper": 1.915862481330714,
+          "ci_source": "region-stratified system bootstrap (n_boot=5000, seed=42)"
+        },
+        "federal": {
+          "burden_ratio": 1.6258224019401137,
+          "regions": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "ci_lower": 1.3959286852826893,
+          "ci_upper": 2.33307378248856,
+          "ci_source": "region-stratified system bootstrap (n_boot=5000, seed=42)"
+        },
+        "state": {
+          "burden_ratio": 1.6385808885402826,
+          "regions": [
+            2,
+            5,
+            7,
+            9
+          ],
+          "ci_lower": 1.2977023244828017,
+          "ci_upper": 2.1758188067538207,
+          "ci_source": "region-stratified system bootstrap (n_boot=5000, seed=42)"
+        },
+        "pooled_state_regions": {
+          "burden_ratio": 1.391956074859738,
+          "regions": [
+            2,
+            5,
+            7,
+            9
+          ],
+          "note": "published pooled per-region ratios restricted to the state-only row's regions"
+        }
+      },
+      "per_region": {
+        "1": {
+          "cutoffs": {
+            "high": 0.238372093,
+            "low": 0.1066175755
+          },
+          "pooled": {
+            "burden_ratio": 1.3202087286527515,
+            "n_high": 102,
+            "n_low": 253,
+            "detections_high": 33,
+            "detections_low": 62,
+            "n_systems": 526,
+            "n_with_demographics": 506,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.2422680412371132,
+            "n_high": 97,
+            "n_low": 241,
+            "detections_high": 28,
+            "detections_low": 56,
+            "n_systems": 502,
+            "n_with_demographics": 482,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 1.2422680412371132,
+            "n_high": 97,
+            "n_low": 241,
+            "detections_high": 28,
+            "detections_low": 56,
+            "n_systems": 502,
+            "n_with_demographics": 482,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        },
+        "2": {
+          "cutoffs": {
+            "high": 0.3630831064000001,
+            "low": 0.172380952
+          },
+          "pooled": {
+            "burden_ratio": 1.1264217788551183,
+            "n_high": 346,
+            "n_low": 863,
+            "detections_high": 154,
+            "detections_low": 341,
+            "n_systems": 1863,
+            "n_with_demographics": 1727,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.0852373158756137,
+            "n_high": 329,
+            "n_low": 847,
+            "detections_high": 137,
+            "detections_low": 325,
+            "n_systems": 1822,
+            "n_with_demographics": 1686,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 2.1145833333333335,
+            "n_high": 168,
+            "n_low": 290,
+            "detections_high": 49,
+            "detections_low": 40,
+            "n_systems": 749,
+            "n_with_demographics": 624,
+            "included": true
+          },
+          "state": {
+            "burden_ratio": 0.996213881523195,
+            "n_high": 233,
+            "n_low": 645,
+            "detections_high": 113,
+            "detections_low": 314,
+            "n_systems": 1310,
+            "n_with_demographics": 1299,
+            "included": true
+          }
+        },
+        "3": {
+          "cutoffs": {
+            "high": 0.3306420742000001,
+            "low": 0.10934782600000001
+          },
+          "pooled": {
+            "burden_ratio": 1.1928297055057617,
+            "n_high": 165,
+            "n_low": 411,
+            "detections_high": 34,
+            "detections_low": 71,
+            "n_systems": 870,
+            "n_with_demographics": 822,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.4129870129870128,
+            "n_high": 161,
+            "n_low": 391,
+            "detections_high": 32,
+            "detections_low": 55,
+            "n_systems": 837,
+            "n_with_demographics": 789,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 1.4129870129870128,
+            "n_high": 161,
+            "n_low": 391,
+            "detections_high": 32,
+            "detections_low": 55,
+            "n_systems": 837,
+            "n_with_demographics": 789,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        },
+        "4": {
+          "cutoffs": {
+            "high": 0.5799791935999999,
+            "low": 0.231808732
+          },
+          "pooled": {
+            "burden_ratio": 1.3805196431802051,
+            "n_high": 397,
+            "n_low": 992,
+            "detections_high": 100,
+            "detections_low": 181,
+            "n_systems": 2262,
+            "n_with_demographics": 1985,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.4312546410215343,
+            "n_high": 397,
+            "n_low": 983,
+            "detections_high": 100,
+            "detections_low": 173,
+            "n_systems": 2253,
+            "n_with_demographics": 1976,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 1.4312546410215343,
+            "n_high": 397,
+            "n_low": 983,
+            "detections_high": 100,
+            "detections_low": 173,
+            "n_systems": 2253,
+            "n_with_demographics": 1976,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        },
+        "5": {
+          "cutoffs": {
+            "high": 0.24150921500000075,
+            "low": 0.09042954
+          },
+          "pooled": {
+            "burden_ratio": 1.0460405884134698,
+            "n_high": 649,
+            "n_low": 1621,
+            "detections_high": 98,
+            "detections_low": 234,
+            "n_systems": 3482,
+            "n_with_demographics": 3243,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 0.8479455406998733,
+            "n_high": 569,
+            "n_low": 1466,
+            "detections_high": 26,
+            "detections_low": 79,
+            "n_systems": 3039,
+            "n_with_demographics": 2915,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 0.8505309557202965,
+            "n_high": 434,
+            "n_low": 849,
+            "detections_high": 20,
+            "detections_low": 46,
+            "n_systems": 1876,
+            "n_with_demographics": 1831,
+            "included": true
+          },
+          "state": {
+            "burden_ratio": 1.4884210526315789,
+            "n_high": 175,
+            "n_low": 707,
+            "detections_high": 14,
+            "detections_low": 38,
+            "n_systems": 1357,
+            "n_with_demographics": 1271,
+            "included": true
+          }
+        },
+        "6": {
+          "cutoffs": {
+            "high": 0.61433869,
+            "low": 0.31661496499999997
+          },
+          "pooled": {
+            "burden_ratio": 1.631274131274131,
+            "n_high": 350,
+            "n_low": 845,
+            "detections_high": 25,
+            "detections_low": 37,
+            "n_systems": 1947,
+            "n_with_demographics": 1690,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.5340603761656393,
+            "n_high": 342,
+            "n_low": 844,
+            "detections_high": 23,
+            "detections_low": 37,
+            "n_systems": 1928,
+            "n_with_demographics": 1671,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 1.5340603761656393,
+            "n_high": 342,
+            "n_low": 844,
+            "detections_high": 23,
+            "detections_low": 37,
+            "n_systems": 1928,
+            "n_with_demographics": 1671,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        },
+        "7": {
+          "cutoffs": {
+            "high": 0.169685415,
+            "low": 0.076790831
+          },
+          "pooled": {
+            "burden_ratio": 2.5724721706864564,
+            "n_high": 308,
+            "n_low": 765,
+            "detections_high": 29,
+            "detections_low": 28,
+            "n_systems": 1551,
+            "n_with_demographics": 1533,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 2.3757763975155277,
+            "n_high": 299,
+            "n_low": 765,
+            "detections_high": 26,
+            "detections_low": 28,
+            "n_systems": 1542,
+            "n_with_demographics": 1524,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 2.458588957055215,
+            "n_high": 163,
+            "n_low": 229,
+            "detections_high": 7,
+            "detections_low": 4,
+            "n_systems": 574,
+            "n_with_demographics": 560,
+            "included": true
+          },
+          "state": {
+            "burden_ratio": 2.50891861761427,
+            "n_high": 207,
+            "n_low": 643,
+            "detections_high": 21,
+            "detections_low": 26,
+            "n_systems": 1208,
+            "n_with_demographics": 1204,
+            "included": true
+          }
+        },
+        "8": {
+          "cutoffs": {
+            "high": 0.3333419468,
+            "low": 0.149774775
+          },
+          "pooled": {
+            "burden_ratio": 2.477272727272727,
+            "n_high": 88,
+            "n_low": 218,
+            "detections_high": 11,
+            "detections_low": 11,
+            "n_systems": 538,
+            "n_with_demographics": 437,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 2.941463414634146,
+            "n_high": 82,
+            "n_low": 201,
+            "detections_high": 6,
+            "detections_low": 5,
+            "n_systems": 496,
+            "n_with_demographics": 400,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 2.941463414634146,
+            "n_high": 82,
+            "n_low": 201,
+            "detections_high": 6,
+            "detections_low": 5,
+            "n_systems": 496,
+            "n_with_demographics": 400,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        },
+        "9": {
+          "cutoffs": {
+            "high": 0.815997173,
+            "low": 0.445818902
+          },
+          "pooled": {
+            "burden_ratio": 1.3372621547913859,
+            "n_high": 437,
+            "n_low": 1080,
+            "detections_high": 158,
+            "detections_low": 292,
+            "n_systems": 2410,
+            "n_with_demographics": 2179,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 1.6717988528054515,
+            "n_high": 393,
+            "n_low": 881,
+            "detections_high": 132,
+            "detections_low": 177,
+            "n_systems": 2075,
+            "n_with_demographics": 1856,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 2.0269286137691593,
+            "n_high": 241,
+            "n_low": 374,
+            "detections_high": 64,
+            "detections_low": 49,
+            "n_systems": 1066,
+            "n_with_demographics": 908,
+            "included": true
+          },
+          "state": {
+            "burden_ratio": 1.6342879256965945,
+            "n_high": 304,
+            "n_low": 618,
+            "detections_high": 123,
+            "detections_low": 153,
+            "n_systems": 1421,
+            "n_with_demographics": 1358,
+            "included": true
+          }
+        },
+        "10": {
+          "cutoffs": {
+            "high": 0.348030019,
+            "low": 0.179465776
+          },
+          "pooled": {
+            "burden_ratio": 2.1832770270270268,
+            "n_high": 96,
+            "n_low": 235,
+            "detections_high": 33,
+            "detections_low": 37,
+            "n_systems": 832,
+            "n_with_demographics": 472,
+            "included": true
+          },
+          "ndr": {
+            "burden_ratio": 2.6500000000000004,
+            "n_high": 70,
+            "n_low": 212,
+            "detections_high": 14,
+            "detections_low": 16,
+            "n_systems": 504,
+            "n_with_demographics": 400,
+            "included": true
+          },
+          "federal": {
+            "burden_ratio": 2.6500000000000004,
+            "n_high": 70,
+            "n_low": 212,
+            "detections_high": 14,
+            "detections_low": 16,
+            "n_systems": 504,
+            "n_with_demographics": 400,
+            "included": true
+          },
+          "state": {
+            "n_systems": 0,
+            "included": false
+          }
+        }
+      }
+    }
+  },
+  "e2_composition": {
+    "test": {
+      "burden_ratio": 2.710712457536414,
+      "burden_ratio_counterfactual": 1.4358131962783123,
+      "share": 0.6372571153866076,
+      "share_ci_lower": 0.4598694123890481,
+      "share_ci_upper": 0.8845728323743787,
+      "reportable": true,
+      "pooled_ci_used": [
+        1.6209248243158374,
+        2.1821450284211688
+      ],
+      "n_systems": 3075,
+      "strata_counts": {
+        "federal_only": {
+          "high": 147,
+          "low": 850
+        },
+        "state_only": {
+          "high": 215,
+          "low": 393
+        },
+        "both": {
+          "high": 189,
+          "low": 66
+        }
+      },
+      "strata_rates": {
+        "federal_only": {
+          "n_systems": 1654,
+          "detections": 115,
+          "rate_all": 0.06952841596130592,
+          "detections_high": 14,
+          "detections_low": 50,
+          "rate_high": 0.09523809523809523,
+          "rate_low": 0.058823529411764705
+        },
+        "state_only": {
+          "n_systems": 1009,
+          "detections": 209,
+          "rate_all": 0.20713577799801783,
+          "detections_high": 58,
+          "detections_low": 76,
+          "rate_high": 0.26976744186046514,
+          "rate_low": 0.19338422391857507
+        },
+        "both": {
+          "n_systems": 412,
+          "detections": 219,
+          "rate_all": 0.5315533980582524,
+          "detections_high": 106,
+          "detections_low": 30,
+          "rate_high": 0.5608465608465608,
+          "rate_low": 0.45454545454545453
+        }
+      }
+    },
+    "region9": {
+      "burden_ratio": 1.6717988528054515,
+      "burden_ratio_counterfactual": 1.189761682820649,
+      "share": 0.6618934587866373,
+      "share_ci_lower": 0.39780560719408947,
+      "share_ci_upper": 1.1815566648098623,
+      "reportable": true,
+      "pooled_ci_used": [
+        1.1366451200185506,
+        1.5564831506070909
+      ],
+      "n_systems": 2075,
+      "strata_counts": {
+        "federal_only": {
+          "high": 89,
+          "low": 263
+        },
+        "state_only": {
+          "high": 152,
+          "low": 507
+        },
+        "both": {
+          "high": 152,
+          "low": 111
+        }
+      },
+      "strata_rates": {
+        "federal_only": {
+          "n_systems": 654,
+          "detections": 52,
+          "rate_all": 0.07951070336391437,
+          "detections_high": 8,
+          "detections_low": 22,
+          "rate_high": 0.0898876404494382,
+          "rate_low": 0.08365019011406843
+        },
+        "state_only": {
+          "n_systems": 1009,
+          "detections": 209,
+          "rate_all": 0.20713577799801783,
+          "detections_high": 37,
+          "detections_low": 99,
+          "rate_high": 0.24342105263157895,
+          "rate_low": 0.1952662721893491
+        },
+        "both": {
+          "n_systems": 412,
+          "detections": 219,
+          "rate_all": 0.5315533980582524,
+          "detections_high": 87,
+          "detections_low": 56,
+          "rate_high": 0.5723684210526315,
+          "rate_low": 0.5045045045045045
+        }
+      }
+    }
+  },
+  "e3_outcome_selectivity": {
+    "n_systems": 700,
+    "n_same_day_geotracker_records_dropped": 390,
+    "primary_pre_ucmr5_sampling": {
+      "risk_ratio": 2.8868536814018895,
+      "ci_lower": 2.135251209112893,
+      "ci_upper": 4.005631016847171,
+      "mantel_haenszel_risk_ratio": 2.862067541221954,
+      "mh_ci_lower": 2.1143003954303143,
+      "mh_ci_upper": 3.9762967373083495,
+      "n_exposed": 283,
+      "n_unexposed": 417,
+      "p_detect_exposed": 0.3392226148409894,
+      "p_detect_unexposed": 0.11750599520383694
+    },
+    "any_sampling": {
+      "risk_ratio": 5.120586275816122,
+      "ci_lower": 3.4240065256080676,
+      "ci_upper": 8.839849917239617,
+      "mantel_haenszel_risk_ratio": 5.063002217230156,
+      "mh_ci_lower": 3.4020319918397566,
+      "mh_ci_upper": 8.809084605862333,
+      "n_exposed": 395,
+      "n_unexposed": 305,
+      "p_detect_exposed": 0.3189873417721519,
+      "p_detect_unexposed": 0.06229508196721312
+    },
+    "targeting_by_poc": {
+      "exposure_rate_ratio_high_vs_low": 1.8430598823122184,
+      "ci_lower": 1.4898594588177922,
+      "ci_upper": 2.2815361879761578,
+      "n_high": 135,
+      "n_low": 337,
+      "n_exposed_high": 79,
+      "n_exposed_low": 107
+    },
+    "strata": [
+      "gt3300|GW",
+      "gt3300|SW",
+      "le3300|GW",
+      "le3300|SW"
+    ]
+  },
+  "e4_ca_census_vs_targeted": {
+    "common_reporting_limits_ug_per_l": {
+      "PFOA": 0.004,
+      "PFOS": 0.004,
+      "PFNA": 0.004,
+      "PFHxS": 0.003,
+      "PFBS": 0.003,
+      "HFPO-DA": 0.005
+    },
+    "n_targeted_primary_systems": 469,
+    "n_targeted_all_systems": 1421,
+    "primary": {
+      "outcome": "PFOS",
+      "rl": "common",
+      "targeted": "first_sampled_2019_2022",
+      "population": "all",
+      "primary": true,
+      "census": {
+        "burden_ratio": 2.076437587657784,
+        "n_high": 155,
+        "n_low": 315,
+        "detections_high": 47,
+        "detections_low": 46,
+        "n_systems": 700,
+        "n_with_demographics": 674,
+        "ci_lower": 1.4418028493694128,
+        "ci_upper": 2.9878457524985294
+      },
+      "targeted_design": {
+        "burden_ratio": 1.7015637423800691,
+        "n_high": 98,
+        "n_low": 214,
+        "detections_high": 60,
+        "detections_low": 77,
+        "n_systems": 462,
+        "n_with_demographics": 443,
+        "ci_lower": 1.3320942893548013,
+        "ci_upper": 2.1392084949000476
+      },
+      "delta_log_br": -0.1991060504076536,
+      "ratio_targeted_over_census": 0.8194629843410937,
+      "delta_ci_lower": -0.5770039982286659,
+      "delta_ci_upper": 0.19860990212232013,
+      "ratio_ci_lower": 0.5615783384060818,
+      "ratio_ci_upper": 1.219706068333942,
+      "stable": true,
+      "n_union": 968
+    },
+    "primary_design_specific_cutoffs": {
+      "outcome": "PFOS",
+      "rl": "common",
+      "targeted": "first_sampled_2019_2022",
+      "population": "all",
+      "primary": true,
+      "census": {
+        "burden_ratio": 2.096888888888889,
+        "n_high": 135,
+        "n_low": 337,
+        "detections_high": 42,
+        "detections_low": 50,
+        "n_systems": 700,
+        "n_with_demographics": 674,
+        "ci_lower": 1.4505383322865952,
+        "ci_upper": 2.9782879312229578
+      },
+      "targeted_design": {
+        "burden_ratio": 1.7332140891579526,
+        "n_high": 92,
+        "n_low": 221,
+        "detections_high": 57,
+        "detections_low": 79,
+        "n_systems": 462,
+        "n_with_demographics": 443,
+        "ci_lower": 1.3565080038279178,
+        "ci_upper": 2.175100457136407
+      },
+      "delta_log_br": -0.19047722493291352,
+      "ratio_targeted_over_census": 0.8265645825785063,
+      "delta_ci_lower": -0.5666454732084757,
+      "delta_ci_upper": 0.20684030171248627,
+      "ratio_ci_lower": 0.5674256943823018,
+      "ratio_ci_upper": 1.2297861613539893,
+      "stable": true,
+      "n_union": 968
+    },
+    "primary_geotracker_2023_2025_window": {
+      "outcome": "PFOS",
+      "rl": "common",
+      "targeted": "first_sampled_2019_2022",
+      "population": "all",
+      "primary": true,
+      "census": {
+        "burden_ratio": 2.0079022988505746,
+        "n_high": 145,
+        "n_low": 325,
+        "detections_high": 43,
+        "detections_low": 48,
+        "n_systems": 700,
+        "n_with_demographics": 674,
+        "ci_lower": 1.3772140905236046,
+        "ci_upper": 2.938813793837475
+      },
+      "targeted_design": {
+        "burden_ratio": 1.4312512883941455,
+        "n_high": 77,
+        "n_low": 131,
+        "detections_high": 53,
+        "detections_low": 63,
+        "n_systems": 306,
+        "n_with_demographics": 300,
+        "ci_lower": 1.1316492101648352,
+        "ci_upper": 1.8177444491588646
+      },
+      "delta_log_br": -0.3385414561867777,
+      "ratio_targeted_over_census": 0.7128092284238464,
+      "delta_ci_lower": -0.7440504310066505,
+      "delta_ci_upper": 0.05467608049554364,
+      "ratio_ci_lower": 0.4751853070084902,
+      "ratio_ci_upper": 1.0561984359853183,
+      "stable": true,
+      "n_union": 848
+    },
+    "spec_curve": [
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 2.0830294530154276,
+          "n_high": 155,
+          "n_low": 316,
+          "detections_high": 47,
+          "detections_low": 46,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.435925438560657,
+          "ci_upper": 3.030732068967363
+        },
+        "targeted_design": {
+          "burden_ratio": 1.6089619600257898,
+          "n_high": 99,
+          "n_low": 217,
+          "detections_high": 69,
+          "detections_low": 94,
+          "n_systems": 469,
+          "n_with_demographics": 450,
+          "ci_lower": 1.3186766884800591,
+          "ci_upper": 1.9815470368239354
+        },
+        "delta_log_br": -0.25823407615550387,
+        "ratio_targeted_over_census": 0.772414407149467,
+        "delta_ci_lower": -0.6463077882185773,
+        "delta_ci_upper": 0.13235429843166677,
+        "ratio_ci_lower": 0.5239768430875762,
+        "ratio_ci_upper": 1.1415126837837404,
+        "stable": true,
+        "n_union": 975
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.9056956115779646,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 39,
+          "detections_low": 51,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.3232198877505414,
+          "ci_upper": 2.7584942599287707
+        },
+        "targeted_design": {
+          "burden_ratio": 1.4005787515502275,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 44,
+          "detections_low": 41,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 1.0829979377662569,
+          "ci_upper": 1.84167293472718
+        },
+        "delta_log_br": -0.3079615472001782,
+        "ratio_targeted_over_census": 0.7349435781040144,
+        "delta_ci_lower": -0.6808826313122064,
+        "delta_ci_upper": 0.08360596251759111,
+        "ratio_ci_lower": 0.5061700336237388,
+        "ratio_ci_upper": 1.0872004116822678,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.458001768346596,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 17,
+          "detections_low": 29,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.8599181378348045,
+          "ci_upper": 2.318853073463268
+        },
+        "targeted_design": {
+          "burden_ratio": 1.4923076923076926,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 30,
+          "detections_low": 50,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 1.134501695415008,
+          "ci_upper": 1.959242527173913
+        },
+        "delta_log_br": 0.023256862164267367,
+        "ratio_targeted_over_census": 1.023529411764706,
+        "delta_ci_lower": -0.3662587699062735,
+        "delta_ci_upper": 0.4707770695733077,
+        "ratio_ci_lower": 0.6933233667720039,
+        "ratio_ci_upper": 1.6012379832154728,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 2.191311730578746,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 58,
+          "detections_low": 37,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.5439326713375578,
+          "ci_upper": 3.2588960408064116
+        },
+        "targeted_design": {
+          "burden_ratio": 1.6175892564690468,
+          "n_high": 284,
+          "n_low": 664,
+          "detections_high": 119,
+          "detections_low": 172,
+          "n_systems": 1421,
+          "n_with_demographics": 1358,
+          "ci_lower": 1.330126844190505,
+          "ci_upper": 1.9568071606252364
+        },
+        "delta_log_br": -0.30356340064251036,
+        "ratio_targeted_over_census": 0.7381830863661859,
+        "delta_ci_lower": -0.6846041184951179,
+        "delta_ci_upper": 0.03602305663025962,
+        "ratio_ci_lower": 0.5042898290797754,
+        "ratio_ci_upper": 1.0366797485570323,
+        "stable": true,
+        "n_union": 1724
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.9859375000000001,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 41,
+          "detections_low": 50,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.370871686813796,
+          "ci_upper": 2.8454708599857845
+        },
+        "targeted_design": {
+          "burden_ratio": 1.1734397677793904,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 63,
+          "detections_low": 78,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 0.931634455228235,
+          "ci_upper": 1.4719267729168815
+        },
+        "delta_log_br": -0.5261516868322337,
+        "ratio_targeted_over_census": 0.5908744700069314,
+        "delta_ci_lower": -0.834287813864468,
+        "delta_ci_upper": -0.20347719578995252,
+        "ratio_ci_lower": 0.4341835908818953,
+        "ratio_ci_upper": 0.8158888098103254,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.2165254237288137,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 29,
+          "detections_low": 59,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.8271333251130116,
+          "ci_upper": 1.728623531776801
+        },
+        "targeted_design": {
+          "burden_ratio": 1.175,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 47,
+          "detections_low": 99,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.9231689946881763,
+          "ci_upper": 1.4755264091796296
+        },
+        "delta_log_br": -0.03473063450528596,
+        "ratio_targeted_over_census": 0.9658655520724486,
+        "delta_ci_lower": -0.3113374158231325,
+        "delta_ci_upper": 0.2805013105461486,
+        "ratio_ci_lower": 0.732466688318626,
+        "ratio_ci_upper": 1.3237932775534453,
+        "stable": true,
+        "n_union": 397
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": true,
+        "census": {
+          "burden_ratio": 2.076437587657784,
+          "n_high": 155,
+          "n_low": 315,
+          "detections_high": 47,
+          "detections_low": 46,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.4418028493694128,
+          "ci_upper": 2.9878457524985294
+        },
+        "targeted_design": {
+          "burden_ratio": 1.7015637423800691,
+          "n_high": 98,
+          "n_low": 214,
+          "detections_high": 60,
+          "detections_low": 77,
+          "n_systems": 462,
+          "n_with_demographics": 443,
+          "ci_lower": 1.3320942893548013,
+          "ci_upper": 2.1392084949000476
+        },
+        "delta_log_br": -0.1991060504076536,
+        "ratio_targeted_over_census": 0.8194629843410937,
+        "delta_ci_lower": -0.5770039982286659,
+        "delta_ci_upper": 0.19860990212232013,
+        "ratio_ci_lower": 0.5615783384060818,
+        "ratio_ci_upper": 1.219706068333942,
+        "stable": true,
+        "n_union": 968
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.9056956115779646,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 39,
+          "detections_low": 51,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.3232198877505414,
+          "ci_upper": 2.7584942599287707
+        },
+        "targeted_design": {
+          "burden_ratio": 1.486346516007533,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 41,
+          "detections_low": 36,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 1.1132083287221488,
+          "ci_upper": 2.017261065981432
+        },
+        "delta_log_br": -0.24852598616593374,
+        "ratio_targeted_over_census": 0.7799495926722528,
+        "delta_ci_lower": -0.6282379304103374,
+        "delta_ci_upper": 0.15029235057314833,
+        "ratio_ci_lower": 0.5335310921282826,
+        "ratio_ci_upper": 1.1621739552902095,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.458001768346596,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 17,
+          "detections_low": 29,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.8599181378348045,
+          "ci_upper": 2.318853073463268
+        },
+        "targeted_design": {
+          "burden_ratio": 1.5262237762237763,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 27,
+          "detections_low": 44,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 1.119986111111111,
+          "ci_upper": 2.0841290726817046
+        },
+        "delta_log_br": 0.04572971801632586,
+        "ratio_targeted_over_census": 1.0467914438502675,
+        "delta_ci_lower": -0.35271721352013813,
+        "delta_ci_upper": 0.511897473875054,
+        "ratio_ci_lower": 0.7027759008031504,
+        "ratio_ci_upper": 1.6684540412428022,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 2.191311730578746,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 58,
+          "detections_low": 37,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.541436464088398,
+          "ci_upper": 3.2544291031718577
+        },
+        "targeted_design": {
+          "burden_ratio": 1.874015748031496,
+          "n_high": 282,
+          "n_low": 658,
+          "detections_high": 102,
+          "detections_low": 127,
+          "n_systems": 1412,
+          "n_with_demographics": 1349,
+          "ci_lower": 1.4985553666414522,
+          "ci_upper": 2.3288981521163903
+        },
+        "delta_log_br": -0.15641674104293113,
+        "ratio_targeted_over_census": 0.8552027180252216,
+        "delta_ci_lower": -0.5367870855172548,
+        "delta_ci_upper": 0.19354862803035527,
+        "ratio_ci_lower": 0.5846235837002002,
+        "ratio_ci_upper": 1.2135483975850083,
+        "stable": true,
+        "n_union": 1716
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.9859375000000001,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 41,
+          "detections_low": 50,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.370871686813796,
+          "ci_upper": 2.8454708599857845
+        },
+        "targeted_design": {
+          "burden_ratio": 1.316627358490566,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 58,
+          "detections_low": 64,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 1.0175819490152196,
+          "ci_upper": 1.712653446243538
+        },
+        "delta_log_br": -0.41101765934742723,
+        "ratio_targeted_over_census": 0.662975223787539,
+        "delta_ci_lower": -0.7233480775039387,
+        "delta_ci_upper": -0.08898972337730889,
+        "ratio_ci_lower": 0.4851252967942915,
+        "ratio_ci_upper": 0.9148549751455404,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.225702638918687,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 29,
+          "detections_low": 59,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.8242341132847462,
+          "ci_upper": 1.759270268391044
+        },
+        "targeted_design": {
+          "burden_ratio": 1.2930145335208625,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 42,
+          "detections_low": 81,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.9883548399697909,
+          "ci_upper": 1.6938500358337314
+        },
+        "delta_log_br": 0.0534620775301749,
+        "ratio_targeted_over_census": 1.0549169859514687,
+        "delta_ci_lower": -0.21440987134545508,
+        "delta_ci_upper": 0.3470370247691392,
+        "ratio_ci_lower": 0.8070175438596492,
+        "ratio_ci_upper": 1.414869109602811,
+        "stable": true,
+        "n_union": 396
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.8241086587436335,
+          "n_high": 155,
+          "n_low": 316,
+          "detections_high": 51,
+          "detections_low": 57,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.3000663845929383,
+          "ci_upper": 2.5366981054542546
+        },
+        "targeted_design": {
+          "burden_ratio": 1.532215357458076,
+          "n_high": 99,
+          "n_low": 217,
+          "detections_high": 72,
+          "detections_low": 103,
+          "n_systems": 469,
+          "n_with_demographics": 450,
+          "ci_lower": 1.2658828274839709,
+          "ci_upper": 1.8608602594130381
+        },
+        "delta_log_br": -0.17437682736515203,
+        "ratio_targeted_over_census": 0.8399803104456502,
+        "delta_ci_lower": -0.5242136078690374,
+        "delta_ci_upper": 0.18651323725965074,
+        "ratio_ci_lower": 0.592020741810979,
+        "ratio_ci_upper": 1.2050405734150802,
+        "stable": true,
+        "n_union": 975
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.6354166666666665,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 42,
+          "detections_low": 64,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.1769616329880135,
+          "ci_upper": 2.2754902882205505
+        },
+        "targeted_design": {
+          "burden_ratio": 1.2251815980629541,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 46,
+          "detections_low": 49,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 0.9846245893005068,
+          "ci_upper": 1.5372382617382616
+        },
+        "delta_log_br": -0.2888085375540388,
+        "ratio_targeted_over_census": 0.7491556268410421,
+        "delta_ci_lower": -0.6295596718822896,
+        "delta_ci_upper": 0.05817189410673994,
+        "ratio_ci_lower": 0.5328263677915279,
+        "ratio_ci_upper": 1.0598971701297801,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.2435897435897436,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 18,
+          "detections_low": 36,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.775188953488372,
+          "ci_upper": 1.8763747570636238
+        },
+        "targeted_design": {
+          "burden_ratio": 1.285042735042735,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 31,
+          "detections_low": 60,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 1.0074444695713354,
+          "ci_upper": 1.6099098899516493
+        },
+        "delta_log_br": 0.03278982282299078,
+        "ratio_targeted_over_census": 1.0333333333333332,
+        "delta_ci_lower": -0.3364768326318886,
+        "delta_ci_upper": 0.4571465636260601,
+        "ratio_ci_lower": 0.71428243142849,
+        "ratio_ci_upper": 1.5795603733809869,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.873788570792024,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 63,
+          "detections_low": 47,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.3604572477705892,
+          "ci_upper": 2.6456458333333335
+        },
+        "targeted_design": {
+          "burden_ratio": 1.455537144435239,
+          "n_high": 284,
+          "n_low": 664,
+          "detections_high": 127,
+          "detections_low": 204,
+          "n_systems": 1421,
+          "n_with_demographics": 1358,
+          "ci_lower": 1.2168989672464872,
+          "ci_upper": 1.730346212460632
+        },
+        "delta_log_br": -0.252587351105491,
+        "ratio_targeted_over_census": 0.7767883565540182,
+        "delta_ci_lower": -0.5848776123858161,
+        "delta_ci_upper": 0.0509672598418071,
+        "ratio_ci_lower": 0.5571740488419877,
+        "ratio_ci_upper": 1.0522884406292035,
+        "stable": true,
+        "n_union": 1724
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.691468253968254,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 44,
+          "detections_low": 63,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.2156163055475453,
+          "ci_upper": 2.3357595938345166
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0610557557769769,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 65,
+          "detections_low": 89,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 0.8610927672955975,
+          "ci_upper": 1.30383123144406
+        },
+        "delta_log_br": -0.466332532621244,
+        "ratio_targeted_over_census": 0.6272986520957141,
+        "delta_ci_lower": -0.7437976836196275,
+        "delta_ci_upper": -0.18385454732714074,
+        "ratio_ci_lower": 0.4753054240321808,
+        "ratio_ci_upper": 0.832056819913829,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.1119565217391303,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 31,
+          "detections_low": 69,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.7709320398477025,
+          "ci_upper": 1.5400387394620627
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0421052631578946,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 48,
+          "detections_low": 114,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.8329570330699178,
+          "ci_upper": 1.278668334790119
+        },
+        "delta_log_br": -0.06487813737449136,
+        "ratio_targeted_over_census": 0.937181663837012,
+        "delta_ci_lower": -0.323751864391621,
+        "delta_ci_upper": 0.23678226609248632,
+        "ratio_ci_lower": 0.723429728786309,
+        "ratio_ci_upper": 1.2671651829094452,
+        "stable": true,
+        "n_union": 397
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.8183361629881156,
+          "n_high": 155,
+          "n_low": 315,
+          "detections_high": 51,
+          "detections_low": 57,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.3208147075055188,
+          "ci_upper": 2.535079195205478
+        },
+        "targeted_design": {
+          "burden_ratio": 1.6955582232893156,
+          "n_high": 98,
+          "n_low": 214,
+          "detections_high": 66,
+          "detections_low": 85,
+          "n_systems": 462,
+          "n_with_demographics": 443,
+          "ci_lower": 1.3598203559083957,
+          "ci_upper": 2.094339617580338
+        },
+        "delta_log_br": -0.0699098649087736,
+        "ratio_targeted_over_census": 0.9324778650956179,
+        "delta_ci_lower": -0.42434679428630884,
+        "delta_ci_upper": 0.2974535447054931,
+        "ratio_ci_lower": 0.6541969707938018,
+        "ratio_ci_upper": 1.3464258252916503,
+        "stable": true,
+        "n_union": 968
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.6354166666666665,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 42,
+          "detections_low": 64,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.1769616329880135,
+          "ci_upper": 2.2754902882205505
+        },
+        "targeted_design": {
+          "burden_ratio": 1.3354355538037053,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 44,
+          "detections_low": 43,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 1.0412476884359227,
+          "ci_upper": 1.7362302076002816
+        },
+        "delta_log_br": -0.2026401177078085,
+        "ratio_targeted_over_census": 0.816572058376788,
+        "delta_ci_lower": -0.5619491439246235,
+        "delta_ci_upper": 0.16106738202606696,
+        "ratio_ci_lower": 0.5700967795255854,
+        "ratio_ci_upper": 1.1747641241338536,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.2435897435897436,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 18,
+          "detections_low": 36,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.775188953488372,
+          "ci_upper": 1.8763747570636238
+        },
+        "targeted_design": {
+          "burden_ratio": 1.3870808678500988,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 29,
+          "detections_low": 52,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 1.059263087676798,
+          "ci_upper": 1.8036915204678357
+        },
+        "delta_log_br": 0.10919929196499209,
+        "ratio_targeted_over_census": 1.1153846153846154,
+        "delta_ci_lower": -0.2653884390890297,
+        "delta_ci_upper": 0.5589395956187385,
+        "ratio_ci_lower": 0.7669079950679618,
+        "ratio_ci_upper": 1.7488170634371836,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.873788570792024,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 63,
+          "detections_low": 47,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.369784296383648,
+          "ci_upper": 2.6465227433281004
+        },
+        "targeted_design": {
+          "burden_ratio": 1.6540084388185654,
+          "n_high": 282,
+          "n_low": 658,
+          "detections_high": 112,
+          "detections_low": 158,
+          "n_systems": 1413,
+          "n_with_demographics": 1350,
+          "ci_lower": 1.3501855188210712,
+          "ci_upper": 2.0128407543945657
+        },
+        "delta_log_br": -0.12476065637976241,
+        "ratio_targeted_over_census": 0.8827081478672054,
+        "delta_ci_lower": -0.4670994049139863,
+        "delta_ci_upper": 0.18969674882218696,
+        "ratio_ci_lower": 0.6268177785480139,
+        "ratio_ci_upper": 1.2088829468889404,
+        "stable": true,
+        "n_union": 1717
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.691468253968254,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 44,
+          "detections_low": 63,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.2156163055475453,
+          "ci_upper": 2.3357595938345166
+        },
+        "targeted_design": {
+          "burden_ratio": 1.150943396226415,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 61,
+          "detections_low": 77,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 0.9123607930472791,
+          "ci_upper": 1.4514061272584442
+        },
+        "delta_log_br": -0.3850149904651139,
+        "ratio_targeted_over_census": 0.6804404360095169,
+        "delta_ci_lower": -0.669677462096021,
+        "delta_ci_upper": -0.09526065322762342,
+        "ratio_ci_lower": 0.5118736498182324,
+        "ratio_ci_upper": 0.9091359343665114,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "PFOA_or_PFOS",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.1203448908457163,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 31,
+          "detections_low": 69,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.7864893118739174,
+          "ci_upper": 1.5514828602129136
+        },
+        "targeted_design": {
+          "burden_ratio": 1.1429324894514767,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 44,
+          "detections_low": 96,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.8923907409389175,
+          "ci_upper": 1.450687743664717
+        },
+        "delta_log_br": 0.019960742562538075,
+        "ratio_targeted_over_census": 1.0201612903225807,
+        "delta_ci_lower": -0.23549918219224455,
+        "delta_ci_upper": 0.30271023698286226,
+        "ratio_ci_lower": 0.7901763092208588,
+        "ratio_ci_upper": 1.3535222069357289,
+        "stable": true,
+        "n_union": 396
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.4826979472140762,
+          "n_high": 155,
+          "n_low": 316,
+          "detections_high": 56,
+          "detections_low": 77,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.0987425821392385,
+          "ci_upper": 1.9677279794035802
+        },
+        "targeted_design": {
+          "burden_ratio": 1.429512516469038,
+          "n_high": 99,
+          "n_low": 217,
+          "detections_high": 75,
+          "detections_low": 115,
+          "n_systems": 469,
+          "n_with_demographics": 450,
+          "ci_lower": 1.2047759181797717,
+          "ci_upper": 1.70185297809473
+        },
+        "delta_log_br": -0.036529876970200936,
+        "ratio_targeted_over_census": 0.9641292882039992,
+        "delta_ci_lower": -0.3464863788374823,
+        "delta_ci_upper": 0.2843472171176491,
+        "ratio_ci_lower": 0.7071684516780767,
+        "ratio_ci_upper": 1.3288942654930254,
+        "stable": true,
+        "n_union": 975
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.3811436221074775,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 46,
+          "detections_low": 83,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.0218712631019191,
+          "ci_upper": 1.8403004497117865
+        },
+        "targeted_design": {
+          "burden_ratio": 1.160075329566855,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 48,
+          "detections_low": 54,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 0.9583333333333334,
+          "ci_upper": 1.409525075987842
+        },
+        "delta_log_br": -0.1744269253576914,
+        "ratio_targeted_over_census": 0.8399382301724018,
+        "delta_ci_lower": -0.4762215798593432,
+        "delta_ci_upper": 0.14674543122484293,
+        "ratio_ci_lower": 0.6211258380226073,
+        "ratio_ci_upper": 1.1580591198108192,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.1843711843711842,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 20,
+          "detections_low": 42,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.7794597421260628,
+          "ci_upper": 1.7241532594300288
+        },
+        "targeted_design": {
+          "burden_ratio": 1.224457593688363,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 32,
+          "detections_low": 65,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.9809376052070475,
+          "ci_upper": 1.5081174589768338
+        },
+        "delta_log_br": 0.03328597763346702,
+        "ratio_targeted_over_census": 1.033846153846154,
+        "delta_ci_lower": -0.30597405338693845,
+        "delta_ci_upper": 0.43260751512586904,
+        "ratio_ci_lower": 0.7364057264426586,
+        "ratio_ci_upper": 1.5412711763493703,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.5289594240837696,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 70,
+          "detections_low": 64,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.1494239319019735,
+          "ci_upper": 2.0497480781332733
+        },
+        "targeted_design": {
+          "burden_ratio": 1.283064239093095,
+          "n_high": 284,
+          "n_low": 664,
+          "detections_high": 135,
+          "detections_low": 246,
+          "n_systems": 1421,
+          "n_with_demographics": 1358,
+          "ci_lower": 1.084636545355755,
+          "ci_upper": 1.4996922620477837
+        },
+        "delta_log_br": -0.1753362352220124,
+        "ratio_targeted_over_census": 0.8391748131981805,
+        "delta_ci_lower": -0.46645659115185456,
+        "delta_ci_upper": 0.10173945234037378,
+        "ratio_ci_lower": 0.6272208351737075,
+        "ratio_ci_upper": 1.107094983140211,
+        "stable": true,
+        "n_union": 1724
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.4176829268292683,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 48,
+          "detections_low": 82,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.0494143704746581,
+          "ci_upper": 1.876471025910364
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0334565259677104,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 69,
+          "detections_low": 97,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 0.8554786701437028,
+          "ci_upper": 1.2436120741431311
+        },
+        "delta_log_br": -0.3161147628077741,
+        "ratio_targeted_over_census": 0.7289757860589441,
+        "delta_ci_lower": -0.5571626035533058,
+        "delta_ci_upper": -0.04614971619507308,
+        "ratio_ci_lower": 0.572832111943442,
+        "ratio_ci_upper": 0.9548989876450699,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "native",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 0.9960365853658536,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 33,
+          "detections_low": 82,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.7082013175205062,
+          "ci_upper": 1.334329830836873
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0060975609756098,
+          "n_high": 80,
+          "n_low": 198,
+          "detections_high": 50,
+          "detections_low": 123,
+          "n_systems": 397,
+          "n_with_demographics": 396,
+          "ci_lower": 0.816970055795702,
+          "ci_upper": 1.2214753394643951
+        },
+        "delta_log_br": 0.010050335853501506,
+        "ratio_targeted_over_census": 1.0101010101010102,
+        "delta_ci_lower": -0.23382720279131955,
+        "delta_ci_upper": 0.2963496417323744,
+        "ratio_ci_lower": 0.7914985728236943,
+        "ratio_ci_upper": 1.344940321896687,
+        "stable": true,
+        "n_union": 397
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.4826979472140762,
+          "n_high": 155,
+          "n_low": 316,
+          "detections_high": 56,
+          "detections_low": 77,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.094583380649557,
+          "ci_upper": 1.9622003284072242
+        },
+        "targeted_design": {
+          "burden_ratio": 1.5758468335787923,
+          "n_high": 98,
+          "n_low": 214,
+          "detections_high": 70,
+          "detections_low": 97,
+          "n_systems": 464,
+          "n_with_demographics": 445,
+          "ci_lower": 1.2971981933780627,
+          "ci_upper": 1.904107325601228
+        },
+        "delta_log_br": 0.06092943434812481,
+        "ratio_targeted_over_census": 1.0628239126787344,
+        "delta_ci_lower": -0.24213571138412535,
+        "delta_ci_upper": 0.3749745606703757,
+        "ratio_ci_lower": 0.7849496437204482,
+        "ratio_ci_upper": 1.4549544010828062,
+        "stable": true,
+        "n_union": 970
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.3811436221074775,
+          "n_high": 126,
+          "n_low": 314,
+          "detections_high": 46,
+          "detections_low": 83,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.0218712631019191,
+          "ci_upper": 1.8403004497117865
+        },
+        "targeted_design": {
+          "burden_ratio": 1.305084745762712,
+          "n_high": 59,
+          "n_low": 77,
+          "detections_high": 46,
+          "detections_low": 46,
+          "n_systems": 196,
+          "n_with_demographics": 196,
+          "ci_lower": 1.0404100017016933,
+          "ci_upper": 1.6674549531684282
+        },
+        "delta_log_br": -0.05664388970130796,
+        "ratio_targeted_over_census": 0.9449305089439519,
+        "delta_ci_lower": -0.3672098701499295,
+        "delta_ci_upper": 0.2893850222019554,
+        "ratio_ci_lower": 0.6926642602368129,
+        "ratio_ci_upper": 1.3356058674567386,
+        "stable": true,
+        "n_union": 657
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "first_sampled_2019_2022",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.1843711843711842,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 20,
+          "detections_low": 42,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 0.7794597421260628,
+          "ci_upper": 1.7241532594300288
+        },
+        "targeted_design": {
+          "burden_ratio": 1.401864801864802,
+          "n_high": 39,
+          "n_low": 97,
+          "detections_high": 31,
+          "detections_low": 55,
+          "n_systems": 194,
+          "n_with_demographics": 194,
+          "ci_lower": 1.0979658249997555,
+          "ci_upper": 1.7857288767172486
+        },
+        "delta_log_br": 0.16859136398205282,
+        "ratio_targeted_over_census": 1.1836363636363638,
+        "delta_ci_lower": -0.15920374767864942,
+        "delta_ci_upper": 0.568487572172547,
+        "ratio_ci_lower": 0.8528225806451614,
+        "ratio_ci_upper": 1.7655946965201503,
+        "stable": true,
+        "n_union": 194
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "all",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.5289594240837696,
+          "n_high": 191,
+          "n_low": 267,
+          "detections_high": 70,
+          "detections_low": 64,
+          "n_systems": 700,
+          "n_with_demographics": 674,
+          "ci_lower": 1.1652078356426183,
+          "ci_upper": 2.0489306726551626
+        },
+        "targeted_design": {
+          "burden_ratio": 1.4305489781793013,
+          "n_high": 283,
+          "n_low": 660,
+          "detections_high": 119,
+          "detections_low": 194,
+          "n_systems": 1415,
+          "n_with_demographics": 1352,
+          "ci_lower": 1.1960337713310303,
+          "ci_upper": 1.7069099383675126
+        },
+        "delta_log_br": -0.06652911761787195,
+        "ratio_targeted_over_census": 0.9356356719777302,
+        "delta_ci_lower": -0.35208843411373125,
+        "delta_ci_upper": 0.19961055017657464,
+        "ratio_ci_lower": 0.7032179307720017,
+        "ratio_ci_upper": 1.2209271756854396,
+        "stable": true,
+        "n_union": 1719
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "gt3300",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.4176829268292683,
+          "n_high": 128,
+          "n_low": 310,
+          "detections_high": 48,
+          "detections_low": 82,
+          "n_systems": 649,
+          "n_with_demographics": 626,
+          "ci_lower": 1.0494143704746581,
+          "ci_upper": 1.876471025910364
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0938956714761376,
+          "n_high": 106,
+          "n_low": 154,
+          "detections_high": 64,
+          "detections_low": 85,
+          "n_systems": 390,
+          "n_with_demographics": 389,
+          "ci_lower": 0.8841066614375281,
+          "ci_upper": 1.3495262925969445
+        },
+        "delta_log_br": -0.25927846203229515,
+        "ratio_targeted_over_census": 0.7716081295573616,
+        "delta_ci_lower": -0.5028238815268827,
+        "delta_ci_upper": -0.0001916842133600526,
+        "ratio_ci_lower": 0.6048203050432348,
+        "ratio_ci_upper": 0.999808334156885,
+        "stable": true,
+        "n_union": 667
+      },
+      {
+        "outcome": "six_regulated",
+        "rl": "common",
+        "targeted": "all_geotracker",
+        "population": "overlap",
+        "primary": false,
+        "census": {
+          "burden_ratio": 1.00355047854276,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 33,
+          "detections_low": 82,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.7236831759591787,
+          "ci_upper": 1.3493678511514413
+        },
+        "targeted_design": {
+          "burden_ratio": 1.0924653405666063,
+          "n_high": 79,
+          "n_low": 197,
+          "detections_high": 46,
+          "detections_low": 105,
+          "n_systems": 396,
+          "n_with_demographics": 395,
+          "ci_lower": 0.8665473536876325,
+          "ci_upper": 1.359158602102183
+        },
+        "delta_log_br": 0.08489273212934448,
+        "ratio_targeted_over_census": 1.0886002886002886,
+        "delta_ci_lower": -0.1456370927377413,
+        "delta_ci_upper": 0.3453474185740481,
+        "ratio_ci_lower": 0.8644713692032607,
+        "ratio_ci_upper": 1.4124805564153449,
+        "stable": true,
+        "n_union": 396
+      }
+    ],
+    "summary": {
+      "n_cells": 36,
+      "n_stable": 36,
+      "majority_sign": -1,
+      "fraction_stable_agreeing_with_majority": 0.6944444444444444,
+      "ratio_range_stable": [
+        0.5908744700069314,
+        1.1836363636363638
+      ],
+      "census_br_range_stable": [
+        0.9960365853658536,
+        2.191311730578746
+      ],
+      "targeted_br_range_stable": [
+        1.0060975609756098,
+        1.874015748031496
+      ]
+    }
+  },
+  "prose_rule": {
+    "design_mix_explains_test": true,
+    "design_mix_explains_region9": true,
+    "outcome_selective_targeting": true,
+    "direction_statable": false,
+    "direction": null
+  }
+}

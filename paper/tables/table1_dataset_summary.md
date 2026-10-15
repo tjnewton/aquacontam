@@ -18,4 +18,4 @@
 †Detection-only reporting: source data includes only detected samples; non-detects are not available.
 §SDWIS reports Lead and Copper Rule 90th-percentile compliance values, which are genuine quantitative measurements that are only rarely left-censored; the 0% censoring reflects this measurement mechanism, not detection-only reporting.
 ‡Excluded from analysis: zero unique PWSIDs after deduplication with national sources.
-‖Ambient environmental monitoring (groundwater/surface water), a different population from public-water-system finished water; reserved for external validation, not included in the main benchmark train/validation/test splits.
+‖External-validation sources, not included in the main benchmark train/validation/test splits: CA GeoTracker is public-water-system well sampling reported to the California Division of Drinking Water; WQP sites are ambient groundwater and surface-water monitoring locations.

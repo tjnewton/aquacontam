@@ -6,15 +6,38 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **Monitoring-design analysis** (`src/aquacontam/analysis/monitoring_design.py`,
+  `paper/compute_monitoring_design.py`): pre-registered, reproduction-gated estimates of how the
+  people-of-color PFAS detection-burden ratios depend on monitoring design. It covers
+  design-restricted ratios (federal census; state programs that report non-detects), the share of
+  the log ratio explained by the groups' different design mix, outcome-selective state sampling
+  before UCMR5 in California, and a 36-cell California census-versus-targeted specification curve.
+  The results are frozen as `results/paper_frozen/monitoring_design.json` with G8 input-hash
+  stamps, and appear in Supplementary Table 27 (`paper/tables/table_supp_monitoring_design.*`)
+  and a Fig. 4 panel-c Source Data sheet. Unit tests: `tests/unit/test_monitoring_design.py`.
+- **`paper/generate_figures.py --only`**: regenerates a named subset of figures.
+
 ### Changed
 
 - **Citation metadata**: the preferred citation in `CITATION.cff`, the README and leaderboard
   BibTeX, and the export dataset card now cite the EarthArXiv preprint of the accompanying
   paper (doi:10.31223/X51V3G) until the peer-reviewed article is published
+- **Fig. 4 Source Data**: a new `c Design decomposition` sheet; gate clause G14 gains frozen-read
+  panel-c sentinels
+- **Table 1 footnote**: CA GeoTracker is described as public-water-system well sampling reported
+  to the California Division of Drinking Water, used with the ambient WQP sites for external
+  validation
+- **Literature comparison table**: a row for the concurrent national UCMR5 spatial-holdout study
+  of Chen et al.
 
 ### Fixed
 
 - **CI typecheck (pandas-stubs 3.0.5.260914 regression)**: the 2026-09-14 release repeats the 3.0.5.260730 overload bug under the project's numpy<2 pin (`Series.astype(str)` resolves to `Series[bool]`; the same 23 `[misc]` errors across 9 data loaders, with no change to our source). Excluded that release as well (`!=3.0.5.260914`); the constraint still resolves to 3.0.3.260530.
+- **Typecheck**: `paper/generate_source_data.py` types its JSON loader's return. mypy 2.3 reported
+  `no-any-return` there, reaching the file through `pipeline/export.py` and
+  `paper.generate_figures`.
 
 ## [4.0.0] - 2026-08-20
 

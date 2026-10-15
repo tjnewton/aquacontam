@@ -9,7 +9,8 @@ committed frozen archive so the numbers are exactly those the figures plot:
     Fig. 2  Two compounding confounds          -> split_comparison + detection_only_ablation
                                                   + feature_ablation
     Fig. 3  Models learn the monitoring process -> shap_T1 + causal_deconfounding
-    Fig. 4  Inequitable monitoring             -> monitoring_inequity
+    Fig. 4  Inequitable monitoring             -> monitoring_inequity (a, b)
+                                                  + monitoring_design (c)
 
 There is no Figure 5 in the submitted manuscript (the national risk map is a
 webapp asset). The freshness and figure↔data fidelity of these files is enforced
@@ -43,7 +44,8 @@ def _load_json(path: Path) -> dict | list:
     """
     if not path.exists():
         raise FileNotFoundError(f"Required frozen input missing: {path}")
-    return json.loads(path.read_text(encoding="utf-8"))
+    data: dict | list = json.loads(path.read_text(encoding="utf-8"))
+    return data
 
 
 def generate_fig1_source_data(results_dir: Path, output_dir: Path) -> Path:
@@ -214,12 +216,88 @@ _INEQUITY_LABELS = {
 }
 
 
+#: Fig. 4c scopes (top to bottom) and design rows, from ``monitoring_design.json`` E1.
+DESIGN_SCOPES: tuple[tuple[str, str], ...] = (
+    ("national", "Nation (leave-one-region-out mean)"),
+    ("test", "Test regions (EPA Regions 8–10)"),  # noqa: RUF001
+    ("region9", "EPA Region 9"),
+)
+DESIGN_LABELS: dict[str, str] = {
+    "pooled": "All sources (published estimate)",
+    "ndr_pooled": "Programs reporting non-detects",
+    "federal": "Federal census (UCMR3/UCMR5)",
+    "state": "State programs",
+    "state_ca": "State program (CA GeoTracker)",
+}
+#: Fig. 4c bottom block: the E4 primary California comparison.
+CA_SCOPE = "California: census vs targeted"
+CA_DESIGNS: tuple[tuple[str, str], ...] = (
+    ("census", "Census (UCMR5)"),
+    ("targeted_design", "Targeted (GeoTracker, first sampled 2019–2022)"),  # noqa: RUF001
+)
+
+
+def design_forest_rows(md: dict) -> list[dict]:
+    """Fig. 4c rows: E1 design-restricted burden ratios by scope, then the E4 primary pair.
+
+    Shared by ``generate_figures.fig_monitoring_inequity`` and the Fig. 4 Source
+    Data so the plotted and tabulated values cannot drift. National rows are
+    n_systems-weighted means of per-region ratios; their ``Systems`` sums the
+    included regions.
+    """
+    e1 = md["e1_design_restricted"]
+    rows: list[dict] = []
+    for scope, scope_label in DESIGN_SCOPES:
+        block = e1[scope]["rows"]
+        per_region = e1[scope].get("per_region")
+        for key, label in DESIGN_LABELS.items():
+            est = block.get(key)
+            if est is None:
+                continue
+            if per_region is not None:
+                series = key.removesuffix("_pooled")
+                n = sum(int(per_region[str(r)][series]["n_systems"]) for r in est["regions"])
+                k = len(est["regions"])
+                if k < len(per_region):
+                    label = f"{label} ({k} region{'' if k == 1 else 's'})"
+            else:
+                n = int(est["n_systems"])
+            rows.append(
+                {
+                    "Scope": scope_label,
+                    "Design": label,
+                    "Design_Key": key,
+                    "Burden_Ratio": est["burden_ratio"],
+                    "CI_Lower": est["ci_lower"],
+                    "CI_Upper": est["ci_upper"],
+                    "Systems": n,
+                }
+            )
+    primary = md["e4_ca_census_vs_targeted"]["primary"]
+    for key, label in CA_DESIGNS:
+        est = primary[key]
+        rows.append(
+            {
+                "Scope": CA_SCOPE,
+                "Design": label,
+                "Design_Key": key,
+                "Burden_Ratio": est["burden_ratio"],
+                "CI_Lower": est["ci_lower"],
+                "CI_Upper": est["ci_upper"],
+                "Systems": int(est["n_systems"]),
+            }
+        )
+    return rows
+
+
 def generate_fig4_source_data(results_dir: Path, output_dir: Path) -> Path:
-    """Fig. 4: monitoring inequity — the values the figure plots.
+    """Fig. 4: monitoring inequity and design dependence — the values the figure plots.
 
     Panel (a): mean sampling intensity in high- vs low-share systems and the
     high/low ratio per demographic dimension. Panel (b): population-size-adjusted
     regression coefficients with SEs. Source: ``monitoring_inequity.json``.
+    Panel (c): people-of-color detection-burden ratios by monitoring design with
+    95% CIs. Source: ``monitoring_design.json``.
     """
     ineq = _load_json(results_dir / "monitoring_inequity.json")
     rows = []
@@ -248,8 +326,12 @@ def generate_fig4_source_data(results_dir: Path, output_dir: Path) -> Path:
             }
         )
     df = pd.DataFrame(rows)
+    md = _load_json(results_dir / "monitoring_design.json")
+    design = pd.DataFrame(design_forest_rows(md)).drop(columns="Design_Key")  # type: ignore[arg-type]
     path = output_dir / "Fig4_source_data.xlsx"
-    df.to_excel(path, index=False, sheet_name="Monitoring inequity")
+    with pd.ExcelWriter(path) as writer:
+        df.to_excel(writer, index=False, sheet_name="Monitoring inequity")
+        design.to_excel(writer, index=False, sheet_name="c Design decomposition")
     return path
 
 

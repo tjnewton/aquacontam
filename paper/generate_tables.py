@@ -168,10 +168,10 @@ def table_dataset_summary(output_dir: Path) -> Path:
         "detection-only reporting. "
         "\\ddag Excluded from analysis: zero unique PWSIDs after deduplication "
         "with national sources. "
-        "\\textbardbl Ambient environmental monitoring (groundwater/surface "
-        "water), a different population from public-water-system finished water; "
-        "reserved for external validation, not included in the main benchmark "
-        "train/validation/test splits."
+        "\\textbardbl External-validation sources, not included in the main "
+        "benchmark train/validation/test splits: CA GeoTracker is public-water-system "
+        "well sampling reported to the California Division of Drinking Water; WQP "
+        "sites are ambient groundwater and surface-water monitoring locations."
     )
     df.to_latex(f"{path}.tex", index=False, caption=caption, label="tab:datasets")
     df.to_markdown(f"{path}.md", index=False)
@@ -190,10 +190,10 @@ def table_dataset_summary(output_dir: Path) -> Path:
             "mechanism, not detection-only reporting.\n"
             "‡Excluded from analysis: zero unique PWSIDs after deduplication "
             "with national sources.\n"
-            "‖Ambient environmental monitoring (groundwater/surface water), a "
-            "different population from public-water-system finished water; "
-            "reserved for external validation, not included in the main "
-            "benchmark train/validation/test splits.\n"
+            "‖External-validation sources, not included in the main benchmark "
+            "train/validation/test splits: CA GeoTracker is public-water-system well "
+            "sampling reported to the California Division of Drinking Water; WQP sites "
+            "are ambient groundwater and surface-water monitoring locations.\n"
         )
     return Path(f"{path}.csv")
 
@@ -1756,6 +1756,18 @@ def table_ext5_literature_comparison(
             "Best AUPRC": "NR",
             "Feature Categories": "Proximity, land use, demographics, hydrogeology",
             "Open Code": "No",
+        },
+        {
+            "Study": "Chen et al.",
+            "Year": 2027,
+            "Dataset Size": "9436 systems",
+            "Analytes": "PFAS (UCMR5)",
+            "Geographic Scope": "National (US)",
+            "Split Method": "Grouped CV; 16-block spatial holdout",
+            "Best AUROC": "0.741 (CV); 0.625 (spatial)",
+            "Best AUPRC": "NR",
+            "Feature Categories": "System and location attributes (provenance-audited)",
+            "Open Code": "NR",
         },
         {
             "Study": "AquaContam (random split)*",
@@ -3491,6 +3503,281 @@ def table_supp_areal_apportionment(output_dir: Path, results_dir: Path) -> Path:
     return Path(f"{path}.csv")
 
 
+_MD_SCOPES = {
+    "test": "Test regions (EPA 8-10)",
+    "region9": "EPA Region 9",
+    "national": "Nation (LORO-weighted)",
+}
+_MD_DESIGNS = {
+    "pooled": "All sources (published)",
+    "ndr_pooled": "Non-detect-reporting programs",
+    "ndr": "Non-detect-reporting programs",
+    "federal": "Federal census (UCMR3/UCMR5)",
+    "state_ca": "State program (CA GeoTracker)",
+    "state": "State programs (CA, MN, NJ, MO)",
+    "pooled_state_regions": "All sources (published)",
+}
+_MD_STRATA = {
+    "federal_only": "Federal census only",
+    "state_only": "State program only",
+    "both": "Both",
+}
+_MD_OUTCOMES = {"PFOS": "PFOS", "PFOA_or_PFOS": "PFOA or PFOS", "six_regulated": "Any of six"}
+_MD_RL = {"native": "Native", "common": "Common"}
+_MD_TARGETED = {"first_sampled_2019_2022": "First sampled 2019-2022", "all_geotracker": "All"}
+_MD_POPULATION = {"all": "All", "gt3300": ">3,300 served", "overlap": "Overlap"}
+
+
+def table_supp_monitoring_design(output_dir: Path, results_dir: Path) -> Path:
+    """Supplementary Table 27: monitoring design and the POC detection-burden ratio.
+
+    Reads ``monitoring_design.json`` (pre-registered as EST-D2): design-restricted
+    burden ratios (E1, panels A-B), design-stratum composition (E2, panels C-D),
+    California pre-census state sampling (E3, panel E) and the California
+    census-vs-targeted specification curve (E4, panel F). The CSV holds every row in
+    long form with a ``Panel`` column.
+    """
+    import json
+
+    def _f(v: Any, nd: int = 3) -> str:
+        return "—" if v is None else f"{float(v):.{nd}f}"
+
+    def _ci(v: Any, lo: Any, hi: Any) -> str:
+        if v is None:
+            return "—"
+        if lo is None or hi is None:
+            return _f(v)
+        return f"{_f(v)} [{_f(lo)}, {_f(hi)}]"
+
+    def _n(v: Any) -> str:
+        return "—" if v is None else f"{int(v):,}"
+
+    def _pct_ci(v: Any, lo: Any, hi: Any) -> str:
+        if v is None or lo is None or hi is None:
+            return "—"
+        return f"{100 * v:.1f} [{100 * lo:.1f}, {100 * hi:.1f}]"
+
+    def _hl(est: dict[str, Any]) -> tuple[str, str]:
+        hi = f"{_n(est.get('n_high'))} ({_n(est.get('detections_high'))})"
+        lo = f"{_n(est.get('n_low'))} ({_n(est.get('detections_low'))})"
+        return hi, lo
+
+    src = results_dir / "monitoring_design.json"
+    data = json.loads(src.read_text()) if src.exists() else {}
+    e1 = data.get("e1_design_restricted", {})
+    panels: dict[str, list[dict[str, Any]]] = {k: [] for k in "ABCDEF"}
+
+    # Panel A: E1 design-restricted burden ratios by scope.
+    for scope in ("test", "region9"):
+        for key, est in e1.get(scope, {}).get("rows", {}).items():
+            hi, lo = _hl(est)
+            panels["A"].append(
+                {
+                    "Scope": _MD_SCOPES[scope],
+                    "Records used": _MD_DESIGNS[key],
+                    "Systems": _n(est.get("n_systems")),
+                    "High-share systems (detections)": hi,
+                    "Low-share systems (detections)": lo,
+                    "Burden ratio [95% CI]": _ci(
+                        est.get("burden_ratio"), est.get("ci_lower"), est.get("ci_upper")
+                    ),
+                }
+            )
+    nat = e1.get("national", {})
+    per_region = nat.get("per_region", {})
+    for key, row in nat.get("rows", {}).items():
+        series = "pooled" if key == "pooled_state_regions" else key.replace("_pooled", "")
+        regions = [str(r) for r in row.get("regions", [])]
+        ests = [per_region[r][series] for r in regions]
+        systems = sum(int(e["n_systems"]) for e in ests)
+        agg = {
+            f: sum(int(e[f]) for e in ests)
+            for f in ("n_high", "n_low", "detections_high", "detections_low")
+        }
+        hi, lo = _hl(agg)
+        label = _MD_DESIGNS[key]
+        if len(regions) < len(per_region):
+            label += f"; regions {', '.join(regions)}"
+        panels["A"].append(
+            {
+                "Scope": _MD_SCOPES["national"],
+                "Records used": label,
+                "Systems": _n(systems),
+                "High-share systems (detections)": hi,
+                "Low-share systems (detections)": lo,
+                "Burden ratio [95% CI]": _ci(
+                    row.get("burden_ratio"), row.get("ci_lower"), row.get("ci_upper")
+                ),
+            }
+        )
+
+    # Panel B: the per-region ratios behind the national rows.
+    for r in sorted(per_region, key=int):
+        rec: dict[str, Any] = {"EPA region": r}
+        for series in ("pooled", "ndr", "federal", "state"):
+            est = per_region[r][series]
+            name = _MD_DESIGNS[series]
+            rec[f"{name}: systems"] = _n(est.get("n_systems"))
+            rec[f"{name}: ratio"] = (
+                _f(est.get("burden_ratio")) if est.get("included") else "not estimated"
+            )
+        panels["B"].append(rec)
+
+    # Panel C: E2 composition by design stratum.
+    for scope, e2 in data.get("e2_composition", {}).items():
+        for k, rates in e2.get("strata_rates", {}).items():
+            counts = e2["strata_counts"][k]
+            rh, rl = rates.get("rate_high"), rates.get("rate_low")
+            within = (rh / rl) if (rh is not None and rl) else None
+            panels["C"].append(
+                {
+                    "Scope": _MD_SCOPES[scope],
+                    "Stratum": _MD_STRATA[k],
+                    "High-share systems (detections)": (
+                        f"{_n(counts['high'])} ({_n(rates.get('detections_high'))})"
+                    ),
+                    "Low-share systems (detections)": (
+                        f"{_n(counts['low'])} ({_n(rates.get('detections_low'))})"
+                    ),
+                    "Detection rate, all": _f(rates.get("rate_all")),
+                    "Detection rate, high / low": f"{_f(rh)} / {_f(rl)}",
+                    "Within-stratum ratio": _f(within),
+                }
+            )
+        panels["D"].append(
+            {
+                "Scope": _MD_SCOPES[scope],
+                "Systems": _n(e2.get("n_systems")),
+                "Observed ratio": _f(e2.get("burden_ratio")),
+                "Ratio at the low-share design mix": _f(e2.get("burden_ratio_counterfactual")),
+                "Share of log ratio explained, % [95% CI]": _pct_ci(
+                    e2.get("share"), e2.get("share_ci_lower"), e2.get("share_ci_upper")
+                ),
+            }
+        )
+
+    # Panel E: E3 pre-census state sampling and UCMR5 detection (California).
+    e3 = data.get("e3_outcome_selectivity", {})
+    for key, label in (
+        ("primary_pre_ucmr5_sampling", "GeoTracker PFOS sample before first UCMR5 sample"),
+        ("any_sampling", "Any GeoTracker PFOS sample"),
+    ):
+        blk = e3.get(key)
+        if not blk:
+            continue
+        panels["E"].append(
+            {
+                "Exposure": label,
+                "Exposed / unexposed systems": (
+                    f"{_n(blk.get('n_exposed'))} / {_n(blk.get('n_unexposed'))}"
+                ),
+                "UCMR5 detection rate, exposed / unexposed": (
+                    f"{_f(blk.get('p_detect_exposed'))} / {_f(blk.get('p_detect_unexposed'))}"
+                ),
+                "Risk ratio [95% CI]": _ci(
+                    blk.get("risk_ratio"), blk.get("ci_lower"), blk.get("ci_upper")
+                ),
+                "Mantel-Haenszel risk ratio [95% CI]": _ci(
+                    blk.get("mantel_haenszel_risk_ratio"),
+                    blk.get("mh_ci_lower"),
+                    blk.get("mh_ci_upper"),
+                ),
+            }
+        )
+    tgt = e3.get("targeting_by_poc")
+    if tgt:
+        panels["E"].append(
+            {
+                "Exposure": "Sampled before UCMR5, high- vs low-share systems",
+                "Exposed / unexposed systems": (
+                    f"high {_n(tgt.get('n_exposed_high'))} of {_n(tgt.get('n_high'))}; "
+                    f"low {_n(tgt.get('n_exposed_low'))} of {_n(tgt.get('n_low'))}"
+                ),
+                "UCMR5 detection rate, exposed / unexposed": "—",
+                "Risk ratio [95% CI]": (
+                    "exposure-rate ratio "
+                    + _ci(
+                        tgt.get("exposure_rate_ratio_high_vs_low"),
+                        tgt.get("ci_lower"),
+                        tgt.get("ci_upper"),
+                    )
+                ),
+                "Mantel-Haenszel risk ratio [95% CI]": "—",
+            }
+        )
+
+    # Panel F: E4 California census-vs-targeted specification curve.
+    e4 = data.get("e4_ca_census_vs_targeted", {})
+    cells = [(c, "") for c in e4.get("spec_curve", [])]
+    for key, note in (
+        ("primary_design_specific_cutoffs", "primary, design-specific cut-offs"),
+        ("primary_geotracker_2023_2025_window", "primary, GeoTracker 2023-2025 only"),
+    ):
+        if key in e4:
+            cells.append((e4[key], note))
+    for c, note in cells:
+        cen, tar = c["census"], c["targeted_design"]
+        panels["F"].append(
+            {
+                "Outcome": _MD_OUTCOMES[c["outcome"]],
+                "Reporting limit": _MD_RL[c["rl"]],
+                "Targeted set": _MD_TARGETED[c["targeted"]],
+                "Population": _MD_POPULATION[c["population"]],
+                "Specification": note or ("primary" if c.get("primary") else ""),
+                "Census ratio [95% CI]": _ci(
+                    cen.get("burden_ratio"), cen.get("ci_lower"), cen.get("ci_upper")
+                ),
+                "Targeted ratio [95% CI]": _ci(
+                    tar.get("burden_ratio"), tar.get("ci_lower"), tar.get("ci_upper")
+                ),
+                "Targeted / census [95% CI]": _ci(
+                    c.get("ratio_targeted_over_census"),
+                    c.get("ratio_ci_lower"),
+                    c.get("ratio_ci_upper"),
+                ),
+                "Stable": "yes" if c.get("stable") else "no",
+            }
+        )
+
+    titles = {
+        "A": "A. Design-restricted burden ratios (E1)",
+        "B": "B. Per-region burden ratios behind the national rows (E1)",
+        "C": "C. Detection by monitoring-design stratum (E2)",
+        "D": "D. Share of the log burden ratio explained by design mix (E2)",
+        "E": "E. California: state sampling before UCMR5 and UCMR5 PFOS detection (E3)",
+        "F": "F. California census (UCMR5) vs targeted (GeoTracker) specification curve (E4)",
+    }
+    rl = e4.get("common_reporting_limits_ug_per_l", {})
+    notes = (
+        "Burden ratio: PFOS detection rate in systems at or above the 80th percentile of "
+        "people-of-color share divided by the rate below the 50th percentile, with each "
+        "scope's published cut-offs held fixed. Confidence intervals: system bootstrap, "
+        f"{_n(data.get('_meta', {}).get('n_boot'))} draws, seed "
+        f"{data.get('_meta', {}).get('seed', '—')}; the published pooled intervals are reused "
+        "where they exist. National rows are the n_systems-weighted mean of per-region "
+        "ratios; counts sum each region's own groups. Stable: at least 10 detections per "
+        "group and at least 30 high-share systems in both designs. Common reporting limits "
+        "(ug/L): " + ", ".join(f"{k} {v:g}" for k, v in rl.items()) + "."
+    )
+
+    tabulate = importlib.import_module("tabulate")
+    md_parts = ["## Supplementary Table 27: Monitoring Design and the Detection-Burden Ratio\n"]
+    csv_frames = []
+    for key in "ABCDEF":
+        df = pd.DataFrame(panels[key])
+        table_str = tabulate.tabulate(
+            df, headers="keys", tablefmt="pipe", showindex=False, disable_numparse=True
+        )
+        md_parts.append(f"**{titles[key]}**\n\n{table_str}\n")
+        csv_frames.append(df.assign(Panel=key))
+    md_parts.append(f"*{notes}*\n")
+    path = output_dir / "table_supp_monitoring_design"
+    pd.concat(csv_frames, ignore_index=True).to_csv(f"{path}.csv", index=False)
+    Path(f"{path}.md").write_text("\n".join(md_parts), encoding="utf-8")
+    logger.info("Table written: %s", f"{path}.csv")
+    return Path(f"{path}.csv")
+
+
 @click.command()
 @click.option("--results", default="results", help="Results directory from reproduce.py.")
 @click.option("--output", "-o", default="paper/tables", help="Output directory.")
@@ -3558,6 +3845,7 @@ def main(results: str, output: str) -> None:
     paths.append(table_val_reuse_bias(output_dir, results_dir=results_path))
     paths.append(table_supp_group_error_calibration(output_dir, results_dir=results_path))
     paths.append(table_supp_areal_apportionment(output_dir, results_dir=results_path))
+    paths.append(table_supp_monitoring_design(output_dir, results_dir=results_path))
 
     for p in paths:
         click.echo(f"  {p}")

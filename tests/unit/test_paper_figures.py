@@ -20,6 +20,7 @@ from paper.generate_figures import (
     fig_equity_analysis,
     fig_feature_importance,
     fig_group_conformal,
+    fig_monitoring_inequity,
     fig_national_risk_map,
     fig_reliability_diagram,
     fig_temporal_prediction,
@@ -268,3 +269,82 @@ class TestReliabilityDiagram:
         monkeypatch.setattr(Axes, "plot", spy)
         fig_reliability_diagram(entries, tmp_path)
         assert not any("dummy" in lbl.lower() for lbl in labels)
+
+
+def _design_estimate(br: float, n: int) -> dict[str, float]:
+    return {"burden_ratio": br, "ci_lower": br * 0.8, "ci_upper": br * 1.25, "n_systems": n}
+
+
+def _design_payload() -> dict:
+    """Minimal monitoring_design.json structure behind Fig. 4c (EST-D2)."""
+    scope_rows = {
+        "pooled": _design_estimate(1.9, 3000),
+        "ndr_pooled": _design_estimate(2.7, 2500),
+        "federal": _design_estimate(3.5, 2000),
+        "state_ca": _design_estimate(1.8, 1400),
+    }
+    per_region = {
+        str(r): {
+            "pooled": {"n_systems": 100 * r},
+            "ndr": {"n_systems": 90 * r},
+            "federal": {"n_systems": 50 * r},
+            "state": {"n_systems": 40 * r},
+        }
+        for r in (1, 2)
+    }
+    national = {
+        "pooled": {**_design_estimate(1.5, 0), "regions": [1, 2]},
+        "ndr_pooled": {**_design_estimate(1.5, 0), "regions": [1, 2]},
+        "federal": {**_design_estimate(1.6, 0), "regions": [1, 2]},
+        "state": {**_design_estimate(1.6, 0), "regions": [2]},
+        "pooled_state_regions": {"burden_ratio": 1.4, "regions": [2]},
+    }
+    return {
+        "e1_design_restricted": {
+            "national": {"rows": national, "per_region": per_region},
+            "test": {"rows": scope_rows},
+            "region9": {"rows": scope_rows},
+        },
+        "e4_ca_census_vs_targeted": {
+            "primary": {
+                "census": _design_estimate(2.1, 700),
+                "targeted_design": _design_estimate(1.7, 462),
+            }
+        },
+    }
+
+
+_INEQUITY = {
+    "pct_people_of_color": {
+        "mean_high": 14.3,
+        "mean_low": 7.7,
+        "monitoring_ratio": 1.85,
+        "size_adjusted_coef": 0.06,
+        "size_adjusted_se": 0.006,
+        "size_adjusted_p": 1e-20,
+    }
+}
+
+
+class TestMonitoringDesignPanel:
+    """Fig. 4c: the design forest plot and its shared row builder."""
+
+    def test_rows_order_counts_and_labels(self) -> None:
+        from paper.generate_source_data import design_forest_rows
+
+        rows = design_forest_rows(_design_payload())
+        scopes = list(dict.fromkeys(r["Scope"] for r in rows))
+        assert scopes[0].startswith("Nation") and scopes[-1].startswith("California")
+        assert len(rows) == 4 + 4 + 4 + 2  # pooled_state_regions has no CI and is skipped
+        national = {r["Design_Key"]: r for r in rows if r["Scope"] == scopes[0]}
+        assert national["pooled"]["Systems"] == 100 + 200  # summed over included regions
+        assert national["state"]["Systems"] == 80  # region 2 only
+        assert national["state"]["Design"].endswith("(1 region)")
+
+    def test_fig4_renders_three_panels(self, tmp_path: Path) -> None:
+        path = fig_monitoring_inequity(_INEQUITY, tmp_path, design_data=_design_payload())
+        assert path.exists() and path.with_suffix(".png").exists()
+
+    def test_fig4_without_design_data_loud_fails(self, tmp_path: Path) -> None:
+        with pytest.raises(MissingFigureDataError):
+            fig_monitoring_inequity(_INEQUITY, tmp_path, design_data=None)

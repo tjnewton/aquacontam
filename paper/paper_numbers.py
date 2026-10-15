@@ -172,6 +172,27 @@ def _recov(which: str, probe: str = "logistic") -> float:
     )
 
 
+def _md(path: str) -> float:
+    """A dotted-path value from monitoring_design.json (EST-D2)."""
+    d: Any = _json("monitoring_design.json")
+    for part in path.split("."):
+        d = d[int(part)] if isinstance(d, list) else d[part]
+    return float(d)
+
+
+def _md_both_pct(group: str) -> float:
+    """Percent of the test-region high/low group monitored by both designs (E2)."""
+    counts = _json("monitoring_design.json")["e2_composition"]["test"]["strata_counts"]
+    return 100.0 * counts["both"][group] / sum(c[group] for c in counts.values())
+
+
+def _md_within(extremum: str) -> float:
+    """Smallest/largest within-stratum test-region burden ratio (E2)."""
+    rates = _json("monitoring_design.json")["e2_composition"]["test"]["strata_rates"]
+    vals = [r["rate_high"] / r["rate_low"] for r in rates.values() if r["rate_low"]]
+    return float(min(vals) if extremum == "min" else max(vals))
+
+
 def _dml_adjusted() -> float:
     return float(_json("deconfounded_auroc.json")["deconfounded_auroc"])
 
@@ -1487,8 +1508,7 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
         _commas,
     ),
     "misgeo_flagged": (
-        "Systems flagged PWSID-prefix vs coordinate EPA-region mismatch "
-        "(state-polygon rule, v2)",
+        "Systems flagged PWSID-prefix vs coordinate EPA-region mismatch (state-polygon rule, v2)",
         lambda: _json("misgeocode_sensitivity_v2.json")["n_flagged_systems"],
         _commas,
     ),
@@ -1745,6 +1765,356 @@ REGISTRY: dict[str, tuple[str, Callable[[], float], Callable[[float], str]]] = {
     "ds_samples": ("total samples", lambda: float(_merged_count("samples")), _commas),
     "ds_systems": ("total systems", lambda: float(_merged_count("systems")), _commas),
     "ds_geocoded": ("geocoded systems", lambda: float(_merged_count("geocoded")), _commas),
+    # --- Monitoring design and the disparity estimates (monitoring_design.json; EST-D2) ---
+    "md_n_boot": (
+        "monitoring-design bootstrap draws",
+        lambda: _md("_meta.n_boot"),
+        _commas,
+    ),
+    "md_n_specs": (
+        "E4 specification-grid cells",
+        lambda: _md("_meta.n_specs"),
+        _fmt0,
+    ),
+    "md_e1_test_ndr": (
+        "E1 test-region burden, non-detect-reporting programs",
+        lambda: _md("e1_design_restricted.test.rows.ndr_pooled.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_test_ndr_lo": (
+        "E1 test-region burden, non-detect-reporting programs 95% CI lower",
+        lambda: _md("e1_design_restricted.test.rows.ndr_pooled.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_test_ndr_hi": (
+        "E1 test-region burden, non-detect-reporting programs 95% CI upper",
+        lambda: _md("e1_design_restricted.test.rows.ndr_pooled.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_test_fed": (
+        "E1 test-region burden, federal census only",
+        lambda: _md("e1_design_restricted.test.rows.federal.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_test_fed_lo": (
+        "E1 test-region burden, federal census only 95% CI lower",
+        lambda: _md("e1_design_restricted.test.rows.federal.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_test_fed_hi": (
+        "E1 test-region burden, federal census only 95% CI upper",
+        lambda: _md("e1_design_restricted.test.rows.federal.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_test_state": (
+        "E1 test-region burden, CA state program only",
+        lambda: _md("e1_design_restricted.test.rows.state_ca.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_test_state_lo": (
+        "E1 test-region burden, CA state program only 95% CI lower",
+        lambda: _md("e1_design_restricted.test.rows.state_ca.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_test_state_hi": (
+        "E1 test-region burden, CA state program only 95% CI upper",
+        lambda: _md("e1_design_restricted.test.rows.state_ca.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_r9_fed": (
+        "E1 region-9 burden, federal census only",
+        lambda: _md("e1_design_restricted.region9.rows.federal.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_r9_fed_lo": (
+        "E1 region-9 burden, federal census only 95% CI lower",
+        lambda: _md("e1_design_restricted.region9.rows.federal.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_r9_fed_hi": (
+        "E1 region-9 burden, federal census only 95% CI upper",
+        lambda: _md("e1_design_restricted.region9.rows.federal.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_nat_ndr": (
+        "E1 national burden, non-detect-reporting programs",
+        lambda: _md("e1_design_restricted.national.rows.ndr_pooled.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_nat_ndr_lo": (
+        "E1 national burden, non-detect-reporting programs 95% CI lower",
+        lambda: _md("e1_design_restricted.national.rows.ndr_pooled.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_nat_ndr_hi": (
+        "E1 national burden, non-detect-reporting programs 95% CI upper",
+        lambda: _md("e1_design_restricted.national.rows.ndr_pooled.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_nat_fed": (
+        "E1 national burden, federal census only",
+        lambda: _md("e1_design_restricted.national.rows.federal.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_nat_fed_lo": (
+        "E1 national burden, federal census only 95% CI lower",
+        lambda: _md("e1_design_restricted.national.rows.federal.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_nat_fed_hi": (
+        "E1 national burden, federal census only 95% CI upper",
+        lambda: _md("e1_design_restricted.national.rows.federal.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_nat_state": (
+        "E1 national burden, state programs only",
+        lambda: _md("e1_design_restricted.national.rows.state.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e1_nat_state_lo": (
+        "E1 national burden, state programs only 95% CI lower",
+        lambda: _md("e1_design_restricted.national.rows.state.ci_lower"),
+        _fmt2,
+    ),
+    "md_e1_nat_state_hi": (
+        "E1 national burden, state programs only 95% CI upper",
+        lambda: _md("e1_design_restricted.national.rows.state.ci_upper"),
+        _fmt2,
+    ),
+    "md_e1_nat_pooled_state_reg": (
+        "E1 national pooled burden, state-program regions only",
+        lambda: _md("e1_design_restricted.national.rows.pooled_state_regions.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e2_test_cf": (
+        "E2 test-region burden at the low-share design mix",
+        lambda: _md("e2_composition.test.burden_ratio_counterfactual"),
+        _fmt2,
+    ),
+    "md_e2_test_share": (
+        "E2 test-region share of log burden explained by design mix %",
+        lambda: 100 * _md("e2_composition.test.share"),
+        _fmt0,
+    ),
+    "md_e2_test_share_lo": (
+        "E2 test-region share 95% CI lower %",
+        lambda: 100 * _md("e2_composition.test.share_ci_lower"),
+        _fmt0,
+    ),
+    "md_e2_test_share_hi": (
+        "E2 test-region share 95% CI upper %",
+        lambda: 100 * _md("e2_composition.test.share_ci_upper"),
+        _fmt0,
+    ),
+    "md_e2_r9_share": (
+        "E2 region-9 share of log burden explained by design mix %",
+        lambda: 100 * _md("e2_composition.region9.share"),
+        _fmt0,
+    ),
+    "md_e2_r9_share_lo": (
+        "E2 region-9 share 95% CI lower %",
+        lambda: 100 * _md("e2_composition.region9.share_ci_lower"),
+        _fmt0,
+    ),
+    "md_e2_r9_share_hi": (
+        "E2 region-9 share 95% CI upper %",
+        lambda: 100 * _md("e2_composition.region9.share_ci_upper"),
+        _fmt0,
+    ),
+    "md_e2_rate_both": (
+        "E2 test-region detection rate, systems in both designs %",
+        lambda: 100 * _md("e2_composition.test.strata_rates.both.rate_all"),
+        _fmt0,
+    ),
+    "md_e2_rate_fed_only": (
+        "E2 test-region detection rate, federal-census-only systems %",
+        lambda: 100 * _md("e2_composition.test.strata_rates.federal_only.rate_all"),
+        _fmt0,
+    ),
+    "md_e3_n": (
+        "E3 California UCMR5 PFOS systems",
+        lambda: _md("e3_outcome_selectivity.n_systems"),
+        _commas,
+    ),
+    "md_e3_n_exposed": (
+        "E3 systems GeoTracker-sampled before UCMR5",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.n_exposed"),
+        _commas,
+    ),
+    "md_e3_same_day": (
+        "E3 same-day GeoTracker records dropped",
+        lambda: _md("e3_outcome_selectivity.n_same_day_geotracker_records_dropped"),
+        _commas,
+    ),
+    "md_e3_p_exp": (
+        "E3 UCMR5 PFOS detection %, sampled before UCMR5",
+        lambda: 100 * _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.p_detect_exposed"),
+        _fmt0,
+    ),
+    "md_e3_p_unexp": (
+        "E3 UCMR5 PFOS detection %, not sampled before UCMR5",
+        lambda: 100 * _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.p_detect_unexposed"),
+        _fmt0,
+    ),
+    "md_e3_rr": (
+        "E3 risk ratio of UCMR5 detection, sampled before UCMR5",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.risk_ratio"),
+        _fmt2,
+    ),
+    "md_e3_rr_lo": (
+        "E3 risk ratio 95% CI lower",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.ci_lower"),
+        _fmt2,
+    ),
+    "md_e3_rr_hi": (
+        "E3 risk ratio 95% CI upper",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.ci_upper"),
+        _fmt2,
+    ),
+    "md_e3_mh": (
+        "E3 Mantel-Haenszel risk ratio (size x water type)",
+        lambda: _md(
+            "e3_outcome_selectivity.primary_pre_ucmr5_sampling.mantel_haenszel_risk_ratio"
+        ),
+        _fmt2,
+    ),
+    "md_e3_mh_lo": (
+        "E3 Mantel-Haenszel risk ratio 95% CI lower",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.mh_ci_lower"),
+        _fmt2,
+    ),
+    "md_e3_mh_hi": (
+        "E3 Mantel-Haenszel risk ratio 95% CI upper",
+        lambda: _md("e3_outcome_selectivity.primary_pre_ucmr5_sampling.mh_ci_upper"),
+        _fmt2,
+    ),
+    "md_e3_any_rr": (
+        "E3 risk ratio, any GeoTracker sampling",
+        lambda: _md("e3_outcome_selectivity.any_sampling.risk_ratio"),
+        _fmt2,
+    ),
+    "md_e3_any_rr_lo": (
+        "E3 any-sampling risk ratio 95% CI lower",
+        lambda: _md("e3_outcome_selectivity.any_sampling.ci_lower"),
+        _fmt2,
+    ),
+    "md_e3_any_rr_hi": (
+        "E3 any-sampling risk ratio 95% CI upper",
+        lambda: _md("e3_outcome_selectivity.any_sampling.ci_upper"),
+        _fmt2,
+    ),
+    "md_e3_target": (
+        "E3 pre-UCMR5 sampling rate ratio, high vs low POC share",
+        lambda: _md("e3_outcome_selectivity.targeting_by_poc.exposure_rate_ratio_high_vs_low"),
+        _fmt2,
+    ),
+    "md_e3_target_lo": (
+        "E3 targeting ratio 95% CI lower",
+        lambda: _md("e3_outcome_selectivity.targeting_by_poc.ci_lower"),
+        _fmt2,
+    ),
+    "md_e3_target_hi": (
+        "E3 targeting ratio 95% CI upper",
+        lambda: _md("e3_outcome_selectivity.targeting_by_poc.ci_upper"),
+        _fmt2,
+    ),
+    "md_e4_n_census": (
+        "E4 primary census (UCMR5) systems",
+        lambda: _md("e4_ca_census_vs_targeted.primary.census.n_systems"),
+        _commas,
+    ),
+    "md_e4_n_targeted": (
+        "E4 primary targeted (GeoTracker first sampled 2019-2022) systems",
+        lambda: _md("e4_ca_census_vs_targeted.primary.targeted_design.n_systems"),
+        _commas,
+    ),
+    "md_e4_census": (
+        "E4 primary census burden ratio",
+        lambda: _md("e4_ca_census_vs_targeted.primary.census.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e4_census_lo": (
+        "E4 primary census burden ratio 95% CI lower",
+        lambda: _md("e4_ca_census_vs_targeted.primary.census.ci_lower"),
+        _fmt2,
+    ),
+    "md_e4_census_hi": (
+        "E4 primary census burden ratio 95% CI upper",
+        lambda: _md("e4_ca_census_vs_targeted.primary.census.ci_upper"),
+        _fmt2,
+    ),
+    "md_e4_targeted": (
+        "E4 primary targeted burden ratio",
+        lambda: _md("e4_ca_census_vs_targeted.primary.targeted_design.burden_ratio"),
+        _fmt2,
+    ),
+    "md_e4_targeted_lo": (
+        "E4 primary targeted burden ratio 95% CI lower",
+        lambda: _md("e4_ca_census_vs_targeted.primary.targeted_design.ci_lower"),
+        _fmt2,
+    ),
+    "md_e4_targeted_hi": (
+        "E4 primary targeted burden ratio 95% CI upper",
+        lambda: _md("e4_ca_census_vs_targeted.primary.targeted_design.ci_upper"),
+        _fmt2,
+    ),
+    "md_e4_ratio": (
+        "E4 primary targeted/census burden-ratio ratio",
+        lambda: _md("e4_ca_census_vs_targeted.primary.ratio_targeted_over_census"),
+        _fmt2,
+    ),
+    "md_e4_ratio_lo": (
+        "E4 primary ratio 95% CI lower",
+        lambda: _md("e4_ca_census_vs_targeted.primary.ratio_ci_lower"),
+        _fmt2,
+    ),
+    "md_e4_ratio_hi": (
+        "E4 primary ratio 95% CI upper",
+        lambda: _md("e4_ca_census_vs_targeted.primary.ratio_ci_upper"),
+        _fmt2,
+    ),
+    "md_e4_n_stable": (
+        "E4 stable specification cells",
+        lambda: _md("e4_ca_census_vs_targeted.summary.n_stable"),
+        _fmt0,
+    ),
+    "md_e4_ratio_min": (
+        "E4 smallest stable targeted/census ratio",
+        lambda: _md("e4_ca_census_vs_targeted.summary.ratio_range_stable.0"),
+        _fmt2,
+    ),
+    "md_e4_ratio_max": (
+        "E4 largest stable targeted/census ratio",
+        lambda: _md("e4_ca_census_vs_targeted.summary.ratio_range_stable.1"),
+        _fmt2,
+    ),
+    "md_e4_agree": (
+        "E4 stable cells sharing the majority sign %",
+        lambda: (
+            100 * _md("e4_ca_census_vs_targeted.summary.fraction_stable_agreeing_with_majority")
+        ),
+        _fmt0,
+    ),
+    "md_e2_both_high": (
+        "E2 test-region high-share systems in both designs %",
+        lambda: _md_both_pct("high"),
+        _fmt0,
+    ),
+    "md_e2_both_low": (
+        "E2 test-region low-share systems in both designs %",
+        lambda: _md_both_pct("low"),
+        _fmt0,
+    ),
+    "md_e2_within_min": (
+        "E2 smallest within-stratum burden ratio",
+        lambda: _md_within("min"),
+        _fmt2,
+    ),
+    "md_e2_within_max": (
+        "E2 largest within-stratum burden ratio",
+        lambda: _md_within("max"),
+        _fmt2,
+    ),
 }
 
 #: Registry ids whose value appears ONLY in a generated table or figure (Table 1,

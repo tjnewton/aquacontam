@@ -13,7 +13,7 @@ and reported numbers, version-controlled so reviewers can reproduce Table 2 et a
   need those arrays; regenerate them with `scripts/reproduce.py --all` if exact
   reproduction is required (the full prediction arrays are also included in the Zenodo
   archive).
-- **Files:** 76 JSONs (each < 5.0 MB; guard enforced).
+- **Files:** 77 JSONs (each < 5.0 MB; guard enforced).
 - **Integrity:** `checksums.sha256` lists SHA-256 of every JSON here.
 - **Software:** see `software_versions.json` in this directory (its `aquacontam`
   dev-version string embeds a commit id from the private development history, which does
@@ -97,6 +97,20 @@ committed anchor before writing (see `paper/DERIVATIONS.tsv` for input stamps):
     unperturbed T1/T4 xgboost reproduce frozen `results.json` AUROC; (B) the retained
     legacy rule reproduces the v1 6,889/87,450 on the same coords frame. v2 flags 1,818;
     exclusion moves T1 0.864->0.866 and T4 0.699->0.697, inside the 0.02 band.
+
+## ES&T monitoring-design analysis (2026-09-24; pre-registered, reproduction-gated)
+
+  - `monitoring_design.json` — NEW: how the published POC detection-burden ratios depend
+    on monitoring design (`paper/compute_monitoring_design.py`; estimators in
+    `src/aquacontam/analysis/monitoring_design.py`). Specified in `paper/DECISIONS.md`
+    EST-D2 before the first run; every grid cell and sensitivity is reported. Before any
+    write, the reproduction gate re-derives the frozen test-region ratio (1.878; n_high/n_low
+    618/1,544), the region-9 ratio (1.337), all ten LORO regional ratios and their weighted
+    mean (1.482), and checks that the per-design labels reproduce every published label.
+    E1: design-restricted ratios (federal census, non-detect-reporting state programs).
+    E2: the share of log(ratio) explained by the groups' different design mixes. E3:
+    outcome-selective state sampling in California before UCMR5. E4: a 36-cell California
+    census-vs-targeted specification curve. System bootstrap, 5,000 draws, seed 42.
 
 ## Reviewer verification
 

@@ -569,6 +569,20 @@ def _has_value(cells: list, target: float, tol: float = 5e-4) -> bool:
     return any(isinstance(v, (int, float)) and abs(float(v) - target) < tol for v in cells)
 
 
+def _fig4_design_sentinels(md: dict) -> list[tuple[str, float]]:
+    """Fig. 4c sentinels, read straight from the frozen ``monitoring_design.json``.
+
+    The test-region ratio from programs reporting non-detects (E1) and the California
+    census ratio (E4 primary): values only a correctly wired panel-c sheet carries.
+    """
+    e1 = md["e1_design_restricted"]["test"]["rows"]["ndr_pooled"]["burden_ratio"]
+    e4 = md["e4_ca_census_vs_targeted"]["primary"]["census"]["burden_ratio"]
+    return [
+        ("test-region non-detect-reporting ratio 2.711", float(e1)),
+        ("California census ratio 2.076", float(e4)),
+    ]
+
+
 def g14_source_data(root: Path | None = None, frozen: Path | None = None) -> ClauseResult:
     """Per-figure Source Data regenerate from frozen and carry their sentinel values.
 
@@ -635,6 +649,7 @@ def g14_source_data(root: Path | None = None, frozen: Path | None = None) -> Cla
         try:
             mi = json.loads((fz / "monitoring_inequity.json").read_text(encoding="utf-8"))
             sc = json.loads((fz / "split_comparison.json").read_text(encoding="utf-8"))
+            md = json.loads((fz / "monitoring_design.json").read_text(encoding="utf-8"))
         except (OSError, ValueError) as e:
             return ClauseResult("G14 source_data", False, f"frozen sentinel input unreadable: {e}")
         fig4 = _xlsx_cells(committed / "Fig4_source_data.xlsx")
@@ -643,6 +658,9 @@ def g14_source_data(root: Path | None = None, frozen: Path | None = None) -> Cla
             return ClauseResult(
                 "G14 source_data", False, "Fig4 missing monitoring_inequity sentinel (1.847)"
             )
+        for label, target in _fig4_design_sentinels(md):
+            if not _has_value(fig4_cells, target):
+                return ClauseResult("G14 source_data", False, f"Fig4 missing sentinel ({label})")
         fig2 = _xlsx_cells(committed / "Fig2_source_data.xlsx")
         fig2_cells = [v for vals in fig2.values() for v in vals]
         simple = sc["simple"]
