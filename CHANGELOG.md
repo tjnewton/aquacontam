@@ -21,6 +21,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- **Paper figures sized for ES&T**: `paper/generate_figures.py` draws every figure 6.5 in wide
+  with no text below 8 pt, and `_save_figure` raises `FigureSpecError` on a violation;
+  `paper/style.mplstyle` tick and legend text is 8 pt
 - **Citation metadata**: the preferred citation in `CITATION.cff`, the README and leaderboard
   BibTeX, and the export dataset card now cite the EarthArXiv preprint of the accompanying
   paper (doi:10.31223/X51V3G) until the peer-reviewed article is published
@@ -34,6 +37,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Fixed
 
+- **CI typecheck (pandas-stubs 3.1.0.261029 regression)**: the 2026-10-29 release repeats the same `Series.astype(str)` -> `Series[bool]` overload bug (the same 23 `[misc]` errors across 9 data loaders, with no change to our source). Excluded it as well (`!=3.1.0.261029`).
 - **CI typecheck (pandas-stubs 3.0.5.260914 regression)**: the 2026-09-14 release repeats the 3.0.5.260730 overload bug under the project's numpy<2 pin (`Series.astype(str)` resolves to `Series[bool]`; the same 23 `[misc]` errors across 9 data loaders, with no change to our source). Excluded that release as well (`!=3.0.5.260914`); the constraint still resolves to 3.0.3.260530.
 - **Typecheck**: `paper/generate_source_data.py` types its JSON loader's return. mypy 2.3 reported
   `no-any-return` there, reaching the file through `pipeline/export.py` and

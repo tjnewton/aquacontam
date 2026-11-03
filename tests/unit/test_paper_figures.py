@@ -348,3 +348,61 @@ class TestMonitoringDesignPanel:
     def test_fig4_without_design_data_loud_fails(self, tmp_path: Path) -> None:
         with pytest.raises(MissingFigureDataError):
             fig_monitoring_inequity(_INEQUITY, tmp_path, design_data=None)
+
+
+class TestEstFigureSpec:
+    """ES&T sizing: every saved figure is <= 6.5 in wide and draws no text below 8 pt."""
+
+    def test_small_text_raises(self, tmp_path: Path) -> None:
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots(figsize=(gf.FIG_WIDTH_IN, 3.0))
+        ax.text(0.5, 0.5, "too small", fontsize=6)
+        with pytest.raises(gf.FigureSpecError, match="too small"):
+            gf._save_figure(fig, tmp_path / "small.pdf")
+        assert not (tmp_path / "small.pdf").exists()
+
+    def test_too_wide_raises(self, tmp_path: Path) -> None:
+        import matplotlib.pyplot as plt
+
+        gf._load_style()  # savefig.bbox: tight -- the axes must span the full width to survive it
+        fig = plt.figure(figsize=(7.5, 3.0))
+        fig.add_axes((0.0, 0.0, 1.0, 1.0)).plot([0, 1], [0, 1])
+        with pytest.raises(gf.FigureSpecError, match="exceeds"):
+            gf._save_figure(fig, tmp_path / "wide.pdf")
+
+    def test_hidden_and_empty_text_ignored(self, tmp_path: Path) -> None:
+        import matplotlib.pyplot as plt
+
+        fig, ax = plt.subplots(figsize=(gf.FIG_WIDTH_IN, 3.0))
+        ax.text(0.1, 0.1, "hidden", fontsize=4).set_visible(False)
+        ax.text(0.2, 0.2, "   ", fontsize=4)
+        path = gf._save_figure(fig, tmp_path / "ok.pdf")
+        assert path.exists() and path.with_suffix(".png").exists()
+
+    def test_rendered_figures_fit_est_width(
+        self,
+        tmp_path: Path,
+        synthetic_wq_for_fig: pd.DataFrame,
+        allow_placeholders: None,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        import sys
+
+        from PIL import Image
+
+        # Canonical runs execute the script, where the PyGMT module is not importable;
+        # block it so Fig. 1 takes the same (checked) matplotlib path here.
+        monkeypatch.setitem(sys.modules, "paper.generate_figures_geo", None)
+        fig_dataset_overview(synthetic_wq_for_fig, tmp_path)
+        fig_data_distribution(synthetic_wq_for_fig, tmp_path)
+        fig_transfer_learning(None, tmp_path)
+        fig_temporal_prediction(None, tmp_path)
+        fig_causal_comparison(None, tmp_path)
+        fig_monitoring_inequity(_INEQUITY, tmp_path, design_data=_design_payload())
+
+        pngs = sorted(tmp_path.glob("*.png"))
+        assert len(pngs) == 6
+        for png in pngs:
+            with Image.open(png) as im:
+                assert im.size[0] / im.info["dpi"][0] <= gf.FIG_WIDTH_IN + 0.01, png.name

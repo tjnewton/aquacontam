@@ -72,7 +72,8 @@ dev = [
     # a `<` cap) deliberately leaves room for. Re-test and drop the exclusion then.
     # 3.0.5.260914 (2026-09-14) repeats the identical bug under this project's numpy<2
     # pin, so it is excluded the same way; the constraint still resolves to 3.0.3.260530.
-    "pandas-stubs>=2.0,<4,!=3.0.5.260730,!=3.0.5.260914",
+    # 3.1.0.261029 (2026-10-29) repeats it again (the same 23 errors), excluded likewise.
+    "pandas-stubs>=2.0,<4,!=3.0.5.260730,!=3.0.5.260914,!=3.1.0.261029",
     "types-requests>=2.31",
     "types-tqdm>=4.66",
 ]

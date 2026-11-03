@@ -1,4 +1,4 @@
-# AquaContam — Nature Water figure style
+# AquaContam — ES&T figure style (6.5 in wide = DOCX text width; all text >= 8 pt)
 # Usage: plt.style.use('paper/style.mplstyle')
 
 # Font
@@ -7,7 +7,7 @@ font.sans-serif: Arial, Helvetica, DejaVu Sans
 font.size: 8
 
 # Figure
-figure.figsize: 7.087, 4.331
+figure.figsize: 6.5, 4.0
 figure.dpi: 300
 savefig.dpi: 300
 savefig.bbox: tight
@@ -22,8 +22,8 @@ axes.spines.top: False
 axes.spines.right: False
 
 # Ticks
-xtick.labelsize: 7
-ytick.labelsize: 7
+xtick.labelsize: 8
+ytick.labelsize: 8
 xtick.major.width: 0.5
 ytick.major.width: 0.5
 xtick.major.size: 3
@@ -32,7 +32,7 @@ xtick.minor.size: 1.5
 ytick.minor.size: 1.5
 
 # Legend
-legend.fontsize: 7
+legend.fontsize: 8
 legend.frameon: False
 legend.handlelength: 1.5
 

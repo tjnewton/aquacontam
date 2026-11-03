@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Generate publication figures for AquaContam (Nature Water format).
+"""Generate publication figures for AquaContam (ES&T format: <= 6.5 in wide, text >= 8 pt).
 
 Usage::
 
@@ -9,6 +9,8 @@ Usage::
 from __future__ import annotations
 
 import logging
+import struct
+import textwrap
 from pathlib import Path
 from typing import Any
 
@@ -72,7 +74,7 @@ def _pub_name(code_name: str) -> str:
 
 
 def _load_style() -> None:
-    """Load the Nature Water matplotlib style."""
+    """Load the paper matplotlib style (``style.mplstyle``)."""
     if STYLE_PATH.exists():
         plt.style.use(str(STYLE_PATH))
 
@@ -106,6 +108,76 @@ def _placeholder(ax: Any, message: str, *, figure: str) -> None:
     )
 
 
+# ES&T sizing: double-column figures may be at most 7.0 in wide, and figure text must be
+# at least 8 pt at submission. Figures are drawn 6.5 in wide -- the DOCX text width
+# (``convert_to_docx.MAX_IMAGE_WIDTH_IN``) -- so they embed at 1:1 and 8 pt stays 8 pt.
+FIG_WIDTH_IN = 6.5
+MAX_FIG_HEIGHT_IN = 9.0
+MIN_FONT_PT = 8.0
+
+
+class FigureSpecError(RuntimeError):
+    """A figure breaks the ES&T sizing rules (text below 8 pt, or too wide/tall)."""
+
+
+def _drawn_text_sizes(fig: Any) -> list[tuple[str, float]]:
+    """Every non-empty string the Agg renderer draws for ``fig``, with its size in points.
+
+    Recording at draw time (not walking ``fig.findobj(Text)``) skips tick labels outside
+    the view limits, empty strings and other artists that never reach the page.
+    """
+    from matplotlib.backends.backend_agg import RendererAgg
+
+    seen: list[tuple[str, float]] = []
+    original = RendererAgg.draw_text
+
+    def _record(
+        self: Any, gc: Any, x: Any, y: Any, s: str, prop: Any, *args: Any, **kw: Any
+    ) -> Any:
+        if s.strip():
+            seen.append((s, float(prop.get_size_in_points())))
+        return original(self, gc, x, y, s, prop, *args, **kw)
+
+    RendererAgg.draw_text = _record  # type: ignore[method-assign]
+    try:
+        fig.canvas.draw()
+    finally:
+        RendererAgg.draw_text = original  # type: ignore[method-assign]
+    return seen
+
+
+def _save_figure(fig: Any, path: Path) -> Path:
+    """Check ES&T sizing, then save ``path`` (PDF) and its PNG twin and close ``fig``.
+
+    Raises :class:`FigureSpecError` if any drawn text is below ``MIN_FONT_PT`` or the
+    saved PNG is wider than ``FIG_WIDTH_IN`` (or taller than ``MAX_FIG_HEIGHT_IN``).
+    """
+    small = sorted(
+        {(s, round(pt, 2)) for s, pt in _drawn_text_sizes(fig) if pt < MIN_FONT_PT - 1e-6}
+    )
+    if small:
+        plt.close(fig)
+        listed = "; ".join(f"{s!r} {pt} pt" for s, pt in small[:12])
+        raise FigureSpecError(
+            f"{path.name}: {len(small)} text item(s) below {MIN_FONT_PT} pt: {listed}"
+        )
+    save_dpi = matplotlib.rcParams["savefig.dpi"]
+    dpi = float(fig.dpi if save_dpi == "figure" else save_dpi)
+    fig.savefig(path)
+    png = path.with_suffix(".png")
+    fig.savefig(png)
+    plt.close(fig)
+    # Pixel size from the PNG IHDR chunk (bytes 16-24), so no Pillow dependency here.
+    width_px, height_px = struct.unpack(">II", png.read_bytes()[16:24])
+    width_in, height_in = width_px / dpi, height_px / dpi
+    if width_in > FIG_WIDTH_IN + 0.01 or height_in > MAX_FIG_HEIGHT_IN + 0.01:
+        raise FigureSpecError(
+            f"{png.name}: saved size {width_in:.3f} x {height_in:.3f} in exceeds "
+            f"{FIG_WIDTH_IN} x {MAX_FIG_HEIGHT_IN} in"
+        )
+    return path
+
+
 def fig_dataset_overview(
     wq_df: pd.DataFrame,
     output_dir: Path,
@@ -136,11 +208,11 @@ def fig_dataset_overview(
     if proj is not None:
         import cartopy.crs as ccrs
 
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.5), subplot_kw={"projection": proj})
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.5), subplot_kw={"projection": proj})
         data_crs = ccrs.PlateCarree()
         ax.set_extent([-125, -66, 24, 50], crs=data_crs)  # type: ignore[attr-defined]
     else:
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.5))
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.5))
         data_crs = None
 
     # Map internal source column values to human-readable names
@@ -229,14 +301,15 @@ def fig_dataset_overview(
                 zorder=zorder,
                 **scatter_kw,
             )
+        # Legend below the map: at 8 pt, inside the frame it would cover the Southwest.
         ax.legend(
-            loc="lower left",
+            loc="upper center",
+            bbox_to_anchor=(0.5, -0.02 if data_crs is not None else -0.14),
             markerscale=2,
-            fontsize=5.5,
-            ncol=2,
+            fontsize=8,
+            ncol=5,
             columnspacing=1,
             handletextpad=0.3,
-            framealpha=0.9,
         )
     else:
         coords = wq_df.groupby("pwsid")[["latitude", "longitude"]].median()
@@ -261,10 +334,7 @@ def fig_dataset_overview(
         ax.set_ylim(24, 50)
 
     path = output_dir / "fig1_dataset_overview.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_data_distribution(
@@ -273,7 +343,7 @@ def fig_data_distribution(
 ) -> Path:
     """Supplementary Fig. 8: detection rates and concentration distributions."""
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.0))
+    fig, axes = plt.subplots(1, 2, figsize=(FIG_WIDTH_IN, 3.0))
 
     # Panel a: Detection rates by analyte
     ax = axes[0]
@@ -300,10 +370,7 @@ def fig_data_distribution(
 
     fig.tight_layout()
     path = output_dir / "fig_ext5_data_distribution.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 # Key models to show in main-text Fig 2 (8 models for legibility)
@@ -343,12 +410,10 @@ def fig_benchmark_results(
     _load_style()
 
     if not results:
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 3.5))
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 3.5))
         _placeholder(ax, "No results", figure="fig_ext11_benchmark_results")
         path = output_dir / "fig_ext11_benchmark_results.pdf"
-        fig.savefig(path)
-        plt.close(fig)
-        return path
+        return _save_figure(fig, path)
 
     df = pd.DataFrame(results)
 
@@ -362,7 +427,9 @@ def fig_benchmark_results(
 
     ncols = 2 if has_regression else 1
     widths = [3, 1] if has_regression else [1]
-    fig, axes = plt.subplots(1, ncols, figsize=(7.087, 3.5), gridspec_kw={"width_ratios": widths})
+    fig, axes = plt.subplots(
+        1, ncols, figsize=(FIG_WIDTH_IN, 3.5), gridspec_kw={"width_ratios": widths}
+    )
     if ncols == 1:
         axes = [axes]
 
@@ -429,7 +496,7 @@ def fig_benchmark_results(
     ax.set_ylabel("AUPRC")
     ax.set_title("a  Classification Tasks", loc="left")
     ax.set_ylim(0, min(1.05, ax.get_ylim()[1] * 1.15))
-    ax.legend(fontsize=6, ncol=2, loc="upper right")
+    ax.legend(fontsize=8, ncol=2, loc="upper right")
 
     # Panel b: Regression (RMSE) — lower is better
     if has_regression:
@@ -465,10 +532,7 @@ def fig_benchmark_results(
 
     fig.tight_layout()
     path = output_dir / "fig_ext11_benchmark_results.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 # Human-readable feature name mapping for SHAP plots
@@ -510,6 +574,13 @@ FEATURE_DISPLAY_NAMES: dict[str, str] = {
 }
 
 
+def _wrap_label(label: str, width: int = 24) -> str:
+    """Break a long tick label onto two or more lines at word boundaries (keeps 8 pt text in 6.5 in)."""
+    return (
+        textwrap.fill(label, width=width, break_long_words=False) if len(label) > width else label
+    )
+
+
 def _readable_feature_name(raw_name: str) -> str:
     """Convert raw feature name to human-readable label."""
     if raw_name in FEATURE_DISPLAY_NAMES:
@@ -535,7 +606,7 @@ def fig_feature_importance(
 ) -> Path:
     """Supplementary asset: feature importance — top 20 features with readable names."""
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.0))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.0))
 
     if importance_df is not None and not importance_df.empty:
         top20 = importance_df.head(20)
@@ -552,10 +623,7 @@ def fig_feature_importance(
     fig.tight_layout()
 
     path = output_dir / "fig_supp_feature_importance.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def _get_conus_projection() -> Any:
@@ -646,11 +714,11 @@ def fig_national_risk_map(
     if proj is not None:
         import cartopy.crs as ccrs
 
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.0), subplot_kw={"projection": proj})
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.0), subplot_kw={"projection": proj})
         data_crs = ccrs.PlateCarree()
         ax.set_extent([-125, -66, 24, 50], crs=data_crs)  # type: ignore[attr-defined]
     else:
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.0))
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.0))
         data_crs = None
 
     if predictions_df is not None and not predictions_df.empty:
@@ -694,7 +762,7 @@ def fig_national_risk_map(
                 **scatter_kw,
             )
             cbar = plt.colorbar(sc, ax=ax, label="Predicted risk", shrink=0.85)
-            cbar.ax.tick_params(labelsize=6)
+            cbar.ax.tick_params(labelsize=8)
         else:
             _placeholder(ax, "No CONUS predictions", figure="fig_supp_national_risk_map")
     else:
@@ -709,10 +777,7 @@ def fig_national_risk_map(
     fig.tight_layout()
 
     path = output_dir / "fig_supp_national_risk_map.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 # Human-readable labels for equity analysis demographic dimensions
@@ -743,7 +808,7 @@ def fig_equity_analysis(
     only significance stars.
     """
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 3.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 3.5))
 
     if equity_df is not None and not equity_df.empty:
         if "group" in equity_df.columns and "burden_ratio" in equity_df.columns:
@@ -820,10 +885,7 @@ def fig_equity_analysis(
     fig.tight_layout()
 
     path = output_dir / "fig_supp_equity_analysis.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_transfer_learning(
@@ -835,17 +897,15 @@ def fig_transfer_learning(
     Shows source→target AUROC and AUPRC across model families.
     """
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.0))
+    # Panels stacked (not side by side) so 13 value labels fit at 8 pt.
+    fig, axes = plt.subplots(2, 1, figsize=(FIG_WIDTH_IN, 6.0))
 
     if not results:
         for ax in axes:
             _placeholder(ax, "No data", figure="fig_ext6_transfer_learning")
         fig.tight_layout()
         path = output_dir / "fig_ext6_transfer_learning.pdf"
-        fig.savefig(path)
-        fig.savefig(path.with_suffix(".png"))
-        plt.close(fig)
-        return path
+        return _save_figure(fig, path)
 
     df = pd.DataFrame(results)
     df["display_name"] = df["model"].map(_pub_name)
@@ -872,7 +932,9 @@ def fig_transfer_learning(
             linewidth=0.3,
         )
         ax.set_xticks(x)
-        ax.set_xticklabels(display_models, rotation=30, ha="right", fontsize=7)
+        ax.set_xticklabels(
+            display_models, rotation=30, ha="right", rotation_mode="anchor", fontsize=8
+        )
         label = "a" if panel_idx == 0 else "b"
         metric_label = "AUROC" if metric_key == "auroc" else "AUPRC"
         ax.set_title(f"{label}  T5 Transfer {metric_label}", loc="left")
@@ -887,15 +949,12 @@ def fig_transfer_learning(
                     f"{val:.3f}",
                     ha="center",
                     va="bottom",
-                    fontsize=6,
+                    fontsize=8,
                 )
 
     fig.tight_layout()
     path = output_dir / "fig_ext6_transfer_learning.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_temporal_prediction(
@@ -907,16 +966,13 @@ def fig_temporal_prediction(
     Shows test/persistent/new system AUROC across model families.
     """
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 3.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.2))
 
     if not results:
         _placeholder(ax, "No data", figure="fig_ext7_temporal_prediction")
         fig.tight_layout()
         path = output_dir / "fig_ext7_temporal_prediction.pdf"
-        fig.savefig(path)
-        fig.savefig(path.with_suffix(".png"))
-        plt.close(fig)
-        return path
+        return _save_figure(fig, path)
 
     df = pd.DataFrame(results)
     df["display_name"] = df["model"].map(_pub_name)
@@ -930,7 +986,7 @@ def fig_temporal_prediction(
     ]
 
     x = np.arange(len(display_models))
-    width = 0.25
+    width = 0.3  # wide enough that adjacent vertical 8-pt value labels do not touch
 
     for i, (split_name, metric_key, split_label) in enumerate(split_keys):
         values = []
@@ -958,28 +1014,27 @@ def fig_temporal_prediction(
         )
         for bar, val in zip(bars, values, strict=False):
             if val > 0:
+                # Vertical: 42 bars leave no room for horizontal 8-pt labels.
                 ax.text(
                     bar.get_x() + bar.get_width() / 2,
                     bar.get_height() + 0.01,
                     f"{val:.3f}",
                     ha="center",
                     va="bottom",
-                    fontsize=5,
+                    rotation=90,
+                    fontsize=8,
                 )
 
     ax.set_xticks(x + width)
-    ax.set_xticklabels(display_models, rotation=30, ha="right", fontsize=7)
+    ax.set_xticklabels(display_models, rotation=30, ha="right", rotation_mode="anchor", fontsize=8)
     ax.set_ylabel("AUROC")
     ax.set_title("T7 Temporal Prediction (UCMR3 → UCMR5)", loc="left")
     ax.set_ylim(0, 1.0)
-    ax.legend(fontsize=7)
+    ax.legend(fontsize=8, loc="upper center", ncol=3)
 
     fig.tight_layout()
     path = output_dir / "fig_ext7_temporal_prediction.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_ext_correlation_matrix(
@@ -988,7 +1043,7 @@ def fig_ext_correlation_matrix(
 ) -> Path:
     """Supplementary Fig. 3: feature correlation matrix (file fig_ext1 is historical)."""
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 6.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 6.5))
 
     if feature_df is not None and not feature_df.empty:
         # Select numeric columns and limit to top 30 by variance
@@ -1000,8 +1055,8 @@ def fig_ext_correlation_matrix(
         im = ax.imshow(corr.values, cmap="RdBu_r", vmin=-1, vmax=1, aspect="auto")
         ax.set_xticks(range(len(corr.columns)))
         ax.set_yticks(range(len(corr.columns)))
-        ax.set_xticklabels(corr.columns, rotation=90, fontsize=4)
-        ax.set_yticklabels(corr.columns, fontsize=4)
+        ax.set_xticklabels(corr.columns, rotation=90, fontsize=8)
+        ax.set_yticklabels(corr.columns, fontsize=8)
         plt.colorbar(im, ax=ax, shrink=0.8, label="Pearson r")
     else:
         _placeholder(ax, "No feature data", figure="fig_ext1_correlation_matrix")
@@ -1011,10 +1066,7 @@ def fig_ext_correlation_matrix(
     fig.tight_layout()
 
     path = output_dir / "fig_ext1_correlation_matrix.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_ext_per_analyte_roc(
@@ -1029,7 +1081,7 @@ def fig_ext_per_analyte_roc(
     evaluable rather than drawn as zero-height bars.
     """
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 5.5))
 
     # Extract per-analyte AUROC from T3 results
     t3_results = [r for r in results if r.get("task") == "T3"]
@@ -1072,7 +1124,7 @@ def fig_ext_per_analyte_roc(
                     "not evaluable\n(no test-region detections)",
                     ha="center",
                     va="bottom",
-                    fontsize=6,
+                    fontsize=8,
                     color="gray",
                     rotation=90,
                 )
@@ -1081,7 +1133,8 @@ def fig_ext_per_analyte_roc(
         ax.set_xticklabels(analytes, fontsize=8)
         ax.set_ylabel("AUROC")
         ax.set_ylim(0, 1.0)
-        ax.legend(fontsize=7)
+        # Below the axes: at 8 pt the 16-entry legend would cover the PFHxS group.
+        ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.08), ncol=3)
     else:
         # Fallback: show per-task AUROC across models
         if results:
@@ -1117,7 +1170,7 @@ def fig_ext_per_analyte_roc(
                 ax.set_xticklabels(tasks)
                 ax.set_ylabel("AUROC")
                 ax.set_ylim(0, 1.0)
-                ax.legend(fontsize=7)
+                ax.legend(fontsize=8)
             else:
                 _placeholder(ax, "No data", figure="fig_ext2_per_analyte_roc")
         else:
@@ -1128,10 +1181,7 @@ def fig_ext_per_analyte_roc(
     fig.tight_layout()
 
     path = output_dir / "fig_ext2_per_analyte_roc.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_ext_geographic_splits(
@@ -1162,11 +1212,11 @@ def fig_ext_geographic_splits(
     if proj is not None:
         import cartopy.crs as ccrs
 
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.5), subplot_kw={"projection": proj})
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.5), subplot_kw={"projection": proj})
         data_crs = ccrs.PlateCarree()
         ax.set_extent([-125, -66, 24, 50], crs=data_crs)  # type: ignore[attr-defined]
     else:
-        fig, ax = plt.subplots(1, 1, figsize=(7.087, 4.5))
+        fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 4.5))
         data_crs = None
 
     _add_conus_basemap(ax)
@@ -1219,7 +1269,7 @@ def fig_ext_geographic_splits(
                         **scatter_kw,
                     )
 
-            ax.legend(loc="lower left", markerscale=3, fontsize=7)
+            ax.legend(loc="lower left", markerscale=3, fontsize=8)
     else:
         _placeholder(ax, "No coordinate data", figure="fig_ext3_geographic_splits")
 
@@ -1233,10 +1283,7 @@ def fig_ext_geographic_splits(
     fig.tight_layout()
 
     path = output_dir / "fig_ext3_geographic_splits.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_ext_roc_pr_curves(
@@ -1253,7 +1300,7 @@ def fig_ext_roc_pr_curves(
     churning committed figure references.
     """
     _load_style()
-    fig, axes = plt.subplots(2, 2, figsize=(7.087, 6.0))
+    fig, axes = plt.subplots(2, 2, figsize=(FIG_WIDTH_IN, 6.0))
 
     tasks_to_plot = ["T1", "T4"]
 
@@ -1284,9 +1331,9 @@ def fig_ext_roc_pr_curves(
             if values:
                 ax.barh(range(len(values)), values, color=colors)
                 ax.set_yticks(range(len(values)))
-                ax.set_yticklabels(display_names, fontsize=7)
+                ax.set_yticklabels(display_names, fontsize=8)
                 for i, v in enumerate(values):
-                    ax.text(v + 0.01, i, f"{v:.3f}", va="center", fontsize=6)
+                    ax.text(v + 0.01, i, f"{v:.3f}", va="center", fontsize=8)
 
             metric_label = "AUROC" if metric_key == "auroc" else "AUPRC"
             ax.set_xlabel(metric_label)
@@ -1302,22 +1349,19 @@ def fig_ext_roc_pr_curves(
     fig.tight_layout(rect=(0, 0, 1, 0.96))
 
     path = output_dir / "fig_ext4_roc_pr_curves.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def _plot_shap_panel(ax: Any, shap_data: dict[str, Any], color: str, top_n: int = 15) -> None:
     """Horizontal mean-|SHAP| bars for one model variant, descending."""
     mean_abs = shap_data.get("mean_abs_shap", {})
     top = sorted(mean_abs.items(), key=lambda kv: -kv[1])[:top_n]
-    labels = [_readable_feature_name(name) for name, _ in top]
+    labels = [_wrap_label(_readable_feature_name(name)) for name, _ in top]
     values = [v for _, v in top]
     y_pos = range(len(top))
     ax.barh(y_pos, values, color=color)
     ax.set_yticks(list(y_pos))
-    ax.set_yticklabels(labels, fontsize=6)
+    ax.set_yticklabels(labels, fontsize=8, linespacing=0.95)
     ax.invert_yaxis()
     ax.set_xlabel("Mean |SHAP value|")
 
@@ -1339,7 +1383,7 @@ def fig_shap_summary(
     _load_style()
     two_panel = bool(shap_data) and bool(shap_pf_data)
     n_cols = 2 if two_panel else 1
-    fig, axes = plt.subplots(1, n_cols, figsize=(7.087, 4.5), squeeze=False)
+    fig, axes = plt.subplots(1, n_cols, figsize=(FIG_WIDTH_IN, 4.8), squeeze=False)
 
     ax_a = axes[0][0]
     if shap_data and shap_data.get("mean_abs_shap"):
@@ -1353,15 +1397,12 @@ def fig_shap_summary(
     if two_panel:
         ax_b = axes[0][1]
         _plot_shap_panel(ax_b, shap_pf_data, color="#009E73")  # type: ignore[arg-type]
-        ax_b.set_title("b  Environment-only (provenance-free)", loc="left")
+        ax_b.set_title("b  Environment-only features", loc="left")
 
     fig.tight_layout()
 
     path = output_dir / "fig3_shap_summary.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_confound_decomposition(
@@ -1379,7 +1420,7 @@ def fig_confound_decomposition(
     intensity features (``feature_ablation.json``).
     """
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.5))
+    fig, axes = plt.subplots(1, 2, figsize=(FIG_WIDTH_IN, 3.5))
 
     # Panel (a): spatial leakage.
     ax = axes[0]
@@ -1400,7 +1441,7 @@ def fig_confound_decomposition(
                 val + 0.01,
                 f"{val:.3f}",
                 ha="center",
-                fontsize=7,
+                fontsize=8,
             )
         ax.text(
             0.5,
@@ -1447,23 +1488,20 @@ def fig_confound_decomposition(
         ax.bar(x - width / 2, before, width, color="#D55E00", label="With")
         ax.bar(x + width / 2, after, width, color="#0072B2", label="Without")
         for xi, (b, a) in enumerate(zip(before, after, strict=False)):
-            ax.text(xi - width / 2, b + 0.01, f"{b:.3f}", ha="center", fontsize=7)
-            ax.text(xi + width / 2, a + 0.01, f"{a:.3f}", ha="center", fontsize=7)
+            ax.text(xi - width / 2, b + 0.01, f"{b:.3f}", ha="center", fontsize=8)
+            ax.text(xi + width / 2, a + 0.01, f"{a:.3f}", ha="center", fontsize=8)
         ax.set_xticks(x)
-        ax.set_xticklabels([p[0] for p in pairs], fontsize=7)
+        ax.set_xticklabels([p[0] for p in pairs], fontsize=8)
         ax.set_ylabel("AUPRC")
         ax.set_ylim(0, max(before) * 1.25)
-        ax.legend(fontsize=6, loc="upper right")
+        ax.legend(fontsize=8, loc="upper right")
     else:
         _placeholder(ax, "No data", figure="fig2_confound_decomposition")
     ax.set_title("b  Ascertainment (who is monitored)", loc="left")
 
     fig.tight_layout()
     path = output_dir / "fig2_confound_decomposition.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 #: Display names for the monitoring-inequity demographic dimensions.
@@ -1511,12 +1549,12 @@ def _plot_design_forest(label_ax: Any, ax: Any, design_data: dict[str, Any]) -> 
     rows = _design_forest_rows(design_data)
     y = 0.0
     for scope in dict.fromkeys(r["Scope"] for r in rows):
-        label_ax.text(0.0, y, scope, ha="left", va="center", fontsize=6.5, fontweight="bold")
+        label_ax.text(0.0, y, scope, ha="left", va="center", fontsize=8, fontweight="bold")
         y -= 1.0
         for r in (r for r in rows if r["Scope"] == scope):
             color, marker = _DESIGN_STYLE[r["Design_Key"]]
             br, lo, hi = r["Burden_Ratio"], r["CI_Lower"], r["CI_Upper"]
-            label_ax.text(0.04, y, r["Design"], ha="left", va="center", fontsize=6.5)
+            label_ax.text(0.04, y, r["Design"], ha="left", va="center", fontsize=8)
             ax.errorbar(
                 br,
                 y,
@@ -1534,7 +1572,7 @@ def _plot_design_forest(label_ax: Any, ax: Any, design_data: dict[str, Any]) -> 
                 transform=ax.get_yaxis_transform(),
                 ha="left",
                 va="center",
-                fontsize=6,
+                fontsize=8,
             )
             y -= 1.0
         y -= 0.4
@@ -1571,8 +1609,8 @@ def fig_monitoring_inequity(
     import math
 
     _load_style()
-    fig = plt.figure(figsize=(7.087, 7.0))
-    grid = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.1])
+    fig = plt.figure(figsize=(FIG_WIDTH_IN, 7.6))
+    grid = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.25])
     axes = [fig.add_subplot(grid[0, 0]), fig.add_subplot(grid[0, 1])]
 
     groups = [g for g in _INEQUITY_GROUP_LABELS if g in (inequity_data or {})]
@@ -1588,11 +1626,11 @@ def fig_monitoring_inequity(
         for xi, g in enumerate(groups):
             ratio = inequity_data[g].get("monitoring_ratio", float("nan"))  # type: ignore[index]
             note = "no low-share\nsystems" if math.isinf(ratio) else f"{ratio:.2f}×"  # noqa: RUF001
-            ax.text(xi, max(high[xi], low[xi]) + 0.4, note, ha="center", fontsize=6)
+            ax.text(xi, max(high[xi], low[xi]) + 0.4, note, ha="center", fontsize=8)
         ax.set_xticks(x)
-        ax.set_xticklabels([_INEQUITY_GROUP_LABELS[g] for g in groups], fontsize=6, rotation=20)
+        ax.set_xticklabels([_wrap_label(_INEQUITY_GROUP_LABELS[g], 9) for g in groups], fontsize=8)
         ax.set_ylabel("Mean samples per system")
-        ax.legend(fontsize=6, loc="upper left")
+        ax.legend(fontsize=8, loc="upper left")
         # Headroom so the ratio / "no low-share systems" notes clear the title.
         _top = max([v for v in high + low if v == v] or [1.0])
         ax.set_ylim(top=_top * 1.35)
@@ -1629,17 +1667,17 @@ def fig_monitoring_inequity(
                 xytext=(0, 5 if above else -5),
                 ha="center",
                 va="bottom" if above else "top",
-                fontsize=6,
+                fontsize=8,
             )
-        ax.margins(x=0.12, y=0.18)
+        ax.margins(x=0.2, y=0.18)
         ax.set_xticks(x)
-        ax.set_xticklabels([_INEQUITY_GROUP_LABELS[g] for g in groups], fontsize=6, rotation=20)
+        ax.set_xticklabels([_wrap_label(_INEQUITY_GROUP_LABELS[g], 9) for g in groups], fontsize=8)
         ax.set_ylabel("Size-adjusted coefficient\n(log samples per 1-SD)")
     else:
         _placeholder(ax, "No data", figure="fig4_monitoring_inequity")
     ax.set_title("b  Population-size-adjusted association", loc="left")
 
-    bottom = grid[1, :].subgridspec(1, 2, width_ratios=[1.25, 2.0], wspace=0.02)
+    bottom = grid[1, :].subgridspec(1, 2, width_ratios=[1.45, 1.0], wspace=0.02)
     label_ax = fig.add_subplot(bottom[0, 0])
     ax = fig.add_subplot(bottom[0, 1], sharey=label_ax)
     if design_data:
@@ -1651,10 +1689,7 @@ def fig_monitoring_inequity(
 
     fig.tight_layout()
     path = output_dir / "fig4_monitoring_inequity.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_reliability_diagram(
@@ -1666,7 +1701,7 @@ def fig_reliability_diagram(
     Consumes ``calibration_analysis.json`` from the calibration pipeline stage.
     """
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.5))
+    fig, axes = plt.subplots(1, 2, figsize=(FIG_WIDTH_IN, 6.2))
 
     if not calibration_data:
         # Without data the loop below silently renders diagonal-only panels.
@@ -1703,14 +1738,13 @@ def fig_reliability_diagram(
         ax.set_title(f"{'a' if ax_idx == 0 else 'b'}  {task} Calibration", loc="left")
         ax.set_xlim(0, 1)
         ax.set_ylim(0, 1)
-        ax.legend(fontsize=5, loc="upper left")
+        ax.set_aspect("equal")
+        # Below the axes: at 8 pt, 14 entries inside the frame would hide the curves.
+        ax.legend(fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.2), handlelength=1.2)
 
     fig.tight_layout()
     path = output_dir / "fig_reliability_diagram.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_split_comparison(
@@ -1719,7 +1753,7 @@ def fig_split_comparison(
 ) -> Path:
     """Supplementary Fig. 6: split strategy comparison — AUPRC bars."""
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 3.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 3.5))
 
     # split_comparison.json nests the headline pair under "simple".
     if split_data and "simple" in split_data:
@@ -1760,10 +1794,7 @@ def fig_split_comparison(
     fig.tight_layout()
 
     path = output_dir / "fig_ext_split_comparison.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_causal_comparison(
@@ -1788,7 +1819,7 @@ def fig_causal_comparison(
         Path to the saved figure.
     """
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 5.0))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 5.5))
 
     if causal_data:
         # Filter to features with meaningful sample size and sort by |causal_effect|
@@ -1809,9 +1840,13 @@ def fig_causal_comparison(
         ax.barh(y + height / 2, causal_vals, height, label="DML Causal Effect", color="#D55E00")
 
         ax.set_yticks(y)
-        ax.set_yticklabels(features, fontsize=6)
+        ax.set_yticklabels(
+            [_wrap_label(_readable_feature_name(f), 30) for f in features],
+            fontsize=8,
+            linespacing=0.95,
+        )
         ax.set_xlabel("Effect Size")
-        ax.legend(fontsize=7, loc="lower right")
+        ax.legend(fontsize=8, loc="lower left")
         # The aggregate Spearman rank correlation is stated (pn-gated) in the
         # Extended Data Fig. 2 caption; never bake a copy into the image.
     else:
@@ -1830,10 +1865,7 @@ def fig_causal_comparison(
     fig.tight_layout()
 
     path = output_dir / "fig_ext8_causal_comparison.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_group_conformal(
@@ -1858,7 +1890,7 @@ def fig_group_conformal(
         Path to the saved figure.
     """
     _load_style()
-    fig, ax = plt.subplots(1, 1, figsize=(7.087, 3.5))
+    fig, ax = plt.subplots(1, 1, figsize=(FIG_WIDTH_IN, 3.5))
 
     if conformal_data:
         # Use alpha=0.05 entry
@@ -1888,7 +1920,7 @@ def fig_group_conformal(
 
         ax.set_ylabel("Coverage")
         ax.set_ylim(0.85, 1.0)
-        ax.legend(fontsize=7, loc="lower left")
+        ax.legend(fontsize=8, loc="upper center", ncol=2)
     else:
         _placeholder(ax, "Group conformal data not available", figure="fig_ext9_group_conformal")
 
@@ -1901,10 +1933,7 @@ def fig_group_conformal(
     fig.tight_layout()
 
     path = output_dir / "fig_ext9_group_conformal.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 def fig_icp_analysis(
@@ -1931,7 +1960,7 @@ def fig_icp_analysis(
         Path to saved figure.
     """
     _load_style()
-    fig, axes = plt.subplots(1, 2, figsize=(7.087, 3.5))
+    fig, axes = plt.subplots(1, 2, figsize=(FIG_WIDTH_IN, 3.5))
 
     # Panel a: Adversary convergence
     ax_a = axes[0]
@@ -1948,7 +1977,7 @@ def fig_icp_analysis(
         ax_a.plot(epochs, adv_losses, color="#D55E00", label="Adversary loss", linewidth=1.2)
         ax_a.set_xlabel("Epoch")
         ax_a.set_ylabel("Loss")
-        ax_a.legend(loc="upper right", fontsize=7)
+        ax_a.legend(loc="center right", fontsize=8)
 
         # Right y-axis for lambda schedule
         ax_r = ax_a.twinx()
@@ -1968,13 +1997,15 @@ def fig_icp_analysis(
         warmup_end = next((e for e, lv in zip(epochs, lambda_advs, strict=True) if lv > 0), None)
         if warmup_end is not None:
             ax_a.axvline(warmup_end, color="gray", linestyle=":", alpha=0.5, linewidth=0.8)
+            # Mid-height, clear of the loss curves and the lambda ramp.
+            lo, hi = ax_a.get_ylim()
             ax_a.text(
-                warmup_end + 1,
-                ax_a.get_ylim()[1] * 0.95,
+                warmup_end + 6,
+                lo + 0.55 * (hi - lo),
                 "warmup end",
-                fontsize=6,
+                fontsize=8,
                 color="gray",
-                va="top",
+                va="center",
             )
     else:
         _placeholder(ax_a, "No ICP training history available", figure="fig_ext10_icp_analysis")
@@ -2019,7 +2050,7 @@ def fig_icp_analysis(
             ax_b.set_xticklabels(tasks, fontsize=8)
             ax_b.set_ylabel("Score")
             ax_b.set_ylim(0, 1)
-            ax_b.legend(fontsize=7)
+            ax_b.legend(fontsize=8)
         else:
             _placeholder(
                 ax_b, "No ICP classification metrics available", figure="fig_ext10_icp_analysis"
@@ -2030,10 +2061,7 @@ def fig_icp_analysis(
 
     fig.tight_layout()
     path = output_dir / "fig_ext10_icp_analysis.pdf"
-    fig.savefig(path)
-    fig.savefig(path.with_suffix(".png"))
-    plt.close(fig)
-    return path
+    return _save_figure(fig, path)
 
 
 ALL_FIGURE_FUNCTIONS = [
