@@ -28,7 +28,7 @@ keywords:
   - heavy-metals
 preferred-citation:
   type: article
-  title: "AquaContam: machine-learning models of drinking-water contamination learn who is monitored as much as where contamination occurs"
+  title: "Monitoring design shapes machine-learning predictions and environmental-justice estimates of PFAS in U.S. drinking water"
   authors:
     - family-names: Newton
       given-names: Tyler J.

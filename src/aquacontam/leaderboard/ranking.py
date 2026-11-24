@@ -272,8 +272,8 @@ def generate_leaderboard_document(
         "",
         "```bibtex",
         "@misc{newton2026aquacontam,",
-        "  title={AquaContam: machine-learning models of drinking-water contamination "
-        "learn who is monitored as much as where contamination occurs},",
+        "  title={Monitoring design shapes machine-learning predictions and "
+        "environmental-justice estimates of PFAS in U.S. drinking water},",
         "  author={Newton, Tyler J.},",
         "  howpublished={EarthArXiv preprint},",
         "  doi={10.31223/X51V3G},",

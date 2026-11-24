@@ -133,9 +133,9 @@ def generate_dataset_card(
             "CC BY 4.0 where source terms permit (compiled data); code: Apache License 2.0"
         ),
         "citation": (
-            "Newton, T. J. (2026). AquaContam: machine-learning models of "
-            "drinking-water contamination learn who is monitored as much as "
-            "where contamination occurs. EarthArXiv preprint. "
+            "Newton, T. J. (2026). Monitoring design shapes machine-learning "
+            "predictions and environmental-justice estimates of PFAS in U.S. "
+            "drinking water. EarthArXiv preprint. "
             "https://doi.org/10.31223/X51V3G"
         ),
         "homepage": "https://github.com/tjnewton/aquacontam",

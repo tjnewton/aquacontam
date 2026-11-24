@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- **Citation metadata**: the EarthArXiv preprint (doi:10.31223/X51V3G) is cited under the
+  title of its version 2, "Monitoring design shapes machine-learning predictions and
+  environmental-justice estimates of PFAS in U.S. drinking water", in `CITATION.cff`, the
+  README and leaderboard BibTeX, and the export dataset card
+
 ## [4.1.0] - 2026-11-24
 
 ### Added
