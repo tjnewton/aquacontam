@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-11-24
+
 ### Added
 
 - **Monitoring-design analysis** (`src/aquacontam/analysis/monitoring_design.py`,
@@ -21,6 +23,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- **Zenodo archive, version 4.1.0**: the archived code snapshot now includes the
+  monitoring-design analysis and its frozen results. The dataset bundle is unchanged from
+  version 4.0.0 ([10.5281/zenodo.22073200](https://doi.org/10.5281/zenodo.22073200)).
+  `CITATION.cff` now gives the all-versions DOI
+  ([10.5281/zenodo.22073199](https://doi.org/10.5281/zenodo.22073199)), which always resolves
+  to the newest version
 - **Paper figures sized for ES&T**: `paper/generate_figures.py` draws every figure 6.5 in wide
   with no text below 8 pt, and `_save_figure` raises `FigureSpecError` on a violation;
   `paper/style.mplstyle` tick and legend text is 8 pt
